@@ -68,6 +68,8 @@ public class SubOrdinateHistory extends BaseActivity {
         };
         dateView=(EditText)findViewById(com.iiit.amaresh.demotrack.R.id.sub_date);
         phoneview=(EditText)findViewById(com.iiit.amaresh.demotrack.R.id.sub_pnone);
+        phoneview.setKeyListener(null);
+        phoneview.setText(phone_number);
         set=(Button)findViewById(com.iiit.amaresh.demotrack.R.id.sub_btndset);
         set.setOnClickListener(new View.OnClickListener() {
             @Override

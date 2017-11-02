@@ -234,6 +234,10 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
             Intent intent = new Intent(this, ViewAllUsers.class);
             startActivity(intent);
         }
+       else if(id==R.id.profile){
+           Intent intent = new Intent(this, ProfileDetail.class);
+           startActivity(intent);
+       }
        /*
         else if(id==R.id.attendance){
             Intent intent = new Intent(this, Attendance.class);

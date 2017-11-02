@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
+import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.R;
 
 public class GetMovement extends BaseActivity {
     EditText phone;
     Button cont;
+    String phone_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,11 @@ public class GetMovement extends BaseActivity {
                 }
             });
         }
+        phone_number = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_PHONE, null);
+
         phone=(EditText)findViewById(R.id.mov_pnone);
+        phone.setKeyListener(null);
+        phone.setText(phone_number);
         cont=(Button)findViewById(R.id.mov_cont);
         cont.setOnClickListener(new View.OnClickListener() {
             @Override

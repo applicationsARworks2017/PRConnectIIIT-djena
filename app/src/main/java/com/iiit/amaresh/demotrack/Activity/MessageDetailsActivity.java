@@ -48,6 +48,9 @@ public class MessageDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MessageDetailsActivity.this,PrimaryNotices.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
         });

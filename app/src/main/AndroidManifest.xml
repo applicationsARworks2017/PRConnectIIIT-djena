@@ -101,6 +101,9 @@
             android:name="com.iiit.amaresh.demotrack.Activity.MessageDetailsActivity"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.PrimaryNotices" />
         <activity android:name="com.iiit.amaresh.demotrack.Pojo.Useronlineoffline"></activity>
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.ProfileDetail"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
     </application>
 
 </manifest>

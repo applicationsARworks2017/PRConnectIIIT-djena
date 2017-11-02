@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Phone"
                 android:id="@+id/sub_pnone"
+                android:editable="false"
                 android:singleLine="true"
                 app:met_floatingLabelTextColor="@android:color/black"
                 app:met_iconLeft="@drawable/ic_phone_black_24dp"

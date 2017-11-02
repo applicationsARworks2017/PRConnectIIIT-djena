@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Phone"
                 android:maxLength="10"
+                android:editable="false"
                 android:inputType="phone"
                 android:id="@+id/mov_pnone"
                 android:singleLine="true"

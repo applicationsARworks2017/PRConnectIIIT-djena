@@ -8,11 +8,10 @@
                 android:id="@+id/viewAll"
                 android:icon="@drawable/ic_people_black_24dp"
                 android:title="All Users" />
-            <!--<item
-                android:id="@+id/logout"
+            <item
+                android:id="@+id/profile"
                 android:icon="@drawable/ic_person_black_24dp"
-                android:title="Logout" />
--->
+                android:title="Profile" />
         </menu>
     </item>
 
