@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/card_elevation"
+    android:layout_marginLeft="@dimen/card_elevation"
+    android:layout_marginTop="@dimen/card_elevation">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_rmsg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="@dimen/Heading_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:id="@+id/head_message_r"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date  Time"
+            android:id="@+id/datetime_r"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/body_text_size"
+            android:text="text body"
+            android:id="@+id/msgbdy_r"
+            android:layout_below="@+id/head_message_r"
+            android:layout_marginTop="2dp"
+            android:maxLines="2"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/msgbdy_r"
+            android:background="@drawable/horizontal_line"
+            android:layout_marginTop="2dp"/>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:id="@+id/layoutParent_add"
+    android:background="@drawable/custom_liner_layout">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Full Name"
+                        android:editable="false"
+                        android:id="@+id/f_name"
+                        android:singleLine="true"
+                        app:met_floatingLabelTextColor="@android:color/black"
+                        app:met_iconLeft="@drawable/ic_account_circle_black_24dp"
+                        app:met_floatingLabel="highlight"
+                        app:met_errorColor="@color/colorRed"
+                        app:met_typeface="font/roboto_light.ttf"
+                        app:met_iconPadding="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=" Department"
+                        android:editable="false"
+                        android:id="@+id/id_desig"
+                        android:singleLine="true"
+                        app:met_floatingLabelTextColor="@android:color/black"
+                        app:met_iconLeft="@drawable/ic_account_balance_black_24dp"
+                        app:met_floatingLabel="highlight"
+                        app:met_errorColor="@color/colorRed"
+                        app:met_typeface="font/roboto_light.ttf"
+                        app:met_iconPadding="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:id="@+id/text_inputpassword"
+                        android:singleLine="true"
+                        app:met_floatingLabelTextColor="@android:color/black"
+                        app:met_iconLeft="@drawable/ic_lock_black_24dp"
+                        app:met_floatingLabel="highlight"
+                        app:met_errorColor="@color/colorRed"
+                        app:met_typeface="font/roboto_light.ttf"
+                        app:met_iconPadding="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mail"
+                        android:id="@+id/text_inputmail"
+                        android:singleLine="true"
+                        app:met_floatingLabelTextColor="@android:color/black"
+                        app:met_iconLeft="@drawable/ic_email_black_24dp"
+                        app:met_floatingLabel="highlight"
+                        app:met_errorColor="@color/colorRed"
+                        app:met_typeface="font/roboto_light.ttf"
+                        app:met_iconPadding="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Area"
+                        android:id="@+id/area"
+                        android:editable="false"
+                        android:singleLine="true"
+                        app:met_floatingLabelTextColor="@android:color/black"
+                        app:met_iconLeft="@drawable/ic_home_black_24dp"
+                        app:met_floatingLabel="highlight"
+                        app:met_errorColor="@color/colorRed"
+                        app:met_typeface="font/roboto_light.ttf"
+                        app:met_iconPadding="0dp"
+                        android:minLines="3"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone"
+                        android:editable="false"
+                        android:id="@+id/text_phones"
+                        android:singleLine="true"
+                        app:met_floatingLabelTextColor="@android:color/black"
+                        app:met_iconLeft="@drawable/ic_phone_black_24dp"
+                        app:met_floatingLabel="highlight"
+                        app:met_errorColor="@color/colorRed"
+                        app:met_typeface="font/roboto_light.ttf"
+                        app:met_iconPadding="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="30dp"
+                        android:id="@+id/continu"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:text="Continue"
+                        android:textColor="@color/colorWhite"/>
+
+
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:elevation="6dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</LinearLayout>
+
+

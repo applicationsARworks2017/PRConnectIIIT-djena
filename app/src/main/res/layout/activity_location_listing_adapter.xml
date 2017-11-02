@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:descendantFocusability="blocksDescendants">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qa_list_margin"
+        android:layout_marginTop="@dimen/qa_list_margin"
+        android:layout_marginRight="@dimen/qa_list_margin"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Date"
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="18sp"/>
+            <!--android:layout_toLeftOf="@+id/imgDownArrow"/>-->
+
+            <!-- <ImageView
+                 android:id="@+id/imgDownArrow"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:src="@drawable/ic_keyboard_arrow_down"
+                 android:adjustViewBounds="true"
+                 android:scaleType="fitCenter"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignBottom="@+id/tvFileTitle"/>-->
+
+            <TextView
+                android:id="@+id/tvLatitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvdate"
+                android:layout_margin="5dp"
+                android:textColor="@color/textColorPrimary"
+                android:text="User Phone"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvlongitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvLatitude"
+                android:layout_margin="5dp"
+                android:gravity="left"
+                android:textColor="@color/textColorPrimary"
+                android:text="Latitude"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Address"
+                android:layout_below="@+id/tvlongitude"
+                android:textColor="@color/textColorPrimary" />
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/tvaddress"
+                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
+                android:layout_toRightOf="@+id/msgicon"
+                android:id="@+id/gpsicon"
+                android:background="@drawable/ic_location_on_black_24dp"/>
+
+
+
+            <!-- <LinearLayout
+                 android:id="@+id/layoutComments"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_below="@+id/tvCommentTitle">
+
+                &lt;!&ndash; <TextView
+                     android:id="@+id/viewComments"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="5dp"
+                     android:text="@string/unerline_string"
+                     android:textColor="#303F9F"
+                     android:textSize="15sp"
+                     android:layout_below="@+id/tvAnswerTitle"/>&ndash;&gt;
+
+                 &lt;!&ndash; <TextView
+                      android:id="@+id/noComments"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_margin="5dp"
+                      android:text="No comments to display"
+                      android:textColor="@color/textColorPrimary"
+                      android:textSize="12sp"
+                      android:layout_below="@+id/tvAnswerTitle"/>&ndash;&gt;
+
+             </LinearLayout>-->
+
+            <!--  <EditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/editTextPostAnswerOrComment"
+                  android:layout_marginTop="12dp"
+                  android:layout_below="@+id/layoutComments"
+                  android:hint="Post Here"/>-->
+
+            <!-- <include layout="@layout/edit_and_comment"
+                 android:id="@+id/layout_comment"
+                 android:visibility="gone"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/imgDownArrow"/>
+ -->
+            <!--<ImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:padding="10dp"-->
+            <!--android:id="@+id/imgSend"-->
+            <!--android:src="@drawable/ic_menu_send"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignBottom="@+id/editTextPostAnswerOrComment"-->
+            <!--android:background="@drawable/circle_light_blue_with_white_stroke"/>-->
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

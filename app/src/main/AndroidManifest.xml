@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.iiit.amaresh.demotrack">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/pr_connectlogo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name=".Pojo.GenericFileProvider"
+            android:authorities="com.iiit.amaresh.demotrack"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <receiver android:name="com.iiit.amaresh.demotrack.AutosendData.NotificationRefill">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.iiit.amaresh.demotrack.AutosendData.AutoStartUpdate" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_api_key" />
+
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.MainActivity"
+            android:label="Welcome" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.UserDetails"
+            android:label="Details" />
+        <activity android:name="com.iiit.amaresh.demotrack.Activity.Trackme" />
+        <activity android:name="com.iiit.amaresh.demotrack.Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.Home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.OwnHistory"
+            android:label="@string/Check_history"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.iiit.amaresh.demotrack.Activity.UploadAssets" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.ViewAllUsers"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.Type_message"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.ViewAllUsers" />
+        <activity android:name="com.iiit.amaresh.demotrack.Activity.LocationListingByUser"
+            android:label="Location List"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.OwnHistory">
+
+        </activity>
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.PrimaryNotices"
+            android:label="Primary Notices" />
+        <activity android:name="com.iiit.amaresh.demotrack.Activity.GmapSelf" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.SubOrdinateHistory"
+            android:label="@string/Check_history"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.GetMovement"
+            android:label="@string/Live_Track"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.iiit.amaresh.demotrack.Activity.MovementMap" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.GalaryActivity"
+            android:label="@string/Galary"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.MessageDetailsActivity"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.PrimaryNotices" />
+        <activity android:name="com.iiit.amaresh.demotrack.Pojo.Useronlineoffline"></activity>
+    </application>
+
+</manifest>

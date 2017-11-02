@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">PRConnect</string>
+    <string name="google_api_key">AIzaSyA8pdinRIeRJRW73GAVX5ffdVOsXN379HM</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="date_label_set">Press the button to set the date</string>
+    <string name="date_button_set">Set Date</string>
+    <string name="date_view_set">The Date is: </string>
+    <string name="date_selected"></string>
+    <string name="dateselect">Select The date</string>
+    <string name="phoneselect">Enter A Number</string>
+    <string name="Check_history">Check History</string>
+    <string name="Live_Track">Live Track</string>
+    <string name="all_user"> All Users</string>
+    <string name="msg_page"> Compose Message</string>
+    <string name="msg_details"> Detail Message</string>
+    <string name="Galary">Images</string>
+    <string name="no_app_found_title">Unable to Open</string>
+    <string name="no_app_found_message">There is no application available to open this file.</string>
+</resources>
