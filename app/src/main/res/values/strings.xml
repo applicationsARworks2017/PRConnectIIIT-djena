@@ -11,6 +11,7 @@
     <string name="phoneselect">Enter A Number</string>
     <string name="Check_history">Check History</string>
     <string name="Live_Track">Live Track</string>
+    <string name="userlist">UserList</string>
     <string name="all_user"> All Users</string>
     <string name="profile"> Profile</string>
     <string name="msg_page"> Compose Message</string>

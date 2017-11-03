@@ -43,6 +43,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
     UserListingAdapter qadapter;
     private SearchView search;
     ListView lv;
+    String data="view";
     TextView tvEmptyView;
    // private QaListAdapter mAdapter = null;
     private Menu menu;

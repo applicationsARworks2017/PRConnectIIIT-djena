@@ -138,7 +138,6 @@ public class UserListingAdapter extends BaseAdapter {
             holder.im_of_status.setVisibility(View.VISIBLE);
             holder.im_on_status.setVisibility(View.INVISIBLE);
         }
-
         holder.user_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

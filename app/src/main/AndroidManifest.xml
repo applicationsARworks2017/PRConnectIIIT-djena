@@ -107,6 +107,10 @@
             android:name="com.iiit.amaresh.demotrack.Activity.ProfileDetail"
             android:label="Profile"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+        <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.AlluserList"
+            android:label="AllUser"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
     </application>
 
 </manifest>

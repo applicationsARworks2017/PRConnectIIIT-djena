@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
+import com.iiit.amaresh.demotrack.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,7 +24,7 @@ import java.util.Locale;
 public class SubOrdinateHistory extends BaseActivity {
     private DatePicker datePicker;
     private Calendar calendar;
-    private EditText dateView,phoneview;
+    public static EditText dateView,phoneview;
     Button cntne,set;
     String phone_number,name;
     int user_id;
@@ -30,6 +32,7 @@ public class SubOrdinateHistory extends BaseActivity {
     int server_status;
     String server_message;
     Calendar myCalendar;
+    ImageView add_phone_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,15 @@ public class SubOrdinateHistory extends BaseActivity {
         phone_number = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_PHONE, null);
         name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
         user_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_ID, 0);
+        add_phone_name=(ImageView) findViewById(R.id.add_phone_name);
+        add_phone_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(SubOrdinateHistory.this,AlluserList.class);
+                i.putExtra("page","history");
+                startActivity(i);
+            }
+        });
 
         //// for calander
         myCalendar = Calendar.getInstance();
