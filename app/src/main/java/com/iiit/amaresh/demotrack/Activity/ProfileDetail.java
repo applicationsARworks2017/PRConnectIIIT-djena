@@ -20,8 +20,8 @@ public class ProfileDetail extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-        TextView tv_phone,tv_name;
-        String phone_number,name;
+        TextView tv_phone,tv_name,tv_designation;
+        String phone_number,name,designation;
 
 
         if (null != toolbar) {
@@ -38,9 +38,12 @@ public class ProfileDetail extends BaseActivity {
         }
         phone_number = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_PHONE, null);
         name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
+        designation = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_DESG, null);
         tv_phone=(TextView)findViewById(R.id.tv_phone);
         tv_name=(TextView)findViewById(R.id.tv_name);
+        tv_designation=(TextView)findViewById(R.id.tv_designation);
         tv_phone.setText(phone_number);
         tv_name.setText(name);
+        tv_designation.setText(designation);
     }
 }

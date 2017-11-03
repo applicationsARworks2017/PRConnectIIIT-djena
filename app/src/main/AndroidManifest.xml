@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.iiit.amaresh.demotrack">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -15,6 +16,7 @@
         android:icon="@drawable/pr_connectlogo"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        tools:replace="android:allowBackup"
         android:theme="@style/AppTheme">
         <provider
             android:name=".Pojo.GenericFileProvider"
@@ -103,6 +105,7 @@
         <activity android:name="com.iiit.amaresh.demotrack.Pojo.Useronlineoffline"></activity>
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.ProfileDetail"
+            android:label="Profile"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
     </application>
 

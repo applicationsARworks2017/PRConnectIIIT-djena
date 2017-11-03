@@ -35,6 +35,7 @@ dependencies {
     compile 'com.squareup:android-times-square:1.6.5@aar'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
 
 
 
