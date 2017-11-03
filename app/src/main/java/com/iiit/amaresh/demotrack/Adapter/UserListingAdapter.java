@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.iiit.amaresh.demotrack.Activity.Type_message;
@@ -62,6 +63,9 @@ public class UserListingAdapter extends BaseAdapter {
         private ImageView im_message;
         private ImageView im_location;
         private ImageView im_on_status,im_of_status;
+        RelativeLayout user_detaill_list;
+        RelativeLayout user_list;
+         int count=0;
         //private ImageView imgSend;
     }
 
@@ -85,6 +89,8 @@ public class UserListingAdapter extends BaseAdapter {
             holder.im_message=(ImageView)convertView.findViewById(R.id.msgicon);
             holder.im_on_status=(ImageView)convertView.findViewById(R.id.statusonline_image);
             holder.im_of_status=(ImageView)convertView.findViewById(R.id.statusoffline_image);
+            holder.user_detaill_list=(RelativeLayout)convertView.findViewById(R.id.user_detaill_list);
+            holder.user_list=(RelativeLayout)convertView.findViewById(R.id.user_list);
          //   holder.im_location=(ImageView)convertView.findViewById(R.id.gpsicon);
             convertView.setTag(holder);
 
@@ -102,6 +108,8 @@ public class UserListingAdapter extends BaseAdapter {
         holder.im_message.setTag(position);
         holder.im_on_status.setTag(position);
         holder.im_of_status.setTag(position);
+        holder.user_detaill_list.setTag(position);
+        holder.user_list.setTag(position);
        // holder.im_location.setTag(position);
 
         holder.User_name.setText("Name :"+user_pos.getU_emp_name());
@@ -121,6 +129,25 @@ public class UserListingAdapter extends BaseAdapter {
             holder.im_on_status.setVisibility(View.INVISIBLE);
         }
 
+        holder.user_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos=(Integer)v.getTag();
+                holder.count++;
+                    if(holder.count==1){
+                        holder.user_detaill_list.setVisibility(View.VISIBLE);
+                        //showCustomDialog(list.get(position).image);
+                    }
+                    //double click
+                    if(holder.count==2){
+                        holder.user_detaill_list.setVisibility(View.GONE);
+                        holder.count=0;
+                        //double function()
+                       // holder.count==0;
+                    }
+                }
+            });
+
         holder.im_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,10 +161,6 @@ public class UserListingAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-
-
-
-
         return convertView;
     }
 }
