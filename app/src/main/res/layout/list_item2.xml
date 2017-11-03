@@ -5,44 +5,46 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:descendantFocusability="blocksDescendants">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qa_list_margin"
-        android:layout_marginTop="@dimen/qa_list_margin"
-        android:layout_marginRight="@dimen/qa_list_margin"
-        card_view:cardCornerRadius="2dp"
-        card_view:contentPadding="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:id="@+id/user_list">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/iv_letterView"/>
 
             <TextView
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_marginRight="30dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="5dp"
                 android:text="User Name"
+                android:layout_toRightOf="@id/iv_letterView"
+                android:singleLine="true"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"/>
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:id="@+id/statusonline_image"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/online"
                 />
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:id="@+id/statusoffline_image"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/offline"
@@ -52,30 +54,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvUsername"
-                android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:layout_toRightOf="@id/iv_letterView"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/textColorPrimary"
                 android:text="User Phone"
                 android:textSize="12sp" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_translucent"
+            android:layout_below="@id/tvUserPhone"
+            android:layout_marginTop="10dp">
+        </LinearLayout>
         </RelativeLayout>
 
-    <!--android:layout_toLeftOf="@+id/imgDownArrow"/>-->
-
-           <!-- <ImageView
-                android:id="@+id/imgDownArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_keyboard_arrow_down"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_alignParentRight="true"
-                android:layout_alignBottom="@+id/tvFileTitle"/>-->
          <RelativeLayout
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_marginTop="55dp"
+             android:layout_marginTop="5dp"
              android:layout_below="@+id/user_list"
              android:visibility="gone"
+             android:layout_marginLeft="10dp"
              android:id="@+id/user_detaill_list">
 
             <TextView
@@ -83,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:singleLine="true"
                 android:text="Email"
                 android:textColor="@color/textColorPrimary" />
              <TextView
@@ -91,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Designation"
+                 android:singleLine="true"
                 android:layout_below="@+id/tvemail"
                 android:textColor="@color/textColorPrimary" />
 
@@ -99,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:singleLine="true"
                 android:text="District"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
@@ -110,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Block"
+                android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="12sp"
                 android:layout_below="@+id/tvDist"/>
@@ -120,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Sate"
+                android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
                 android:layout_below="@+id/tvblock"/>
@@ -131,6 +137,13 @@
                 android:layout_margin="10dp"
                 android:id="@+id/msgicon"
                 android:background="@drawable/ic_chat_bubble_outline_black_24dp"/>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="1dp"
+                 android:background="@color/colorPrimary"
+                 android:layout_below="@id/msgicon"
+                 android:layout_marginTop="5dp">
+             </LinearLayout>
          </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
 </RelativeLayout>

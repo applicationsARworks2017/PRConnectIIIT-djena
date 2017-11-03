@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.iiit.amaresh.demotrack.Activity.Type_message;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
 import com.iiit.amaresh.demotrack.R;
@@ -26,6 +28,7 @@ public class UserListingAdapter extends BaseAdapter {
     ProgressDialog progress;
     List<UserListing> user_lis;
     Holder holder;
+    Holder holder1;
     String page="answer";
     String server_message;
     Integer server_status;
@@ -59,6 +62,7 @@ public class UserListingAdapter extends BaseAdapter {
         private TextView User_dist;
         private TextView User_block;
         private TextView User_state;
+        private ImageView iv_letterview;
 
         private ImageView im_message;
         private ImageView im_location;
@@ -89,6 +93,7 @@ public class UserListingAdapter extends BaseAdapter {
             holder.im_message=(ImageView)convertView.findViewById(R.id.msgicon);
             holder.im_on_status=(ImageView)convertView.findViewById(R.id.statusonline_image);
             holder.im_of_status=(ImageView)convertView.findViewById(R.id.statusoffline_image);
+            holder.iv_letterview=(ImageView)convertView.findViewById(R.id.iv_letterView);
             holder.user_detaill_list=(RelativeLayout)convertView.findViewById(R.id.user_detaill_list);
             holder.user_list=(RelativeLayout)convertView.findViewById(R.id.user_list);
          //   holder.im_location=(ImageView)convertView.findViewById(R.id.gpsicon);
@@ -105,20 +110,25 @@ public class UserListingAdapter extends BaseAdapter {
         holder.User_dist.setTag(position);
         holder.User_block.setTag(position);
         holder.User_state.setTag(position);
-        holder.im_message.setTag(position);
+        holder.im_message.setTag(holder);
         holder.im_on_status.setTag(position);
         holder.im_of_status.setTag(position);
-        holder.user_detaill_list.setTag(position);
-        holder.user_list.setTag(position);
+        holder.user_detaill_list.setTag(holder);
+        holder.user_list.setTag(holder);
        // holder.im_location.setTag(position);
-
-        holder.User_name.setText("Name :"+user_pos.getU_emp_name());
-        holder.User_phone.setText("Mob :"+user_pos.getU_emp_phone());
-        holder.User_email.setText("Mail :"+user_pos.getU_emp_mail());
-        holder.User_designation.setText("Designation :"+user_pos.getU_emp_desig());
-        holder.User_dist.setText("District :"+user_pos.getU_emp_dist());
-        holder.User_block.setText("Block :"+user_pos.getU_emp_block());
-        holder.User_state.setText("State :"+user_pos.getU_emp_state());
+        String firstLetter = user_pos.getU_emp_name().substring(0, 1).toUpperCase();
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int color = generator.getColor(user_pos.getU_emp_name());
+        //int color = generator.getRandomColor();
+        TextDrawable drawable = TextDrawable.builder().buildRound(firstLetter, color); // radius in px
+        holder.iv_letterview.setImageDrawable(drawable);
+        holder.User_name.setText("Name: "+user_pos.getU_emp_name());
+        holder.User_phone.setText("Mob: "+user_pos.getU_emp_phone());
+        holder.User_email.setText("Mail: "+user_pos.getU_emp_mail());
+        holder.User_designation.setText("Designation: "+user_pos.getU_emp_desig());
+        holder.User_dist.setText("District: "+user_pos.getU_emp_dist());
+        holder.User_block.setText("Block: "+user_pos.getU_emp_block());
+        holder.User_state.setText("State: "+user_pos.getU_emp_state());
         String user_status=user_pos.getU_user_status();
         if(user_status.contentEquals("Online")){
             holder.im_of_status.setVisibility(View.INVISIBLE);
@@ -132,21 +142,21 @@ public class UserListingAdapter extends BaseAdapter {
         holder.user_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos=(Integer)v.getTag();
+                holder1 = (Holder) v.getTag();
                 holder.count++;
                     if(holder.count==1){
-                        holder.user_detaill_list.setVisibility(View.VISIBLE);
-                        //showCustomDialog(list.get(position).image);
+                        holder1.user_detaill_list.setVisibility(View.VISIBLE);
                     }
                     //double click
                     if(holder.count==2){
-                        holder.user_detaill_list.setVisibility(View.GONE);
+                        holder1.user_detaill_list.setVisibility(View.GONE);
                         holder.count=0;
                         //double function()
                        // holder.count==0;
                     }
                 }
             });
+
 
         holder.im_message.setOnClickListener(new View.OnClickListener() {
             @Override
