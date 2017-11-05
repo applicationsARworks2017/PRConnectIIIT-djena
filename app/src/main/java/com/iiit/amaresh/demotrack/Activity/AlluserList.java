@@ -13,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.iiit.amaresh.demotrack.Adapter.AllUserAdapter;
+import com.iiit.amaresh.demotrack.Database.DBHelper;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
@@ -51,6 +52,7 @@ public class AlluserList extends BaseActivity {
     private int index = 0, top = 0;
     int g_position=0;
     String pagename;
+    DBHelper db=new DBHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -292,8 +294,6 @@ public class AlluserList extends BaseActivity {
             mListView.setAdapter(qadapter);
             mListView.setSelectionFromTop(index, top);
             progress.dismiss();
-
         }
     }
-
 }

@@ -39,7 +39,6 @@ public class GalaryActivity extends BaseActivity {
     int server_status;
     String id,im_title,im_filename,im_emp_id,im_latitude,im_longitude,im_created,server_message,im_usename,im_userdesg,im_useradd;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

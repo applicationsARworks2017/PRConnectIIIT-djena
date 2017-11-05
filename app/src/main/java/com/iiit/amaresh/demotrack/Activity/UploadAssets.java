@@ -40,6 +40,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.iiit.amaresh.demotrack.Database.DBHelper;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -90,6 +91,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     MediaController media_Controller;
     DisplayMetrics dm;
     FrameLayout vshow_frame;
+    DBHelper db=new DBHelper(this);
 
 
     @Override
@@ -166,16 +168,18 @@ public class UploadAssets extends AppCompatActivity implements android.location.
         upload_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                s_title=title.getText().toString();
-                if (!upflag && !vflag) {
-                    Toast.makeText(UploadAssets.this, "File Not Captured..!", Toast.LENGTH_LONG).show();
-                }
-                else if(s_title.length()<=0 && s_title.equals("")){
-                    Toast.makeText(UploadAssets.this, "Please Enter Title For Image", Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
+                    s_title = title.getText().toString();
+                    if (!upflag && !vflag) {
+                        Toast.makeText(UploadAssets.this, "File Not Captured..!", Toast.LENGTH_LONG).show();
+                    } else if (s_title.length() <= 0 && s_title.equals("")) {
+                        Toast.makeText(UploadAssets.this, "Please Enter Title For Image", Toast.LENGTH_LONG).show();
+                    } else {
 
-                    ImUpload();
+                        ImUpload();
+                    }
+                } else {
+                   db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
                 }
             }
         });

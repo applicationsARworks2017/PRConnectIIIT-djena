@@ -17,6 +17,7 @@
     <string name="msg_page"> Compose Message</string>
     <string name="msg_details"> Detail Message</string>
     <string name="Galary">Images</string>
+    <string name="Galary_ASSET">Gallery Asset</string>
     <string name="no_app_found_title">Unable to Open</string>
     <string name="no_app_found_message">There is no application available to open this file.</string>
 </resources>
