@@ -3,7 +3,6 @@ package com.iiit.amaresh.demotrack.Activity;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
@@ -39,13 +38,13 @@ public class OnlineOflineActivity extends BaseActivity {
         ActionBar actionBar = getActionBar();
 
         // Hide Actionbar Icon
-        actionBar.setDisplayShowHomeEnabled(false);
+//        actionBar.setDisplayShowHomeEnabled(false);
 
         // Hide Actionbar Title
-        actionBar.setDisplayShowTitleEnabled(false);
+        //actionBar.setDisplayShowTitleEnabled(false);
 
         // Create Actionbar Tabs
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Set Tab Icon and Titles
         Tab1 = actionBar.newTab().setText("ONLINE GALLERY");
