@@ -31,6 +31,7 @@ import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.iiit.amaresh.demotrack.Tabs.OnlineAssetGalleryFragment;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -58,7 +59,7 @@ public class AllImageAdaper extends BaseAdapter {
     String new_wordd;
     String filetype;
 
-    public AllImageAdaper(GalaryActivity galaryActivity, List<ImageAll> allimagelist) {
+    public AllImageAdaper(Context galaryActivity, List<ImageAll> allimagelist) {
         this.context=galaryActivity;
         this.allimagelist=allimagelist;
        // imageLoader = new ImageLoader(context);

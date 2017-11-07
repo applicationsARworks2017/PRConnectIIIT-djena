@@ -179,7 +179,28 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         ImUpload();
                     }
                 } else {
+                    if(file==null){
+                        video = new File(mediaFile.getPath());
+                        long v_length = video.length();
+                        long vfileSizeInKB = v_length / 1024;
+                        vfileSizeInMB = vfileSizeInKB / 1024;
+
+                    }
+                    else{
+                        File Img = new File(file.getPath());
+                        long length = Img.length();
+                        long fileSizeInKB = length / 1024;
+                        fileSizeInMB = fileSizeInKB / 1024;
+                    }
+                    s_title = title.getText().toString();
+                    sid=String.valueOf(user_id);
+                    saddress=address+","+city;
                    db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
+                    Intent intent=new Intent(UploadAssets.this,Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                 }
             }
         });

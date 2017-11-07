@@ -2,10 +2,16 @@ package com.iiit.amaresh.demotrack.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcel;
+
+import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by RN on 11/5/2017.
@@ -63,5 +69,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(ALLUSER_TABLE, null, contentValues);
         db.close();
         return true;
+    }
+
+    public List<Oflinedata> getOflinedata() {
+        List<Oflinedata> assetlist = new ArrayList<Oflinedata>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + ALLUSER_TABLE,null);
+        res.moveToFirst();
+        while (res.isAfterLast() == false) {
+            Oflinedata user = new Oflinedata();
+            user.setUser_id(res.getInt(res.getColumnIndex(USER_COLUMN_ID)));
+            user.setlatitude(res.getString(res.getColumnIndex(USER_LATITUDE)));
+            user.setlongitude(res.getString(res.getColumnIndex(USER_LONGITUDE)));
+            user.setaddress(res.getString(res.getColumnIndex(USER_ADDRESS)));
+            user.settitle(res.getString(res.getColumnIndex(USER_TITLE)));
+            user.setvideo(res.getString(res.getColumnIndex(USER_VIDEO)));
+            user.setimage(res.getString(res.getColumnIndex(USER_FILE)));
+            assetlist.add(user);
+            res.moveToNext();
+        }
+        return assetlist;
     }
 }

@@ -2,7 +2,11 @@ package com.iiit.amaresh.demotrack.Activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
@@ -11,11 +15,13 @@ import com.iiit.amaresh.demotrack.Tabs.GalleryFragment;
 import com.iiit.amaresh.demotrack.Tabs.OflineAssetGalleryFragment;
 import com.iiit.amaresh.demotrack.Tabs.OnlineAssetGalleryFragment;
 
+import static com.iiit.amaresh.demotrack.R.id.toolbar;
+
 /**
  * Created by RN on 11/5/2017.
  */
 
-public class OnlineOflineActivity extends BaseActivity {
+public class OnlineOflineActivity extends AppCompatActivity {
     ActionBar.Tab Tab1, Tab2;
     OnlineAssetGalleryFragment onlinegallery=new OnlineAssetGalleryFragment();
     OflineAssetGalleryFragment oflinegallery=new OflineAssetGalleryFragment();
@@ -23,6 +29,8 @@ public class OnlineOflineActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_ofline);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         if (null != toolbar) {
             toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 
@@ -35,27 +43,33 @@ public class OnlineOflineActivity extends BaseActivity {
             });
 
         }
-        ActionBar actionBar = getActionBar();
 
-        // Hide Actionbar Icon
-//        actionBar.setDisplayShowHomeEnabled(false);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("ONLINE GALLERY"));
+        tabLayout.addTab(tabLayout.newTab().setText("OFLINE GALLERY"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // Hide Actionbar Title
-        //actionBar.setDisplayShowTitleEnabled(false);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final GalleryFragment adapter = new GalleryFragment
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-        // Create Actionbar Tabs
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        // Set Tab Icon and Titles
-        Tab1 = actionBar.newTab().setText("ONLINE GALLERY");
-        Tab2 = actionBar.newTab().setText("OFLINE GALLERY");
+            }
 
-        // Set Tab Listeners
-        Tab1.setTabListener(new GalleryFragment(onlinegallery));
-        Tab2.setTabListener(new GalleryFragment(oflinegallery));
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-        // Add tabs to actionbar
-        actionBar.addTab(Tab1);
-        actionBar.addTab(Tab2);
+            }
+        });
     }
+
 }

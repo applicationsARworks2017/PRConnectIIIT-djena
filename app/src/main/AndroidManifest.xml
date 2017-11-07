@@ -113,7 +113,7 @@
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.OnlineOflineActivity"
-            android:label="AllUser"
+            android:label="Gallery Asset"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
     </application>
 
