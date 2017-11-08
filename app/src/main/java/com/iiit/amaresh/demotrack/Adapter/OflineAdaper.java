@@ -50,6 +50,15 @@ public class OflineAdaper extends BaseAdapter {
     Holder holder;
     Context context;
     List<Oflinedata> alldataList;
+    String imgUrl=null,image_name,video_url=null;
+    ImageLoader imageLoader;
+    String IPATH=null;
+    MediaController media_Controller;
+    DisplayMetrics dm;
+    String targetFileName;
+    String imgUrlnew;
+    String new_wordd;
+    String filetype;
 
     public OflineAdaper(Context context, List<Oflinedata> oflineList) {
         this.context = context;
@@ -85,6 +94,8 @@ public class OflineAdaper extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        Oflinedata pos=alldataList.get(position);
         holder = new Holder();
 
         if (convertView == null) {
@@ -103,7 +114,52 @@ public class OflineAdaper extends BaseAdapter {
             holder.vshow_frame = (FrameLayout) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.vshow_frame);
             convertView.setTag(holder);
         }
-
+        else{
+            holder = (Holder) convertView.getTag();
+        }
+        holder.Username.setTag(position);
+        holder.Designation.setTag(position);
+        holder.Title.setTag(position);
+        holder.Time.setTag(position);
+        holder.Address.setTag(position);
+        holder.i_image.setTag(position);
+        holder.ivVideo.setTag(position);
+        holder.vshow_frame.setTag(position);
+        holder.d_icon.setTag(position);
+//        holder.Username.setText(pos.getUser_id());
+       // holder.Designation.setText(pos.getd());
+        holder.Title.setText(pos.getTitle());
+        //holder.Time.setText(pos.gettime());
+        holder.Address.setText(pos.getAddress());
+        image_name=pos.getImage();
+        String new_word = image_name.substring(image_name.length() - 4);
+        if(new_word.contentEquals(".jpg") || new_word.contentEquals(".png")|| new_word.contains("jpeg")){
+            holder.i_image.setVisibility(View.VISIBLE);
+            holder.vshow_frame.setVisibility(View.GONE);
+            imgUrl = Constants.DOWNLOAD_URL + image_name;
+            imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
+            imageLoader.get(imgUrl, ImageLoader.getImageListener(holder.i_image, com.iiit.amaresh.demotrack.R.drawable.rounded_image, android.R.drawable.ic_dialog_alert));
+            holder.i_image.setImageUrl(imgUrl, imageLoader);
+        }
+        else {
+            holder.i_image.setVisibility(View.GONE);
+            holder.vshow_frame.setVisibility(View.VISIBLE);
+            media_Controller = new MediaController(context);
+            dm = new DisplayMetrics();
+            //  context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int height = dm.heightPixels;
+            int width = dm.widthPixels;
+            video_url=Constants.DOWNLOAD_URL + image_name;
+            holder.ivVideo.setMinimumWidth(width);
+            holder.ivVideo.setMinimumHeight(height);
+            media_Controller.setAnchorView(holder.ivVideo);
+            holder.ivVideo.setMediaController(media_Controller);
+            holder.ivVideo.setVideoPath(video_url);
+            holder.ivVideo.start();
+        }
         return convertView;
     }
+
+
+
 }

@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
+import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
 
@@ -63,6 +64,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     ImageView cam_bt,imshow,rec_bt;
     Button upload_bt;
     EditText title;
+    String v_deop,im_file;
     String latitude,longitude,s_title,address,city,state;
     private Bitmap photo,bitmapRotate;
     private Boolean upflag = false;
@@ -184,6 +186,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         long v_length = video.length();
                         long vfileSizeInKB = v_length / 1024;
                         vfileSizeInMB = vfileSizeInKB / 1024;
+                        v_deop=video.toString();
 
                     }
                     else{
@@ -191,11 +194,15 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         long length = Img.length();
                         long fileSizeInKB = length / 1024;
                         fileSizeInMB = fileSizeInKB / 1024;
+                        im_file=file.toString();
+
                     }
                     s_title = title.getText().toString();
                     sid=String.valueOf(user_id);
                     saddress=address+","+city;
-                   db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
+                  // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
+                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file));
+
                     Intent intent=new Intent(UploadAssets.this,Home.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

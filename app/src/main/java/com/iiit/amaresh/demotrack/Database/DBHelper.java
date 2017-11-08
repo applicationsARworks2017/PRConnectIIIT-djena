@@ -21,73 +21,75 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DBNAME = "PRConnect.db";
     public static final int VERSON = 1;
     private String DROP_TABLE="drop table if exists data";
-    private String ALLUSER_TABLE = "alluser";
+    private String ALLUSER_TABLE = "Alluser";
     private String USER_COLUMN_ID="userid";
     private String USER_LATITUDE="latitude";
     private String USER_LONGITUDE="longitude";
     private String USER_TITLE="usertitle";
-    private String USER_ADDRESS="address";
+    private String USER_ADDRESS="ownaddress";
     private String USER_VIDEO="video";
     private String USER_FILE="file";
 
     public DBHelper(Context context) {
 
-        super(context, DBNAME, null, 1);
+        super(context, DBNAME, null, VERSON);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + ALLUSER_TABLE +
-                "(" + USER_COLUMN_ID + " text ,"
-                + USER_LATITUDE + " text ,"
-                + USER_LONGITUDE + " text ,"
-                + USER_TITLE +" text ," +
-                USER_ADDRESS + "text ," +
-                USER_VIDEO+"text ," +USER_FILE+"text)"
+                "(" + USER_COLUMN_ID + " text, "
+                + USER_LATITUDE + " text, "
+                + USER_LONGITUDE + " text, "
+                + USER_TITLE +" text, "
+                + USER_ADDRESS + " text, "
+                + USER_VIDEO +" text, "
+                + USER_FILE + " text) "
         );
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ALLUSER_TABLE);
+        onCreate(sqLiteDatabase);
     }
 
 
-    public boolean insertasset(int user_id, String latitude, String longitude, String s_title,
-                               String saddress, File video, File file) {
+    public void insertasset(Oflinedata data) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(USER_COLUMN_ID, user_id);
-        contentValues.put(USER_LATITUDE, latitude);
-        contentValues.put(USER_LONGITUDE, longitude);
-        contentValues.put(USER_TITLE, s_title);
-        contentValues.put(USER_ADDRESS, saddress);
-        contentValues.put(USER_VIDEO, String.valueOf(video));
-        contentValues.put(USER_FILE, String.valueOf(file));
+        contentValues.put(USER_COLUMN_ID, data.getUser_id());
+        contentValues.put(USER_LATITUDE, data.getLatitude());
+        contentValues.put(USER_LONGITUDE, data.getLongitude());
+        contentValues.put(USER_TITLE, data.getTitle());
+        contentValues.put(USER_ADDRESS, data.getAddress());
+        contentValues.put(USER_VIDEO, data.getVideo());
+        contentValues.put(USER_FILE, data.getImage());
+       db.insertWithOnConflict(ALLUSER_TABLE, null, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
+        db.close(); // Closing database connection
 
-        db.insert(ALLUSER_TABLE, null, contentValues);
-        db.close();
-        return true;
     }
 
     public List<Oflinedata> getOflinedata() {
-        List<Oflinedata> assetlist = new ArrayList<Oflinedata>();
+        ArrayList<Oflinedata> assetlist = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + ALLUSER_TABLE,null);
-        res.moveToFirst();
-        while (res.isAfterLast() == false) {
-            Oflinedata user = new Oflinedata();
-            user.setUser_id(res.getInt(res.getColumnIndex(USER_COLUMN_ID)));
-            user.setlatitude(res.getString(res.getColumnIndex(USER_LATITUDE)));
-            user.setlongitude(res.getString(res.getColumnIndex(USER_LONGITUDE)));
-            user.setaddress(res.getString(res.getColumnIndex(USER_ADDRESS)));
-            user.settitle(res.getString(res.getColumnIndex(USER_TITLE)));
-            user.setvideo(res.getString(res.getColumnIndex(USER_VIDEO)));
-            user.setimage(res.getString(res.getColumnIndex(USER_FILE)));
-            assetlist.add(user);
-            res.moveToNext();
-        }
+        Cursor res = db.rawQuery("SELECT  * FROM " + ALLUSER_TABLE,null);
+            if (res.moveToFirst()) {
+                do {
+                    Oflinedata user = new Oflinedata();
+                    user.setUser_id(res.getInt(0));
+                    user.setlatitude(res.getString(1));
+                    user.setlongitude(res.getString(2));
+                    user.setaddress(res.getString(3));
+                    user.settitle(res.getString(4));
+                    user.setvideo(res.getString(5));
+                    user.setimage(res.getString(6));
+                    assetlist.add(user);
+                } while (res.moveToNext());
+            }
+        //res.close();
         return assetlist;
     }
+
+
 }
