@@ -46,7 +46,7 @@ public class OnlineOflineActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("ONLINE GALLERY"));
-        tabLayout.addTab(tabLayout.newTab().setText("OFLINE GALLERY"));
+        tabLayout.addTab(tabLayout.newTab().setText("OFFLINE GALLERY"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

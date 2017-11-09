@@ -28,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private String USER_TITLE="usertitle";
     private String USER_ADDRESS="ownaddress";
     private String USER_VIDEO="video";
+    private String BYTE_ARRAY="bytearray";
     private String USER_FILE="file";
 
     public DBHelper(Context context) {
@@ -44,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + USER_TITLE +" text, "
                 + USER_ADDRESS + " text, "
                 + USER_VIDEO +" text, "
+                + BYTE_ARRAY +" text, "
                 + USER_FILE + " text) "
         );
     }
@@ -64,6 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(USER_TITLE, data.getTitle());
         contentValues.put(USER_ADDRESS, data.getAddress());
         contentValues.put(USER_VIDEO, data.getVideo());
+        contentValues.put(BYTE_ARRAY, data.getInput());
         contentValues.put(USER_FILE, data.getImage());
        db.insertWithOnConflict(ALLUSER_TABLE, null, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         db.close(); // Closing database connection
@@ -83,7 +86,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     user.setaddress(res.getString(3));
                     user.settitle(res.getString(4));
                     user.setvideo(res.getString(5));
-                    user.setimage(res.getString(6));
+                    user.setInput(res.getBlob(6));
+                    user.setimage(res.getString(7));
                     assetlist.add(user);
                 } while (res.moveToNext());
             }

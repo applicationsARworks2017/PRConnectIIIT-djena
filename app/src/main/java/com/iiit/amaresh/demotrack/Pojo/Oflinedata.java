@@ -8,6 +8,7 @@ import java.io.File;
 
 public class Oflinedata {
     String longitude,latitude,address,title,image,video;
+    byte[] input;
     int user_id;
 
     public String getLongitude() {
@@ -62,7 +63,15 @@ public class Oflinedata {
         return user_id;
     }
 
-    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, String file) {
+    public byte[] getInput() {
+        return input;
+    }
+
+    public void setInput(byte[] input) {
+        this.input = input;
+    }
+
+    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, byte[] inputData, String file) {
         this.user_id=user_id;
         this.latitude=latitude;
         this.longitude=longitude;
@@ -70,11 +79,13 @@ public class Oflinedata {
         this.address=saddress;
         this.video=video;
         this.image=file;
+        this.input=inputData;
+
 
     }
 
-    public Oflinedata() {
-
+    public Oflinedata(){
+        
     }
 
     public void setUser_id(int user_id) {

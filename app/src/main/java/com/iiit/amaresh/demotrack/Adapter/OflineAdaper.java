@@ -26,11 +26,13 @@ import android.widget.VideoView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.iiit.amaresh.demotrack.Activity.MainActivity;
+import com.iiit.amaresh.demotrack.Extra.UtilImage;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
 import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
+import com.iiit.amaresh.demotrack.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -85,7 +87,7 @@ public class OflineAdaper extends BaseAdapter {
         private TextView Username, Designation, Time, Title, Address;
         //    private ImageView i_image,d_icon;
         private ImageView d_icon;
-        public NetworkImageView i_image;
+        public ImageView i_image;
         VideoView ivVideo;
         FrameLayout vshow_frame;
         Bitmap vdoBitmap;
@@ -108,7 +110,7 @@ public class OflineAdaper extends BaseAdapter {
             holder.Time = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImtime);
             holder.Address = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImaddress);
             holder.Title = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImtitle);
-            holder.i_image = (NetworkImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivImage);
+            holder.i_image = (ImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivImage);
             holder.ivVideo = (VideoView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivVideo);
             holder.d_icon = (ImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.downloadicon);
             holder.vshow_frame = (FrameLayout) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.vshow_frame);
@@ -132,31 +134,36 @@ public class OflineAdaper extends BaseAdapter {
         //holder.Time.setText(pos.gettime());
         holder.Address.setText(pos.getAddress());
         image_name=pos.getImage();
-        String new_word = image_name.substring(image_name.length() - 4);
-        if(new_word.contentEquals(".jpg") || new_word.contentEquals(".png")|| new_word.contains("jpeg")){
-            holder.i_image.setVisibility(View.VISIBLE);
-            holder.vshow_frame.setVisibility(View.GONE);
-            imgUrl = Constants.DOWNLOAD_URL + image_name;
-            imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
-            imageLoader.get(imgUrl, ImageLoader.getImageListener(holder.i_image, com.iiit.amaresh.demotrack.R.drawable.rounded_image, android.R.drawable.ic_dialog_alert));
-            holder.i_image.setImageUrl(imgUrl, imageLoader);
-        }
-        else {
-            holder.i_image.setVisibility(View.GONE);
-            holder.vshow_frame.setVisibility(View.VISIBLE);
-            media_Controller = new MediaController(context);
-            dm = new DisplayMetrics();
-            //  context.getWindowManager().getDefaultDisplay().getMetrics(dm);
-            int height = dm.heightPixels;
-            int width = dm.widthPixels;
-            video_url=Constants.DOWNLOAD_URL + image_name;
-            holder.ivVideo.setMinimumWidth(width);
-            holder.ivVideo.setMinimumHeight(height);
-            media_Controller.setAnchorView(holder.ivVideo);
-            holder.ivVideo.setMediaController(media_Controller);
-            holder.ivVideo.setVideoPath(video_url);
-            holder.ivVideo.start();
-        }
+        byte[] bytes = pos.getInput();
+        holder.i_image.setVisibility(View.VISIBLE);
+        holder.vshow_frame.setVisibility(View.GONE);
+        holder.i_image.setImageBitmap(UtilImage.getImage(bytes));
+        /*if(image_name!=null) {
+            String new_word = image_name.substring(image_name.length() - 4);
+            if (new_word.contentEquals(".jpg") || new_word.contentEquals(".png") || new_word.contains("jpeg")) {
+                holder.i_image.setVisibility(View.VISIBLE);
+                holder.vshow_frame.setVisibility(View.GONE);
+                imgUrl = Constants.DOWNLOAD_URL + image_name;
+                imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
+                imageLoader.get(imgUrl, ImageLoader.getImageListener(holder.i_image, com.iiit.amaresh.demotrack.R.drawable.rounded_image, android.R.drawable.ic_dialog_alert));
+                holder.i_image.setImageUrl(imgUrl, imageLoader);
+            } else {
+                holder.i_image.setVisibility(View.GONE);
+                holder.vshow_frame.setVisibility(View.VISIBLE);
+                media_Controller = new MediaController(context);
+                dm = new DisplayMetrics();
+                //  context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+                int height = dm.heightPixels;
+                int width = dm.widthPixels;
+                video_url = Constants.DOWNLOAD_URL + image_name;
+                holder.ivVideo.setMinimumWidth(width);
+                holder.ivVideo.setMinimumHeight(height);
+                media_Controller.setAnchorView(holder.ivVideo);
+                holder.ivVideo.setMediaController(media_Controller);
+                holder.ivVideo.setVideoPath(video_url);
+                holder.ivVideo.start();
+            }
+        }*/
         return convertView;
     }
 

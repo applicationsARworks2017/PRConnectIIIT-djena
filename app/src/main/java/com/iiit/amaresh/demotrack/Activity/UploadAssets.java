@@ -41,7 +41,9 @@ import android.widget.VideoView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
+import com.iiit.amaresh.demotrack.Extra.UtilImage;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Pojo.FilePath;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -53,6 +55,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -94,6 +97,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     DisplayMetrics dm;
     FrameLayout vshow_frame;
     DBHelper db=new DBHelper(this);
+    String selectedImagePath;
 
 
     @Override
@@ -200,8 +204,33 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                     s_title = title.getText().toString();
                     sid=String.valueOf(user_id);
                     saddress=address+","+city;
+
+                    /*
+                    * try {
+            InputStream iStream = getContentResolver().openInputStream(image_uri);
+            byte[] inputData = UtilImage.getBytes(iStream);
+            db=new DBHelper(this);
+            String imguri=image_uri.toString();
+            db.insertImage(asked_by_user_id,im_title,inputData,selectedIPath,formattedDate);
+            db.close();
+
+        } catch (IOException ioe) {
+            Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+            db.close();
+
+        }*/
                   // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
-                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file));
+                    try{
+                        InputStream iStream = getContentResolver().openInputStream(picUri);
+                        byte[] inputData = UtilImage.getBytes(iStream);
+                        String imguri=picUri.toString();
+                        db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,inputData,selectedImagePath));
+                        Toast.makeText(UploadAssets.this,"Saved",Toast.LENGTH_SHORT).show();
+                    }
+                    catch (IOException ioe) {
+                        Log.e("Insert Image", "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                        db.close();
+                    }
 
                     Intent intent=new Intent(UploadAssets.this,Home.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -345,6 +374,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             // imPath=picUri.getPath();
             // Bitmap photo = (Bitmap) data.getExtras().get("data");
             try {
+                selectedImagePath= FilePath.getPath(this,picUri);
                 Bitmap photo = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(),picUri);
               //  Bitmap photo = ImageResizer.decodeSampledBitmapFromFile(file.getAbsolutePath(), 512, 342);
                 if (Float.valueOf(getImageOrientation()) >= 0) {
