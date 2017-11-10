@@ -81,8 +81,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     user.setUser_id(res.getInt(0));
                     user.setlatitude(res.getString(1));
                     user.setlongitude(res.getString(2));
-                    user.setaddress(res.getString(3));
-                    user.settitle(res.getString(4));
+                    user.settitle(res.getString(3));
+                    user.setaddress(res.getString(4));
                     user.setvideo(res.getString(5));
                     user.setimage(res.getString(6));
                     assetlist.add(user);
@@ -91,6 +91,12 @@ public class DBHelper extends SQLiteOpenHelper {
         //res.close();
         return assetlist;
     }
-
+    // Deleting single contact
+    public void deleteRow(String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ALLUSER_TABLE, USER_TITLE + " = ?",
+                new String[] { title });
+        db.close();
+    }
 
 }

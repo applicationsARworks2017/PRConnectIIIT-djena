@@ -46,6 +46,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_below="@+id/tvImUsername"
                 android:id="@+id/downloadicon"
+                android:rotation="180"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/ic_file_download_black_24dp"/>
             <TextView

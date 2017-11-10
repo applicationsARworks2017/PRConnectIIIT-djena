@@ -456,20 +456,20 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     private void ImUpload() {
          sid=String.valueOf(user_id);
          saddress=address+","+city;
-        if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
-            if(file==null){
-                video = new File(mediaFile.getPath());
-                long v_length = video.length();
-                long vfileSizeInKB = v_length / 1024;
-                vfileSizeInMB = vfileSizeInKB / 1024;
+            if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
+                if(file==null){
+                    video = new File(mediaFile.getPath());
+                    long v_length = video.length();
+                    long vfileSizeInKB = v_length / 1024;
+                    vfileSizeInMB = vfileSizeInKB / 1024;
 
-         }
-         else{
-                File Img = new File(file.getPath());
-                long length = Img.length();
-                long fileSizeInKB = length / 1024;
-                fileSizeInMB = fileSizeInKB / 1024;
-         }
+                }
+             else{
+                    File Img = new File(file.getPath());
+                    long length = Img.length();
+                    long fileSizeInKB = length / 1024;
+                    fileSizeInMB = fileSizeInKB / 1024;
+             }
 
 
             if (video == null) {
