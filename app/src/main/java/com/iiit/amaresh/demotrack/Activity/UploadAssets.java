@@ -98,6 +98,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     FrameLayout vshow_frame;
     DBHelper db=new DBHelper(this);
     String selectedImagePath;
+    int file_value;
 
 
     @Override
@@ -186,57 +187,65 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                     }
                 } else {
                     if(file==null){
-                        video = new File(mediaFile.getPath());
-                        long v_length = video.length();
-                        long vfileSizeInKB = v_length / 1024;
-                        vfileSizeInMB = vfileSizeInKB / 1024;
-                        v_deop=video.toString();
+                        s_title = title.getText().toString();
+                        sid=String.valueOf(user_id);
+                        saddress=address+","+city;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(UploadAssets.this);
+                        builder.setMessage("No Internet available. Do you want to save the file offline ?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Uri video_uri=Uri.fromFile(mediaFile);
+                                        String videouri=video_uri.toString();
+                                        db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,"video_file",videouri));
+                                        Toast.makeText(UploadAssets.this,"Saved",Toast.LENGTH_SHORT).show();
+
+                                        Intent intent=new Intent(UploadAssets.this,Home.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        startActivity(intent);                                }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
                     }
                     else{
                         File Img = new File(file.getPath());
-                        long length = Img.length();
-                        long fileSizeInKB = length / 1024;
-                        fileSizeInMB = fileSizeInKB / 1024;
-                        im_file=file.toString();
+                        s_title = title.getText().toString();
+                        sid=String.valueOf(user_id);
+                        saddress=address+","+city;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(UploadAssets.this);
+                        builder.setMessage("No Internet available. Do you want to save the file offline ?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        String imguri=picUri.toString();
+                                        db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,"image_file",imguri));
+                                        Toast.makeText(UploadAssets.this,"Saved",Toast.LENGTH_SHORT).show();
+
+                                        Intent intent=new Intent(UploadAssets.this,Home.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        startActivity(intent);                                }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
                     }
-                    s_title = title.getText().toString();
-                    sid=String.valueOf(user_id);
-                    saddress=address+","+city;
 
-                    /*
-                    * try {
-            InputStream iStream = getContentResolver().openInputStream(image_uri);
-            byte[] inputData = UtilImage.getBytes(iStream);
-            db=new DBHelper(this);
-            String imguri=image_uri.toString();
-            db.insertImage(asked_by_user_id,im_title,inputData,selectedIPath,formattedDate);
-            db.close();
 
-        } catch (IOException ioe) {
-            Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
-            db.close();
-
-        }*/
-                  // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
-                    try{
-                        InputStream iStream = getContentResolver().openInputStream(picUri);
-                        byte[] inputData = UtilImage.getBytes(iStream);
-                        String imguri=picUri.toString();
-                        db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,inputData,selectedImagePath));
-                        Toast.makeText(UploadAssets.this,"Saved",Toast.LENGTH_SHORT).show();
-                    }
-                    catch (IOException ioe) {
-                        Log.e("Insert Image", "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
-                        db.close();
-                    }
-
-                    Intent intent=new Intent(UploadAssets.this,Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
                 }
             }
         });
@@ -392,6 +401,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 title.setVisibility(View.VISIBLE);
                 upload_bt.setVisibility(View.VISIBLE);
                 imshow.setImageBitmap(bitmapRotate);
+                file_value=1;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -439,6 +449,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             media_Controller.setAnchorView(vshow);
             vshow.setMediaController(media_Controller);
             vshow.setVideoPath(String.valueOf(mediaFile));
+            file_value=2;
             vshow.start();
         }
     }

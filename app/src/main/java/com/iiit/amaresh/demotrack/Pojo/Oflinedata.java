@@ -54,11 +54,6 @@ public class Oflinedata {
     public String getVideo() {
         return video;
     }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
-
     public int getUser_id() {
         return user_id;
     }
@@ -71,7 +66,7 @@ public class Oflinedata {
         this.input = input;
     }
 
-    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, byte[] inputData, String file) {
+    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, String file) {
         this.user_id=user_id;
         this.latitude=latitude;
         this.longitude=longitude;
@@ -79,7 +74,6 @@ public class Oflinedata {
         this.address=saddress;
         this.video=video;
         this.image=file;
-        this.input=inputData;
 
 
     }

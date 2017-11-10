@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,6 +38,7 @@ import com.iiit.amaresh.demotrack.R;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -61,6 +63,8 @@ public class OflineAdaper extends BaseAdapter {
     String imgUrlnew;
     String new_wordd;
     String filetype;
+    Bitmap photo;
+
 
     public OflineAdaper(Context context, List<Oflinedata> oflineList) {
         this.context = context;
@@ -128,42 +132,29 @@ public class OflineAdaper extends BaseAdapter {
         holder.ivVideo.setTag(position);
         holder.vshow_frame.setTag(position);
         holder.d_icon.setTag(position);
-//        holder.Username.setText(pos.getUser_id());
-       // holder.Designation.setText(pos.getd());
         holder.Title.setText(pos.getTitle());
-        //holder.Time.setText(pos.gettime());
         holder.Address.setText(pos.getAddress());
-        image_name=pos.getImage();
-        byte[] bytes = pos.getInput();
-        holder.i_image.setVisibility(View.VISIBLE);
-        holder.vshow_frame.setVisibility(View.GONE);
-        holder.i_image.setImageBitmap(UtilImage.getImage(bytes));
-        /*if(image_name!=null) {
-            String new_word = image_name.substring(image_name.length() - 4);
-            if (new_word.contentEquals(".jpg") || new_word.contentEquals(".png") || new_word.contains("jpeg")) {
-                holder.i_image.setVisibility(View.VISIBLE);
-                holder.vshow_frame.setVisibility(View.GONE);
-                imgUrl = Constants.DOWNLOAD_URL + image_name;
-                imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
-                imageLoader.get(imgUrl, ImageLoader.getImageListener(holder.i_image, com.iiit.amaresh.demotrack.R.drawable.rounded_image, android.R.drawable.ic_dialog_alert));
-                holder.i_image.setImageUrl(imgUrl, imageLoader);
-            } else {
-                holder.i_image.setVisibility(View.GONE);
-                holder.vshow_frame.setVisibility(View.VISIBLE);
-                media_Controller = new MediaController(context);
-                dm = new DisplayMetrics();
-                //  context.getWindowManager().getDefaultDisplay().getMetrics(dm);
-                int height = dm.heightPixels;
-                int width = dm.widthPixels;
-                video_url = Constants.DOWNLOAD_URL + image_name;
-                holder.ivVideo.setMinimumWidth(width);
-                holder.ivVideo.setMinimumHeight(height);
-                media_Controller.setAnchorView(holder.ivVideo);
-                holder.ivVideo.setMediaController(media_Controller);
-                holder.ivVideo.setVideoPath(video_url);
-                holder.ivVideo.start();
+        filetype=pos.getVideo();
+        if(filetype.contentEquals("image_file")){
+            holder.i_image.setVisibility(View.VISIBLE);
+            holder.vshow_frame.setVisibility(View.GONE);
+            Uri pic_uri=Uri.parse(pos.getImage());
+            try {
+                photo = MediaStore.Images.Media.getBitmap(context.getContentResolver(),pic_uri);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }*/
+            holder.i_image.setImageBitmap(photo);
+        }
+        else{
+            holder.i_image.setVisibility(View.GONE);
+            holder.vshow_frame.setVisibility(View.VISIBLE);
+            Uri video_uri=Uri.parse(pos.getImage());
+            holder.ivVideo.setVideoURI(video_uri);
+            holder.ivVideo.resume();
+        }
+
+
         return convertView;
     }
 
