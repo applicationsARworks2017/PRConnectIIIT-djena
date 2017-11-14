@@ -23,15 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.iiit.amaresh.demotrack.Activity.GalaryActivity;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.iiit.amaresh.demotrack.Activity.MainActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
 import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.Util;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.iiit.amaresh.demotrack.Tabs.OnlineAssetGalleryFragment;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -144,16 +142,11 @@ public class AllImageAdaper extends BaseAdapter {
             holder.i_image.setVisibility(View.GONE);
             holder.vshow_frame.setVisibility(View.VISIBLE);
             media_Controller = new MediaController(context);
-            dm = new DisplayMetrics();
-          //  context.getWindowManager().getDefaultDisplay().getMetrics(dm);
-            int height = dm.heightPixels;
-            int width = dm.widthPixels;
             video_url=Constants.DOWNLOAD_URL + image_name;
-            holder.ivVideo.setMinimumWidth(width);
-            holder.ivVideo.setMinimumHeight(height);
-            media_Controller.setAnchorView(holder.ivVideo);
-            holder.ivVideo.setMediaController(media_Controller);
             holder.ivVideo.setVideoPath(video_url);
+            holder.ivVideo.requestFocus();
+            holder.ivVideo.setMediaController(media_Controller);
+            media_Controller.setAnchorView(holder.ivVideo);
             holder.ivVideo.start();
         }
      //   imageLoader.DisplayImage(imgUrl, holder.i_image);

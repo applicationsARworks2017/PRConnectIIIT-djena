@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
@@ -25,32 +23,18 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.iiit.amaresh.demotrack.Activity.Home;
-import com.iiit.amaresh.demotrack.Activity.MainActivity;
-import com.iiit.amaresh.demotrack.Activity.UploadAssets;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
-import com.iiit.amaresh.demotrack.Extra.UtilImage;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
-import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
-import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
-import com.iiit.amaresh.demotrack.R;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 /**
@@ -162,7 +146,11 @@ public class OflineAdaper extends BaseAdapter {
             holder.i_image.setVisibility(View.GONE);
             holder.vshow_frame.setVisibility(View.VISIBLE);
             Uri video_uri=Uri.parse(pos.getImage());
-            holder.ivVideo.setVideoURI(video_uri);
+          //  holder.ivVideo.setVideoURI(video_uri);
+            holder.ivVideo.setVideoPath(video_url);
+            holder.ivVideo.requestFocus();
+            holder.ivVideo.setMediaController(media_Controller);
+            media_Controller.setAnchorView(holder.ivVideo);
             holder.ivVideo.start();
         }
         holder.d_icon.setOnClickListener(new View.OnClickListener() {

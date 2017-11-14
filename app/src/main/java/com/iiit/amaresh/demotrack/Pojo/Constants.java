@@ -29,6 +29,9 @@ public class Constants {
     public static final String IMEI = "phone_imei";
     public static final String SP_LOGIN_STATUS = "login_status";
     public static final String SP_USER_ID = "user_id";
+    public static final String SP_STATE_ID = "state_id";
+    public static final String SP_DISTRICT_ID = "district_id";
+    public static final String SP_BLOCK_ID = "block_id";
     public static final String SP_USER_API_KEY = "user_api_key";
     public static final String SP_USER_DESG = "user_desg";
     public static final String SP_USER_TYPE = "user_type";
