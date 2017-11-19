@@ -23,13 +23,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.iiit.amaresh.demotrack.Activity.GalaryActivity;
 import com.iiit.amaresh.demotrack.Activity.MainActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
 import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.Util;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.iiit.amaresh.demotrack.Tabs.OnlineAssetGalleryFragment;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -143,14 +145,13 @@ public class AllImageAdaper extends BaseAdapter {
             holder.vshow_frame.setVisibility(View.VISIBLE);
             media_Controller = new MediaController(context);
             video_url=Constants.DOWNLOAD_URL + image_name;
+           // videofile=new File(selectedVideo.getPath());
             holder.ivVideo.setVideoPath(video_url);
             holder.ivVideo.requestFocus();
             holder.ivVideo.setMediaController(media_Controller);
             media_Controller.setAnchorView(holder.ivVideo);
             holder.ivVideo.start();
         }
-     //   imageLoader.DisplayImage(imgUrl, holder.i_image);
-       // Picasso.with(context).load(imgUrl).into(holder.i_image);
 
         holder.d_icon.setOnClickListener(new View.OnClickListener() {
             @Override

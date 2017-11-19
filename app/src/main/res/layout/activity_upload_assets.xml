@@ -26,11 +26,15 @@
             android:id="@+id/vshow_frame"
             android:visibility="gone"
             android:layout_gravity="center">
-        <VideoView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/vshow"
-            android:layout_gravity="center"/>
+            <VideoView
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/vshow"
+                android:layout_height="match_parent" />
         </FrameLayout>
 
         <LinearLayout

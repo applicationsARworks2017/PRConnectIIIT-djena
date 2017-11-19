@@ -160,7 +160,6 @@ public class UserListingAdapter extends BaseAdapter {
         holder.im_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos=(Integer)v.getTag();
                 String username=user_pos.getU_emp_name();
                 String id=user_pos.getU_id();
 

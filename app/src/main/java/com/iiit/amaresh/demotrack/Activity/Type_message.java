@@ -1,6 +1,8 @@
 package com.iiit.amaresh.demotrack.Activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,12 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
+import com.iiit.amaresh.demotrack.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +34,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Type_message extends BaseActivity {
     private String UserName,message_body,id;
@@ -41,6 +47,7 @@ public class Type_message extends BaseActivity {
     String server_response;
     int sender_id;
     String sender_name;
+    List<CharSequence> list ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class Type_message extends BaseActivity {
             });
 
         }
+        list= new ArrayList<CharSequence>();
          sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
        //  sender_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_ID, 0);
 
@@ -67,6 +75,7 @@ public class Type_message extends BaseActivity {
             UserName = extras.getString("name");
             id = extras.getString("id");
         }
+
         recipnt_name=(TextView)findViewById(com.iiit.amaresh.demotrack.R.id.rcpt_name);
         recipnt_name.setText("Name : "+UserName);
         Msg_body=(EditText)findViewById(com.iiit.amaresh.demotrack.R.id.msgbody);
@@ -74,11 +83,10 @@ public class Type_message extends BaseActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message_body=Msg_body.getText().toString();
-                if (Msg_body.length()==0){
+                message_body = Msg_body.getText().toString();
+                if (Msg_body.length() == 0) {
                     Toast.makeText(Type_message.this, "Kindly Enter Message", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     sendMessage();
                 }
             }

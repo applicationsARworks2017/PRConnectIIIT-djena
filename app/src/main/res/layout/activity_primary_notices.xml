@@ -5,7 +5,6 @@
     android:id="@+id/activity_primary_notices"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.android.amaresh.demotrack.com.iiit.amaresh.demotrack.Activity.PrimaryNotices">
     <!--<android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -33,6 +32,18 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout_message"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/float_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_add_white_24dp"
+        app:elevation="4dp"
+        />
 
 
 </RelativeLayout>

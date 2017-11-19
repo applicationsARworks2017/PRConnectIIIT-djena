@@ -62,7 +62,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/button_selector_qa"
                 android:layout_marginTop="20dp"
-                android:text="Send"
+                android:text="Send To"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:id="@+id/send"

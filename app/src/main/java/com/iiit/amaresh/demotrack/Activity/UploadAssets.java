@@ -41,9 +41,7 @@ import android.widget.VideoView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
-import com.iiit.amaresh.demotrack.Extra.UtilImage;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
-import com.iiit.amaresh.demotrack.Pojo.FilePath;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -55,7 +53,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -97,8 +94,6 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     DisplayMetrics dm;
     FrameLayout vshow_frame;
     DBHelper db=new DBHelper(this);
-    String selectedImagePath;
-    int file_value;
 
 
     @Override
@@ -187,65 +182,32 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                     }
                 } else {
                     if(file==null){
-                        s_title = title.getText().toString();
-                        sid=String.valueOf(user_id);
-                        saddress=address+","+city;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(UploadAssets.this);
-                        builder.setMessage("No Internet available. Do you want to save the file offline ?")
-                                .setCancelable(false)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Uri video_uri=Uri.fromFile(mediaFile);
-                                        String videouri=video_uri.toString();
-                                        db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,"video_file",videouri));
-                                        Toast.makeText(UploadAssets.this,"Saved",Toast.LENGTH_SHORT).show();
-
-                                        Intent intent=new Intent(UploadAssets.this,Home.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                        startActivity(intent);                                }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                        video = new File(mediaFile.getPath());
+                        long v_length = video.length();
+                        long vfileSizeInKB = v_length / 1024;
+                        vfileSizeInMB = vfileSizeInKB / 1024;
+                        v_deop=video.toString();
 
                     }
                     else{
                         File Img = new File(file.getPath());
-                        s_title = title.getText().toString();
-                        sid=String.valueOf(user_id);
-                        saddress=address+","+city;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(UploadAssets.this);
-                        builder.setMessage("No Internet available. Do you want to save the file offline ?")
-                                .setCancelable(false)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        String imguri=picUri.toString();
-                                        db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,"image_file",imguri));
-                                        Toast.makeText(UploadAssets.this,"Saved",Toast.LENGTH_SHORT).show();
-
-                                        Intent intent=new Intent(UploadAssets.this,Home.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                        startActivity(intent);                                }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                        long length = Img.length();
+                        long fileSizeInKB = length / 1024;
+                        fileSizeInMB = fileSizeInKB / 1024;
+                        im_file=file.toString();
 
                     }
+                    s_title = title.getText().toString();
+                    sid=String.valueOf(user_id);
+                    saddress=address+","+city;
+                  // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
+                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file));
 
-
+                    Intent intent=new Intent(UploadAssets.this,Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                 }
             }
         });
@@ -383,7 +345,6 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             // imPath=picUri.getPath();
             // Bitmap photo = (Bitmap) data.getExtras().get("data");
             try {
-                selectedImagePath= FilePath.getPath(this,picUri);
                 Bitmap photo = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(),picUri);
               //  Bitmap photo = ImageResizer.decodeSampledBitmapFromFile(file.getAbsolutePath(), 512, 342);
                 if (Float.valueOf(getImageOrientation()) >= 0) {
@@ -401,7 +362,6 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 title.setVisibility(View.VISIBLE);
                 upload_bt.setVisibility(View.VISIBLE);
                 imshow.setImageBitmap(bitmapRotate);
-                file_value=1;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -439,7 +399,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             vshow_frame.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
             upload_bt.setVisibility(View.VISIBLE);
-            media_Controller = new MediaController(this);
+            /*media_Controller = new MediaController(this);
             dm = new DisplayMetrics();
             this.getWindowManager().getDefaultDisplay().getMetrics(dm);
             int height = dm.heightPixels;
@@ -449,27 +409,33 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             media_Controller.setAnchorView(vshow);
             vshow.setMediaController(media_Controller);
             vshow.setVideoPath(String.valueOf(mediaFile));
-            file_value=2;
+            vshow.start();*/
+            String path = data.getData().toString();
+           // videofile=new File(selectedVideo.getPath());
+            vshow.setVideoPath(path);
+            vshow.requestFocus();
+            vshow.setMediaController(media_Controller);
+            media_Controller.setAnchorView(vshow);
             vshow.start();
         }
     }
     private void ImUpload() {
          sid=String.valueOf(user_id);
          saddress=address+","+city;
-            if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
-                if(file==null){
-                    video = new File(mediaFile.getPath());
-                    long v_length = video.length();
-                    long vfileSizeInKB = v_length / 1024;
-                    vfileSizeInMB = vfileSizeInKB / 1024;
+        if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
+            if(file==null){
+                video = new File(mediaFile.getPath());
+                long v_length = video.length();
+                long vfileSizeInKB = v_length / 1024;
+                vfileSizeInMB = vfileSizeInKB / 1024;
 
-                }
-             else{
-                    File Img = new File(file.getPath());
-                    long length = Img.length();
-                    long fileSizeInKB = length / 1024;
-                    fileSizeInMB = fileSizeInKB / 1024;
-             }
+         }
+         else{
+                File Img = new File(file.getPath());
+                long length = Img.length();
+                long fileSizeInKB = length / 1024;
+                fileSizeInMB = fileSizeInKB / 1024;
+         }
 
 
             if (video == null) {

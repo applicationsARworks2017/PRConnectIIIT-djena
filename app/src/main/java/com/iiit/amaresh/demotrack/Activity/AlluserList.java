@@ -51,9 +51,8 @@ public class AlluserList extends BaseActivity {
     TextView tvEmptyView;
     private int index = 0, top = 0;
     int g_position=0;
-    String pagename,servermessage;
+    String pagename;
     DBHelper db=new DBHelper(this);
-    int user_id,user_type,block_id,district_id,state_id,status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +68,6 @@ public class AlluserList extends BaseActivity {
                 }
             });
         }
-        user_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_ID, 0);
-        state_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_STATE_ID, 0);
-        block_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_BLOCK_ID, 0);
-        district_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_DISTRICT_ID, 0);
-        user_type = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_TYPE, 0);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             pagename = extras.getString("page");
@@ -163,18 +157,8 @@ public class AlluserList extends BaseActivity {
     private void getContact() {
         if (Util.getNetworkConnectivityStatus(this)) {
             GetUserDetail asyncTask = new GetUserDetail();
-            String emp_type=null;
-            if(user_type==0){
-                 emp_type="block";
-            }
-            else if(user_type==1){
-                emp_type="state";
-            }
-            else{
-                emp_type="district";
-            }
-
-            asyncTask.execute(emp_type,String.valueOf(user_id),String.valueOf(block_id),String.valueOf(state_id),String.valueOf(district_id));
+            String emp_type="";
+            asyncTask.execute(emp_type);
 
         }
     }
@@ -198,10 +182,6 @@ public class AlluserList extends BaseActivity {
 
             try {
                 String _emptype = params[0];
-                String _userid = params[1];
-                String _blockid = params[2];
-                String _stateid = params[3];
-                String _district = params[4];
                 InputStream in = null;
                 int resCode = -1;
                 String link = Constants.ONLINE_URL + Constants.USER_LIST;
@@ -217,10 +197,7 @@ public class AlluserList extends BaseActivity {
                 conn.setRequestMethod("POST");
 
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("usertype", _emptype)
-                        .appendQueryParameter("block_id", _blockid)
-                        .appendQueryParameter("state_id", _stateid)
-                        .appendQueryParameter("district_id", _district);
+                        .appendQueryParameter("emptype", _emptype);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -253,14 +230,6 @@ public class AlluserList extends BaseActivity {
                 if (response != null && response.length() > 0) {
 
                     JSONObject res = new JSONObject(response);
-                    status=res.getInt("Status");
-                    if(status==1){
-                        servermessage="Got userlist";
-                    }
-                    else{
-                        servermessage="userlist not found";
-
-                    }
                     JSONArray user_list = res.getJSONArray("emp");
 
                     userlist = new ArrayList<UserListing>();
@@ -321,18 +290,9 @@ public class AlluserList extends BaseActivity {
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
-            if(status==1){
-                qadapter = new AllUserAdapter(AlluserList.this,userlist);
-                mListView.setAdapter(qadapter);
-                mListView.setSelectionFromTop(index, top);
-            }
-            else{
-                mListView.setVisibility(View.GONE);
-                TextView tvNoRecordFoundText=(TextView)findViewById(R.id.tvNoRecordFoundText);
-                tvNoRecordFoundText.setVisibility(View.VISIBLE);
-
-            }
-
+            qadapter = new AllUserAdapter(AlluserList.this,userlist);
+            mListView.setAdapter(qadapter);
+            mListView.setSelectionFromTop(index, top);
             progress.dismiss();
         }
     }

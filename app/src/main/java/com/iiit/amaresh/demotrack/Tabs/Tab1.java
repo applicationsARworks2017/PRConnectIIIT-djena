@@ -51,7 +51,7 @@ public class Tab1 extends Fragment {
     ProgressDialog progressDialog;
     String server_response;
     String emp_name,emp_phone,emp_mail,emp_desg;
-    int server_status,user_type,user_id,state_id,district_id,block_id;
+    int server_status,user_type,user_id;
     SharedPreferences sharedPreferences;
     private TelephonyManager mTelephonyManager;
     String deviceid;
@@ -218,9 +218,6 @@ public class Tab1 extends Fragment {
                         emp_mail = userObj.optString("empmail");
                         emp_desg = userObj.optString("empdesg");
                         user_type = userObj.optInt("usertype");
-                        state_id = userObj.optInt("state_id");
-                        district_id = userObj.optInt("district_id");
-                        block_id = userObj.optInt("block_id");
                         server_response="Successfully LoggedIn.";
                     }
                     else{
@@ -264,9 +261,6 @@ public class Tab1 extends Fragment {
             editor.putString(Constants.SP_USER_EMAIL,emp_mail);
             editor.putString(Constants.SP_USER_DESG,emp_desg);
             editor.putInt(Constants.SP_USER_ID,user_id);
-            editor.putInt(Constants.SP_STATE_ID,state_id);
-            editor.putInt(Constants.SP_DISTRICT_ID,district_id);
-            editor.putInt(Constants.SP_BLOCK_ID,block_id);
             editor.commit();
 
             Toast.makeText(getContext(), server_response, Toast.LENGTH_LONG).show();

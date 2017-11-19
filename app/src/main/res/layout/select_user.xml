@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ALL STATE USER"
+            android:id="@+id/tv_ststuser"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="@drawable/squar_background"
+            />
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_ststuser"
+            android:background="@drawable/squar_background"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="STATE" />
+        <TextView
+            android:id="@+id/tv_district"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DISTRICT"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/squar_background"
+            android:layout_below="@+id/tv_state"/>
+        <TextView
+            android:id="@+id/tv_block"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="BLOCK"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_state"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/squar_background"
+            android:layout_toRightOf="@+id/tv_district"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/message_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
+
+
+        <TextView
+            android:inputType="textMultiLine"
+            android:lines="50"
+            android:minLines="9"
+            android:gravity="top|left"
+            android:background="@drawable/rounded_editmessage"
+            android:id="@+id/send_msgbody"
+            android:maxLines="10"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:scrollbars="vertical"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_selector_qa"
+            android:layout_marginTop="20dp"
+            android:text="OK"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:id="@+id/ok"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
