@@ -1,20 +1,42 @@
 package com.iiit.amaresh.demotrack.Activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iiit.amaresh.demotrack.Adapter.AllUserAdapter;
+import com.iiit.amaresh.demotrack.Adapter.DistrictAdapter;
+import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Pojo.UserListing;
+import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,44 +45,42 @@ import java.util.List;
 
 public class SelectedUser extends AppCompatActivity {
 
-    TextView tv_all_state,tv_state,tv_district,tv_block,send_msgbody;
+    String id,emp_id,emp_name,emp_add,emp_mail,emp_phone,
+            emp_address,emp_pass,emp_imei,empl_type,emp_state,emp_dist,emp_block,
+            emp_desig,usertype=null,user_status;
+    List<UserListing> userlist;
+
+    TextView tv_all_state, tv_state, tv_district, tv_block, send_msgbody;
     LinearLayout message_body;
     Button ok;
     String messagebody;
+    RelativeLayout a_d_user, spcfc_d_user, d_w_user;
+    DistrictAdapter adapter;
+    ListView listview;
+   ArrayList<UserListing> district_list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_user);
 
-        send_msgbody=(TextView)findViewById(R.id.send_msgbody);
-        tv_all_state=(TextView)findViewById(R.id.tv_ststuser);
-        tv_state=(TextView)findViewById(R.id.tv_state);
-        tv_district=(TextView)findViewById(R.id.tv_district);
-        tv_block=(TextView)findViewById(R.id.tv_block);
-        message_body=(LinearLayout)findViewById(R.id.message_body);
-        ok=(Button)findViewById(R.id.ok);
+        d_w_user = (RelativeLayout) findViewById(R.id.d_w_user);
+        a_d_user = (RelativeLayout) findViewById(R.id.a_d_user);
+        spcfc_d_user = (RelativeLayout) findViewById(R.id.spcfc_d_user);
 
-        tv_all_state.setOnClickListener(new View.OnClickListener() {
+        d_w_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                message_body.setVisibility(View.VISIBLE);
-                /*Intent i=new Intent(SelectedUser.this,MessageToSelectedUser.class);
-                startActivity(i);*/
+                Intent i=new Intent(SelectedUser.this,DistrictUser.class);
+                startActivity(i);
+               // Specificlist();
             }
         });
-        ok.setOnClickListener(new View.OnClickListener() {
+        spcfc_d_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                messagebody = send_msgbody.getText().toString();
-                if (send_msgbody.length() == 0) {
-                    Toast.makeText(SelectedUser.this, "Kindly Enter Message", Toast.LENGTH_LONG).show();
-                } else {
-                   // sendMessage();
-                }
             }
         });
-
-
-
     }
+
 }
