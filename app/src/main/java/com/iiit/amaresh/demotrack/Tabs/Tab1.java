@@ -52,6 +52,7 @@ public class Tab1 extends Fragment {
     String server_response;
     String emp_name,emp_phone,emp_mail,emp_desg;
     int server_status,user_type,user_id;
+    String state_id,district_id,block_id;
     SharedPreferences sharedPreferences;
     private TelephonyManager mTelephonyManager;
     String deviceid;
@@ -195,16 +196,16 @@ public class Tab1 extends Fragment {
                  *
                  {
                  "emp": {
-                 "id": "394",
-                 "empname": "Sri Deoranjan Kumar Singh",
-                 "empphone": "8280405001",
-                 "empmail": "demo@gmail.com",
-                 "empdesg": "Commissioner-cum-Secretary",
-                 "usertype": "0"
+                 "id": "546",
+                 "empname": "New user",
+                 "empphone": "7026405550",
+                 "empmail": null,
+                 "empdesg": "",
+                 "usertype": "1",
+                 "state_id": "1",
+                 "district_id": null,
+                 "block_id": null
                  },
-                 "status": 1,
-                 "message": "Records available"
-                 }
                  * */
 
                 if (response != null && response.length() > 0) {
@@ -218,6 +219,9 @@ public class Tab1 extends Fragment {
                         emp_mail = userObj.optString("empmail");
                         emp_desg = userObj.optString("empdesg");
                         user_type = userObj.optInt("usertype");
+                        state_id = userObj.getString("state_id");
+                        district_id = userObj.getString("district_id");
+                        block_id = userObj.getString("block_id");
                         server_response="Successfully LoggedIn.";
                     }
                     else{
@@ -253,7 +257,6 @@ public class Tab1 extends Fragment {
     public void postLogin(){
         if(server_status==1) {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
-            //SharedPreferences.Editor editor = pref.edit();
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt(Constants.SP_USER_TYPE,user_type);
             editor.putString(Constants.SP_USER_NAME,emp_name);
@@ -261,6 +264,9 @@ public class Tab1 extends Fragment {
             editor.putString(Constants.SP_USER_EMAIL,emp_mail);
             editor.putString(Constants.SP_USER_DESG,emp_desg);
             editor.putInt(Constants.SP_USER_ID,user_id);
+            editor.putString(Constants.SP_STATE_ID,state_id);
+            editor.putString(Constants.SP_BLOCK_ID,block_id);
+            editor.putString(Constants.SP_DISTRICT_ID,district_id);
             editor.commit();
 
             Toast.makeText(getContext(), server_response, Toast.LENGTH_LONG).show();

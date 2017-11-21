@@ -19,12 +19,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/light_gray">
+                android:background="@drawable/squar_background">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="#ff207d94"
                     android:layout_centerInParent="true"
                     android:text="ALL DISTRICT WISE BLOCK USER"/>
             </RelativeLayout>
@@ -34,12 +36,14 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/a_d_user"
                 android:layout_below="@+id/all"
-                android:background="@color/blue">
+                android:background="@drawable/squar_background3">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="#67C2EF"
                     android:layout_centerInParent="true"
                     android:text="SPECIFIC BLOCK USER"/>
             </RelativeLayout>
@@ -49,12 +53,14 @@
                 android:id="@+id/d_w_user"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/a_d_user"
-                android:background="@color/gray">
+                android:background="@drawable/squar_background2">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    android:textColor="#7C4DFF"
+                    android:textStyle="bold"
                     android:layout_centerInParent="true"
                     android:text="SPECIFIC DISTRICT USER"/>
             </RelativeLayout>
@@ -63,13 +69,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_below="@+id/d_w_user"
-                android:background="@color/green"
+                android:background="@drawable/squar_background4"
                 android:layout_marginTop="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    android:textColor="#4DBD33"
+                    android:textStyle="bold"
                     android:layout_centerInParent="true"
                     android:text="SPECIFIC STATE USER"/>
             </RelativeLayout>

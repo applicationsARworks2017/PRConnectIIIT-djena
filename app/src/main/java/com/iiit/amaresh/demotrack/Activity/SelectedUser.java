@@ -1,42 +1,20 @@
 package com.iiit.amaresh.demotrack.Activity;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.iiit.amaresh.demotrack.Adapter.AllUserAdapter;
 import com.iiit.amaresh.demotrack.Adapter.DistrictAdapter;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
-import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,16 +32,18 @@ public class SelectedUser extends AppCompatActivity {
     LinearLayout message_body;
     Button ok;
     String messagebody;
-    RelativeLayout a_d_user, spcfc_d_user, d_w_user;
+    RelativeLayout a_d_user, spcfc_d_user, d_w_user,all_user;
     DistrictAdapter adapter;
     ListView listview;
-   ArrayList<UserListing> district_list;
+    ArrayList<UserListing> district_list;
+    String tab=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_user);
 
+        all_user = (RelativeLayout) findViewById(R.id.all);
         d_w_user = (RelativeLayout) findViewById(R.id.d_w_user);
         a_d_user = (RelativeLayout) findViewById(R.id.a_d_user);
         spcfc_d_user = (RelativeLayout) findViewById(R.id.spcfc_d_user);
@@ -72,6 +52,7 @@ public class SelectedUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(SelectedUser.this,DistrictUser.class);
+                i.putExtra("TAB","dwbu");
                 startActivity(i);
                // Specificlist();
             }
@@ -79,6 +60,30 @@ public class SelectedUser extends AppCompatActivity {
         spcfc_d_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i=new Intent(SelectedUser.this,DistrictUser.class);
+                i.putExtra("TAB","sdu");
+                startActivity(i);
+               // Specificlist();
+            }
+        });
+        a_d_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tab="adu";
+                Intent i=new Intent(SelectedUser.this,MessageToSelectedUser.class);
+                i.putExtra("TAB",tab);
+                startActivity(i);
+               // Specificlist();
+            }
+        });
+        all_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tab="all";
+                Intent i=new Intent(SelectedUser.this,MessageToSelectedUser.class);
+                i.putExtra("TAB",tab);
+                startActivity(i);
+
             }
         });
     }

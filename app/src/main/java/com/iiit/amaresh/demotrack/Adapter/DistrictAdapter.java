@@ -2,20 +2,18 @@ package com.iiit.amaresh.demotrack.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.RelativeLayout;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.iiit.amaresh.demotrack.Pojo.UserListing;
+import com.iiit.amaresh.demotrack.Pojo.DistrictUserList;
 import com.iiit.amaresh.demotrack.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by RN on 11/20/2017.
@@ -23,20 +21,20 @@ import java.util.List;
 
 public class DistrictAdapter extends BaseAdapter {
     Context context;
-    List<UserListing> mesglist;
+    ArrayList<DistrictUserList> dlist;
     Holder holder;
 
 
-    public DistrictAdapter(Context contex, ArrayList<UserListing> message_list) {
+    public DistrictAdapter(Context contex, ArrayList<DistrictUserList> message_list) {
         this.context=contex;
-        this.mesglist=message_list;
+        this.dlist=message_list;
 
     }
 
     @Override
     public int getCount() {
         //return 0;
-        return mesglist.size();
+        return dlist.size();
     }
 
     @Override
@@ -56,8 +54,7 @@ public class DistrictAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final UserListing user_pos=mesglist.get(position);
-        //String  user_pos=values.toString();
+         DistrictUserList user_pos=dlist.get(position);
         holder = new Holder();
 
         if (convertView == null) {
@@ -74,8 +71,21 @@ public class DistrictAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
         holder.name.setTag(position);
-        holder.checkBox.setTag(holder);
-        holder.name.setText(user_pos.getU_emp_name());
+        holder.checkBox.setTag(position);
+        holder.name.setText(user_pos.getTitle());
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int getPosition = (Integer) buttonView.getTag();
+                dlist.get(getPosition).setSelected(buttonView.isChecked());
+              /* if(context instanceof SelectPreferedLocationReg) {
+                   ((SelectPreferedLocationReg) context).onItemClickOfListView(getPosition, buttonView.isChecked());
+               }*/
+            }
+        });
+
+        holder.checkBox.setChecked(dlist.get(position).isSelected());
 
         return convertView;
     }

@@ -19,13 +19,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/light_gray">
+                android:background="@drawable/squar_background">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:layout_centerInParent="true"
+                    android:textColor="#ff207d94"
+                    android:textStyle="bold"
                     android:text="SPECIFIC STATE USER"/>
             </RelativeLayout>
             <RelativeLayout
@@ -34,13 +36,15 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/a_d_user"
                 android:layout_below="@+id/all"
-                android:background="@color/blue">
+                android:background="@drawable/squar_background2">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:layout_centerInParent="true"
+                    android:textColor="#7C4DFF"
+                    android:textStyle="bold"
                     android:text="SPECIFIC DISTRICT USER"/>
             </RelativeLayout>
             <RelativeLayout
@@ -49,14 +53,16 @@
                 android:id="@+id/d_w_user"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/a_d_user"
-                android:background="@color/gray">
+                android:background="@drawable/squar_background3">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:layout_centerInParent="true"
-                    android:text="DSPECIFIC BLOCK USER"/>
+                    android:text="SPECIFIC BLOCK USER"
+                    android:textColor="#67C2EF"
+                    android:textStyle="bold"/>
             </RelativeLayout>
 
 

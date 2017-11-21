@@ -20,6 +20,10 @@ public class Constants {
     public static final String LATEST_LOC_DETAILS="getlatestlocationlist.php";
     public static final String IMAGE_LIST="getfilelist.php";
     public static final String DOWNLOAD_URL="http://14.139.198.169/web/files/";
+    public static final String SEND_ALL="setbulkmessage.php";
+    public static final String SEND_DISTRICT_W_B_USER="getdistrict.php";
+    public static final String BLOCK_USER="getblock.php";
+
 
 
 
@@ -35,4 +39,8 @@ public class Constants {
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_USER_EMAIL = "user_email";
     public static final String SP_USER_PHONE = "user_phone";
+    public static final String SP_STATE_ID = "state_id";
+    public static final String SP_BLOCK_ID = "block_id";
+    public static final String SP_DISTRICT_ID = "district_id";
 }
+

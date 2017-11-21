@@ -5,7 +5,6 @@
     android:id="@+id/activity_message_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.android.amaresh.demotrack.com.iiit.amaresh.demotrack.Activity.MessageDetailsActivity">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -31,18 +30,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="100dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp">
 
-
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="@color/colorPrimary"
+                android:text="To : Amaresh"
+                android:id="@+id/rcpt_name"
+                android:textSize="20dp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
                 android:inputType="textMultiLine"
-                android:lines="50"
+                android:lines="10"
                 android:minLines="9"
+                android:hint="Type Your Message"
                 android:gravity="top|left"
                 android:background="@drawable/rounded_editmessage"
-                android:id="@+id/send_msgbody"
+                android:id="@+id/msgbody"
                 android:maxLines="10"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
