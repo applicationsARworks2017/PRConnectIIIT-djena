@@ -8,9 +8,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.iiit.amaresh.demotrack.Adapter.DistrictAdapter;
+import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
 import com.iiit.amaresh.demotrack.R;
 
@@ -32,22 +34,61 @@ public class SelectedUser extends AppCompatActivity {
     LinearLayout message_body;
     Button ok;
     String messagebody;
-    RelativeLayout a_d_user, spcfc_d_user, d_w_user,all_user;
+    RelativeLayout a_d_user, spcfc_d_user, d_w_user,s_all_user,spcfc_b_user,district_List,block_list,
+    specific_block_user,specific_d_user,specific_state_user,spcfc_state_user_district,specific_district_user,
+            specic_block_user_district,all_d_w_b_user;
     DistrictAdapter adapter;
     ListView listview;
     ArrayList<UserListing> district_list;
     String tab=null;
+    String userType,districtid;
+    ScrollView scrollview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_user);
 
-        all_user = (RelativeLayout) findViewById(R.id.all);
+
+        userType = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_TYPE, null);
+        districtid = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
+    //for layout
+        district_List = (RelativeLayout) findViewById(R.id.district_list);
+        block_list = (RelativeLayout) findViewById(R.id.block_list);
+
+        //for block
+        specific_state_user = (RelativeLayout) findViewById(R.id.specific_state_user);
+        specific_d_user = (RelativeLayout) findViewById(R.id.specific_d_user);
+        specific_block_user = (RelativeLayout) findViewById(R.id.specific_block_user);
+
+        //for district
+        spcfc_state_user_district = (RelativeLayout) findViewById(R.id.spcfc_state_user_district);
+        specific_district_user = (RelativeLayout) findViewById(R.id.specific_district_user);
+        specic_block_user_district = (RelativeLayout) findViewById(R.id.specic_block_user_district);
+        all_d_w_b_user = (RelativeLayout) findViewById(R.id.all_d_w_b_user);
+
+        //for state
+        s_all_user = (RelativeLayout) findViewById(R.id.all);
+        scrollview = (ScrollView) findViewById(R.id.scrollview);
         d_w_user = (RelativeLayout) findViewById(R.id.d_w_user);
         a_d_user = (RelativeLayout) findViewById(R.id.a_d_user);
         spcfc_d_user = (RelativeLayout) findViewById(R.id.spcfc_d_user);
 
+        // usertype differentiate
+        if(userType.contains("2")){
+            scrollview.setVisibility(View.GONE);
+            district_List.setVisibility(View.VISIBLE);
+        }
+       else if(userType.contains("0")){
+            scrollview.setVisibility(View.GONE);
+            block_list.setVisibility(View.VISIBLE);
+
+        }
+        else{
+            scrollview.setVisibility(View.VISIBLE);
+        }
+
+        // For State unitialization
         d_w_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +117,7 @@ public class SelectedUser extends AppCompatActivity {
                // Specificlist();
             }
         });
-        all_user.setOnClickListener(new View.OnClickListener() {
+        s_all_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tab="all";
@@ -84,6 +125,76 @@ public class SelectedUser extends AppCompatActivity {
                 i.putExtra("TAB",tab);
                 startActivity(i);
 
+            }
+        });
+
+        //for district initialization
+
+        all_d_w_b_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(SelectedUser.this,DistrictUser.class);
+                i.putExtra("TAB","dwbu");
+                startActivity(i);
+                // Specificlist();
+            }
+        });
+        specic_block_user_district.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(SelectedUser.this,BlockUser.class);
+                i.putExtra("DISTRICTID","sbu");
+                startActivity(i);
+                // Specificlist();
+            }
+        });
+        specific_district_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(SelectedUser.this,DistrictUser.class);
+                i.putExtra("TAB","sdu");
+                startActivity(i);
+                // Specificlist();
+            }
+        });
+        spcfc_state_user_district.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tab="State";
+                Intent i=new Intent(SelectedUser.this,MessageToSelectedUser.class);
+                i.putExtra("TAB",tab);
+                startActivity(i);
+
+            }
+        });
+
+        //for block
+
+        specific_state_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tab = "State";
+                Intent i = new Intent(SelectedUser.this, MessageToSelectedUser.class);
+                i.putExtra("TAB", tab);
+                startActivity(i);
+            }
+        });
+        specific_d_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(SelectedUser.this,DistrictUser.class);
+                i.putExtra("TAB","sdu");
+                startActivity(i);
+                // Specificlist();
+            }
+        });
+        specific_block_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(SelectedUser.this,BlockUser.class);
+                i.putExtra("DISTRICTID","sbu");
+                startActivity(i);
+                // Specificlist();
             }
         });
     }

@@ -72,6 +72,11 @@ public class MessageToSelectedUser extends AppCompatActivity{
             rcpt_name.setText("To"+" "+":"+" "+"ALL DISTRICT USER");
 
         }
+        else if(data.contains("State")){
+
+            rcpt_name.setText("To"+" "+":"+" "+"State");
+
+        }
       ok.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {

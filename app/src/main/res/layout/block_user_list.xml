@@ -30,7 +30,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-
+        android:id="@+id/btn_layout"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
@@ -47,5 +47,49 @@
             android:background="@drawable/button_selector_qa"
             android:layout_marginLeft="40dp"
             android:id="@+id/bt_ok"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/message_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="25dp"
+        android:visibility="gone"
+        android:layout_marginRight="25dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorPrimary"
+            android:text="To : Amaresh"
+            android:id="@+id/rcpt_name"
+            android:textSize="20dp"
+            android:textStyle="bold|italic"/>
+
+        <EditText
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:minLines="9"
+            android:hint="Type Your Message"
+            android:gravity="top|left"
+            android:background="@drawable/rounded_editmessage"
+            android:id="@+id/msgbody"
+            android:maxLines="10"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:scrollbars="vertical"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_selector_qa"
+            android:layout_marginTop="20dp"
+            android:text="OK"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:id="@+id/ok"
+            android:textColor="@color/colorPrimary"/>
+
     </LinearLayout>
 </RelativeLayout>

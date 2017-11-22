@@ -118,7 +118,7 @@
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.SelectedUser"
             android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.SelectedUser" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.DistrictUser"
             android:label="Select User"

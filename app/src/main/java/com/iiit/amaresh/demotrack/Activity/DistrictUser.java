@@ -61,6 +61,7 @@ public class DistrictUser extends AppCompatActivity {
     DistrictAdapter adapter;
     BlockAdapter b_adapter;
     ListView listview;
+    LinearLayout message_send;
     ArrayList<DistrictUserList> district_list;
     ArrayList<BlockList> blocklist;
     String state_id;
@@ -69,18 +70,27 @@ public class DistrictUser extends AppCompatActivity {
     SearchView searchView1;
     public static EditText flatName;
     private static int counter = 0;
-    String district_id;
+    String district_id,district_name;
+    TextView rcpt_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.district_user_list);
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            data = extras.getString("TAB");
+        }
+
         state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
         listview = (ListView) findViewById(R.id.district_listView);
         tvNoRecordFound = (TextView) findViewById(R.id.blank_text);
+        rcpt_name = (TextView) findViewById(R.id.rcpt_name);
         bt_ok = (Button) findViewById(R.id.bt_ok);
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
+        message_send=(LinearLayout)findViewById(R.id.message_send);
         searchView1 = (SearchView) findViewById(R.id.searchView1);
         searchView1.setQueryHint("Search");
         bt_cancel.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +100,13 @@ public class DistrictUser extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            data = extras.getString("TAB");
-        }
 
         if (data.contains("dwbu")) {
             getDistrictuser();
+        }
+        else{
+            getDistrictuser();
+
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,6 +130,7 @@ public class DistrictUser extends AppCompatActivity {
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //for id
                 StringBuffer sb = new StringBuffer();
 
                 for (DistrictUserList bean : district_list) {
@@ -143,11 +153,68 @@ public class DistrictUser extends AppCompatActivity {
                         // flatName.setText("");
                         //DistrictUser.this.finish();
                     } else {
-                        district_id=sb.toString().trim().substring(0, sb.length() - 1);
-                        Intent i=new Intent(DistrictUser.this,BlockUser.class);
-                        i.putExtra("DISTRICTID",district_id);
-                        startActivity(i);
-                        DistrictUser.this.finish();
+                        if (data.contains("dwbu")) {
+                            district_id=sb.toString().trim().substring(0, sb.length() - 1);
+                            Intent i=new Intent(DistrictUser.this,BlockUser.class);
+                            i.putExtra("DISTRICTID",district_id);
+                            startActivity(i);
+                           // DistrictUser.this.finish();
+                        }
+                        else{
+                            listview.setVisibility(View.GONE);
+                            searchView1.setVisibility(View.GONE);
+                            message_send.setVisibility(View.VISIBLE);
+                            district_id=sb.toString().trim().substring(0, sb.length() - 1);
+                            //DistrictUser.this.finish();
+
+
+                        }
+
+                    }
+                }
+                //for name
+
+                StringBuffer sb1 = new StringBuffer();
+
+                for (DistrictUserList bean1 : district_list) {
+                        /*if (counter<5) {
+                            counter++;
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Only five please", Toast.LENGTH_SHORT).show();
+                        }*/
+                    if (bean1.isSelected()) {
+                        if (sb1.toString().trim().contains(bean1.getTitle())) {
+
+                        } else {
+                            sb1.append(bean1.getTitle());
+                            sb1.append(",");
+                        }
+                    }
+                    if (sb1.length() <= 0) {
+                        district_name = " ";
+                        // flatName.setText("");
+                        //DistrictUser.this.finish();
+                    } else {
+                        if (data.contains("dwbu")) {
+                            district_name=sb1.toString().trim().substring(0, sb1.length() - 1);
+                            Intent i=new Intent(DistrictUser.this,BlockUser.class);
+                            i.putExtra("DISTRICTID",district_id);
+                            startActivity(i);
+                            DistrictUser.this.finish();
+                        }
+                        else{
+                            listview.setVisibility(View.GONE);
+                            searchView1.setVisibility(View.GONE);
+                            message_send.setVisibility(View.VISIBLE);
+                            district_name=sb1.toString().trim().substring(0, sb1.length() - 1);
+                            rcpt_name.setText("To"+" "+":"+" "+district_name);
+
+                            //DistrictUser.this.finish();
+
+
+                        }
+
                     }
                 }
             }

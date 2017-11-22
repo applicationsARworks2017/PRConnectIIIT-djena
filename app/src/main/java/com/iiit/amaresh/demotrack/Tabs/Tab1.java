@@ -51,11 +51,11 @@ public class Tab1 extends Fragment {
     ProgressDialog progressDialog;
     String server_response;
     String emp_name,emp_phone,emp_mail,emp_desg;
-    int server_status,user_type,user_id;
+    int server_status,user_id;
     String state_id,district_id,block_id;
     SharedPreferences sharedPreferences;
     private TelephonyManager mTelephonyManager;
-    String deviceid;
+    String deviceid,user_type;
     String[] PERMISSIONS = {Manifest.permission.READ_PHONE_STATE};
 
 
@@ -218,7 +218,7 @@ public class Tab1 extends Fragment {
                         emp_phone = userObj.optString("empphone");
                         emp_mail = userObj.optString("empmail");
                         emp_desg = userObj.optString("empdesg");
-                        user_type = userObj.optInt("usertype");
+                        user_type = userObj.optString("usertype");
                         state_id = userObj.getString("state_id");
                         district_id = userObj.getString("district_id");
                         block_id = userObj.getString("block_id");
@@ -258,7 +258,7 @@ public class Tab1 extends Fragment {
         if(server_status==1) {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt(Constants.SP_USER_TYPE,user_type);
+            editor.putString(Constants.SP_USER_TYPE,user_type);
             editor.putString(Constants.SP_USER_NAME,emp_name);
             editor.putString(Constants.SP_USER_PHONE,emp_phone);
             editor.putString(Constants.SP_USER_EMAIL,emp_mail);

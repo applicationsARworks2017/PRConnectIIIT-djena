@@ -65,34 +65,43 @@ public class BlockUser extends AppCompatActivity {
     SearchView searchView1;
     public static EditText flatName;
     private static int counter = 0;
-    String block_id;
+    String block_id,distric_id,block_name;
+    String district_id=null;
+    LinearLayout message_send,btn_layout;
+    TextView rcpt_name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.block_user_list);
-
-        state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
-        listview = (ListView) findViewById(R.id.district_listView);
-        tvNoRecordFound = (TextView) findViewById(R.id.blank_text);
-        bt_ok = (Button) findViewById(R.id.bt_ok);
-        bt_cancel = (Button) findViewById(R.id.bt_cancel);
-        searchView1 = (SearchView) findViewById(R.id.searchView1);
-        searchView1.setQueryHint("Search");
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             selected_district_id = extras.getString("DISTRICTID");
         }
-        GetBlockUserList();
+        state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
+        distric_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
+        listview = (ListView) findViewById(R.id.district_listView);
+        tvNoRecordFound = (TextView) findViewById(R.id.blank_text);
+        bt_ok = (Button) findViewById(R.id.bt_ok);
+        bt_cancel = (Button) findViewById(R.id.bt_cancel);
+        message_send=(LinearLayout)findViewById(R.id.message_send);
+        btn_layout=(LinearLayout)findViewById(R.id.btn_layout);
+        rcpt_name=(TextView)findViewById(R.id.rcpt_name);
+        searchView1 = (SearchView) findViewById(R.id.searchView1);
+        searchView1.setQueryHint("Search");
 
+        if(distric_id.contains("null")){
+            distric_id="";
+        }
+        if(selected_district_id.contains("sbu")){
+            district_id=distric_id;
+        }
+        else{
+            district_id=selected_district_id;
+        }
+        GetBlockUserList();
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,6 +118,12 @@ public class BlockUser extends AppCompatActivity {
                 }
 
 
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         bt_ok.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +144,7 @@ public class BlockUser extends AppCompatActivity {
                     if (sb.length() <= 0) {
                         block_id = " ";
                         // flatName.setText("");
-                        //DistrictUser.this.finish();
+                        //BlockUser.this.finish();
                     } else {
                         block_id=sb.toString();
                        // GetBlockUserList();
@@ -138,6 +153,41 @@ public class BlockUser extends AppCompatActivity {
                     }
 
                 }
+                //for name
+
+                StringBuffer sb1 = new StringBuffer();
+
+                for (BlockList bean1 : blocklist) {
+                        /*if (counter<5) {
+                            counter++;
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Only five please", Toast.LENGTH_SHORT).show();
+                        }*/
+                    if (bean1.isSelected()) {
+                        if (sb1.toString().trim().contains(bean1.getB_title())) {
+
+                        } else {
+                            sb1.append(bean1.getB_title());
+                            sb1.append(",");
+                        }
+                    }
+                    if (sb1.length() <= 0) {
+                        block_name = " ";
+                        // flatName.setText("");
+                        //DistrictUser.this.finish();
+                    }
+                    else {
+                        listview.setVisibility(View.GONE);
+                        searchView1.setVisibility(View.GONE);
+                        btn_layout.setVisibility(View.GONE);
+                        message_send.setVisibility(View.VISIBLE);
+                        block_name=sb1.toString().trim().substring(0, sb1.length() - 1);
+                        rcpt_name.setText("To"+" "+":"+" "+block_name);
+
+                    }
+                }
+
             }
         });
         searchView1.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
@@ -197,7 +247,7 @@ public class BlockUser extends AppCompatActivity {
     private void GetBlockUserList() {
         if (Util.getNetworkConnectivityStatus(this)) {
             GetBlock asyncTask = new GetBlock();
-            asyncTask.execute(selected_district_id);
+            asyncTask.execute(district_id);
         } else {
             Toast.makeText(this, "You are in Offline Mode", Toast.LENGTH_LONG).show();
         }
@@ -209,6 +259,7 @@ public class BlockUser extends AppCompatActivity {
         private static final String TAG = "SyncDetails";
         ProgressDialog progress;
         String b_id,distric_id,b_title;
+        int Server_status;
 
         @Override
         protected void onPreExecute() {
@@ -286,30 +337,23 @@ public class BlockUser extends AppCompatActivity {
                 if (response != null && response.length() > 0) {
 
                     JSONObject res = new JSONObject(response);
+                    Server_status = res.getInt("status");
+
                     JSONArray user_list = res.getJSONArray("blocks");
 
                     blocklist= new ArrayList<BlockList>();
+                    if(Server_status==1) {
+                        for (int i = 0; i < user_list.length(); i++) {
 
-                    //db=new DBHelper(QAAnsweredListActivity.this);
+                            JSONObject q_list_obj = user_list.getJSONObject(i);
 
-                    for (int i = 0; i < user_list.length(); i++) {
+                            b_id = q_list_obj.getString("id");
+                            distric_id = q_list_obj.getString("district_id");
+                            b_title = q_list_obj.getString("title");
 
-                        JSONObject q_list_obj = user_list.getJSONObject(i);
-
-                        b_id = q_list_obj.getString("id");
-                        distric_id = q_list_obj.getString("district_id");
-                        b_title = q_list_obj.getString("title");
-
-                        BlockList b_list = new BlockList(b_id, distric_id, b_title);
-                        blocklist.add(b_list);
-
-                        // db.addAnsweredQuestionList(new AnswerDetails(qid,uid,q_title,qdesc,q_admin_desc,q_isanswer,q_ispublish,q_fullname,q_postdate,q_created));
-
-                      /*String q_isanswer = q_list_obj.getString("is_answer");
-                      String q_ispublish = q_list_obj.getString("is_publish");
-                      String q_postdate = q_list_obj.getString("post_date");
-                      String q_created = q_list_obj.getString("full_name");
-                      String q_modified = q_list_obj.getString("modified");*/
+                            BlockList b_list = new BlockList(b_id, distric_id, b_title);
+                            blocklist.add(b_list);
+                        }
                     }
 
                 }
@@ -327,10 +371,20 @@ public class BlockUser extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
-            b_adapter = new BlockAdapter(BlockUser.this, blocklist);
-            listview.setAdapter(b_adapter);
+            if(Server_status==1) {
+                b_adapter = new BlockAdapter(BlockUser.this, blocklist);
+                listview.setAdapter(b_adapter);
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Connectivity issue",Toast.LENGTH_SHORT).show();
+            }
             // mListView.setSelectionFromTop(index, top);
             progress.dismiss();
         }
+    }
+    @Override
+    public void onBackPressed()
+    {
+
     }
 }

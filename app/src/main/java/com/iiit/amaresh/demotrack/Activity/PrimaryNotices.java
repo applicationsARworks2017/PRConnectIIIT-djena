@@ -1,6 +1,5 @@
 package com.iiit.amaresh.demotrack.Activity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,9 +12,7 @@ import android.view.View;
 import com.iiit.amaresh.demotrack.R;
 import com.iiit.amaresh.demotrack.Tabs.PagerMessages;
 
-import java.util.Calendar;
-
-public class PrimaryNotices extends AppCompatActivity {
+public class PrimaryNotices extends AppCompatActivity  {
     FloatingActionButton fab;
 
 
