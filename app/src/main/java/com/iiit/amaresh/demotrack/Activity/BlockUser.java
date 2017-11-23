@@ -27,15 +27,18 @@ import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +49,13 @@ import java.util.List;
 
 public class BlockUser extends AppCompatActivity {
 
-    String id, emp_id, emp_name, emp_add, emp_mail, emp_phone,
-            emp_address, emp_pass, emp_imei, empl_type, emp_state, emp_dist, emp_block,
-            emp_desig, usertype = null, user_status;
+    String server_response;
+    int server_status;
+    ProgressDialog progressDialog;
     List<UserListing> userlist;
     SearchView searchView;
-    TextView tv_all_state, tv_state, tv_district, tv_block, send_msgbody, tvNoRecordFound;
+    TextView tv_all_state, tv_state, tv_district, tv_block, tvNoRecordFound;
+    EditText msgbody;
     LinearLayout message_body;
     Button ok;
     String selected_district_id;
@@ -61,12 +65,12 @@ public class BlockUser extends AppCompatActivity {
     ArrayList<BlockList> blocklist;
     String state_id;
     String data;
-    Button bt_ok, bt_cancel;
+    Button bt_ok, bt_cancel,SEND_ok;
     SearchView searchView1;
     public static EditText flatName;
     private static int counter = 0;
     String block_id,distric_id,block_name;
-    String district_id=null;
+    String district_id=null,bloc_id,sender_name;
     LinearLayout message_send,btn_layout;
     TextView rcpt_name;
 
@@ -80,12 +84,16 @@ public class BlockUser extends AppCompatActivity {
         if (extras != null) {
             selected_district_id = extras.getString("DISTRICTID");
         }
+        sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
         state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
         distric_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
+        bloc_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_BLOCK_ID, null);
         listview = (ListView) findViewById(R.id.district_listView);
         tvNoRecordFound = (TextView) findViewById(R.id.blank_text);
+        msgbody = (EditText) findViewById(R.id.msgbody);
         bt_ok = (Button) findViewById(R.id.bt_ok);
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
+        SEND_ok = (Button) findViewById(R.id.SEND_ok);
         message_send=(LinearLayout)findViewById(R.id.message_send);
         btn_layout=(LinearLayout)findViewById(R.id.btn_layout);
         rcpt_name=(TextView)findViewById(R.id.rcpt_name);
@@ -146,7 +154,7 @@ public class BlockUser extends AppCompatActivity {
                         // flatName.setText("");
                         //BlockUser.this.finish();
                     } else {
-                        block_id=sb.toString();
+                        block_id=sb.toString().trim().substring(0, sb.length() - 1);;
                        // GetBlockUserList();
                         //flatName.setText(sb.toString().trim().substring(0, sb.length() - 1));
                         //DistrictUser.this.finish();
@@ -190,6 +198,19 @@ public class BlockUser extends AppCompatActivity {
 
             }
         });
+        SEND_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg=msgbody.getText().toString();
+                String name=rcpt_name.getText().toString();
+                if (msg.length() == 0) {
+                    Toast.makeText(BlockUser.this, "Kindly Enter Message", Toast.LENGTH_LONG).show();
+                } else {
+                    sendMessage();
+                }
+
+            }
+        });
         searchView1.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -211,6 +232,20 @@ public class BlockUser extends AppCompatActivity {
             }
         });
     }
+
+    private void sendMessage() {
+        if(Util.getNetworkConnectivityStatus(BlockUser.this)) {
+            send_message regtask = new send_message();
+            String msg=msgbody.getText().toString();
+
+            regtask.execute(sender_name,msg,distric_id,block_id,state_id);
+        }
+        else{
+            Toast.makeText(BlockUser.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
 
 
     private void setQuestionList(String filterText) {
@@ -385,6 +420,124 @@ public class BlockUser extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+        super.onBackPressed();
+    }
 
+    private class send_message  extends AsyncTask<String, Void, Void> {
+        private static final String TAG = "register_user";
+        //private ProgressDialog progressDialog = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (progressDialog == null) {
+                progressDialog = ProgressDialog.show(BlockUser.this, "Loading", "Please wait...");
+            }
+            // onPreExecuteTask();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                String _sendby = params[0];
+                String _msg = params[1];
+                String _distric = params[2];
+                String _block = params[3];
+                String _state = params[4];
+
+                InputStream in = null;
+                int resCode = -1;
+
+                String link = Constants.ONLINE_URL + Constants.SEND_ALL;
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setAllowUserInteraction(false);
+                conn.setInstanceFollowRedirects(true);
+                conn.setRequestMethod("POST");
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("send_by",_sendby)
+                        .appendQueryParameter("message",_msg)
+                        .appendQueryParameter("block_id",_block)
+                        .appendQueryParameter("usertype","0");
+                //.appendQueryParameter("deviceid", deviceid);
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                conn.connect();
+                resCode = conn.getResponseCode();
+                if (resCode == HttpURLConnection.HTTP_OK) {
+                    in = conn.getInputStream();
+                }
+                if (in == null) {
+                    return null;
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                String response = "", data = "";
+
+                while ((data = reader.readLine()) != null) {
+                    response += data + "\n";
+                }
+
+                Log.i(TAG, "Response : " + response);
+
+                /**
+                 * {
+                 "status": 1,
+                 "message": "Details inserted successfully"
+                 }
+                 * */
+
+                if (response != null && response.length() > 0) {
+                    JSONObject res = new JSONObject(response.trim());
+                    server_status = res.optInt("status");
+                    if(server_status == 1){
+                        server_response="Message Sent";
+                    }
+                    else{
+                        server_response="Error";
+
+                    }
+                    // server_response = res.optString("message");
+
+
+                    // int status = res.optInt("login_status");
+                    //  message = res.optString("message");
+                }
+
+                return null;
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void user) {
+            super.onPostExecute(user);
+            if(server_status==1){
+                Intent intent=new Intent(BlockUser.this,SelectedUser.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+            progressDialog.cancel();
+        }
     }
 }

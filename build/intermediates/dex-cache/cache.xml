@@ -39,24 +39,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0af4f577b4a21eb9be2a7f52e33b077b67e6d9f8">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.3.0_6154b9214dca7023911ede748e2406028431b04c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.squareup/android-times-square/1.6.5/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="248fed0fd4ef1442847a45fc57b1b9b2be0d0550">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.squareup-android-times-square-1.6.5_e44cd1415ff5cbfcb518c722f1e058e72562566c.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mobileapplication/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
         jumboMode="false"
         optimize="true"
@@ -147,6 +129,96 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="77f9593d979f4347344be233bd0d888315f79517">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.3.0_f4238293da003d4e151a989f36b497c4ca42938b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="71eda10e33212e44245524b5087366ff8d805825">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.3.0_5123957a81e193bc7fc53b978c94276b3f37147b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="af6ee25641df3142059c0828517aa7ee6eba08d6">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.3.0_35dba4ba5859f3ff204cb3773304d24e67567216.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-23.1.1_971d4b45ab2fd94d3c45357b780ebe8f4b1dbd4d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.1.0/63735f48b82bcd24cdd33821342428252eb1ca5a/butterknife-6.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="63735f48b82bcd24cdd33821342428252eb1ca5a">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/butterknife-6.1.0_8795b70dc14e81b30f6dee247b3742884ae50c52.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="eb576427887e497cd958a475475f9206e38dc314">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.3.0_63a8f152d3163a0130f35ec63afb2b511749dad7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="724ce977487ab3a215d4d2eb47d8dccd9f30013f">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.3.0_8e42503791b8801d98bf7c3ab850bdf82a2b7d81.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_d2be01ceca1eb649d145741980dcec1d95430649.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0af4f577b4a21eb9be2a7f52e33b077b67e6d9f8">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.3.0_6154b9214dca7023911ede748e2406028431b04c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.squareup/android-times-square/1.6.5/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="248fed0fd4ef1442847a45fc57b1b9b2be0d0550">
+        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.squareup-android-times-square-1.6.5_e44cd1415ff5cbfcb518c722f1e058e72562566c.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -201,42 +273,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="77f9593d979f4347344be233bd0d888315f79517">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.3.0_f4238293da003d4e151a989f36b497c4ca42938b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="71eda10e33212e44245524b5087366ff8d805825">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.3.0_5123957a81e193bc7fc53b978c94276b3f37147b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="af6ee25641df3142059c0828517aa7ee6eba08d6">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.3.0_35dba4ba5859f3ff204cb3773304d24e67567216.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-23.1.1_971d4b45ab2fd94d3c45357b780ebe8f4b1dbd4d.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -246,30 +282,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mobileapplication/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.1.0/63735f48b82bcd24cdd33821342428252eb1ca5a/butterknife-6.1.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="63735f48b82bcd24cdd33821342428252eb1ca5a">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/butterknife-6.1.0_8795b70dc14e81b30f6dee247b3742884ae50c52.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mobileapplication/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
         <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_bd522f5f58eb73aa50b00039850a839f8ab63593.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="eb576427887e497cd958a475475f9206e38dc314">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.3.0_63a8f152d3163a0130f35ec63afb2b511749dad7.jar" />
     </item>
     <item
         is-multidex="false"
@@ -318,15 +336,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="724ce977487ab3a215d4d2eb47d8dccd9f30013f">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.3.0_8e42503791b8801d98bf7c3ab850bdf82a2b7d81.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -351,15 +360,6 @@
         revision="25.0.2"
         sha1="6d9ed9a288364688e7fcf6704776284dac1eb42e">
         <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-location-8.3.0_c51febbf9277afd70293d5bcdd94c37108f6077c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/Users/mobileapplication/Desktop/androidApps/PRConnectIIIT-djena/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_d2be01ceca1eb649d145741980dcec1d95430649.jar" />
     </item>
 
 </items>

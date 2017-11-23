@@ -44,7 +44,7 @@ public class MessageToSelectedUser extends AppCompatActivity{
     String message_body;
     ProgressDialog progressDialog;
     int server_status;
-    String server_response;
+    String server_response,sender_name,distric_id,state_id,bloc_id;
 
 
     @Override
@@ -59,6 +59,10 @@ public class MessageToSelectedUser extends AppCompatActivity{
             data = extras.getString("TAB");
         }
 
+        sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
+        //state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
+        distric_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
+        bloc_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_BLOCK_ID, null);
 
         rcpt_name=(TextView)findViewById(R.id.rcpt_name);
         msgbody=(EditText)findViewById(R.id.msgbody);
@@ -84,7 +88,7 @@ public class MessageToSelectedUser extends AppCompatActivity{
               if (msgbody.length() == 0) {
                   Toast.makeText(MessageToSelectedUser.this, "Kindly Enter Message", Toast.LENGTH_LONG).show();
               } else {
-                  //sendMessage();
+                  sendMessage();
               }
           }
       });
@@ -95,8 +99,7 @@ public class MessageToSelectedUser extends AppCompatActivity{
     private void sendMessage() {
         if(Util.getNetworkConnectivityStatus(MessageToSelectedUser.this)) {
             send_message regtask = new send_message();
-            String sender_name="";
-            regtask.execute(sender_name);
+            regtask.execute(sender_name,message_body,distric_id,bloc_id,state_id);
         }
         else{
             Toast.makeText(MessageToSelectedUser.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
@@ -121,6 +124,10 @@ public class MessageToSelectedUser extends AppCompatActivity{
         protected Void doInBackground(String... params) {
             try {
                 String _sendby = params[0];
+                String _msg = params[1];
+                String _distric = params[2];
+                String _block = params[3];
+                String _state = params[4];
 
                 InputStream in = null;
                 int resCode = -1;
@@ -136,12 +143,19 @@ public class MessageToSelectedUser extends AppCompatActivity{
                 conn.setAllowUserInteraction(false);
                 conn.setInstanceFollowRedirects(true);
                 conn.setRequestMethod("POST");
-
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("send_by",_sendby);
-                //.appendQueryParameter("deviceid", deviceid);
+                Uri.Builder builder=null;
+                if(data.contentEquals("adu")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by",_sendby)
+                            .appendQueryParameter("message",_msg)
+                            .appendQueryParameter("usertype","2");
+                }
+                else {
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by", _sendby)
+                            .appendQueryParameter("message", _msg);
+                }
                 String query = builder.build().getEncodedQuery();
-
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));

@@ -118,7 +118,7 @@
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.SelectedUser"
             android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.SelectedUser" />
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.DistrictUser"
             android:label="Select User"
@@ -130,7 +130,8 @@
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.BlockUser"
             android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+            android:launchMode="singleTask"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.DistrictUser" />
     </application>
 
 </manifest>
