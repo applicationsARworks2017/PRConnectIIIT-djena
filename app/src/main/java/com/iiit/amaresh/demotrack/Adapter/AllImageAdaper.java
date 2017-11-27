@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -23,15 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.iiit.amaresh.demotrack.Activity.GalaryActivity;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.iiit.amaresh.demotrack.Activity.FileView;
 import com.iiit.amaresh.demotrack.Activity.MainActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
 import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.Util;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.iiit.amaresh.demotrack.Tabs.OnlineAssetGalleryFragment;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -42,6 +41,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
+import static com.iiit.amaresh.demotrack.Pojo.Constants.DOWNLOAD_URL;
+
 /**
  * Created by LIPL on 16/02/17.
  */
@@ -49,7 +50,7 @@ public class AllImageAdaper extends BaseAdapter {
     Context context;
     List<ImageAll> allimagelist;
     Holder holder;
-    String imgUrl=null,image_name,video_url=null;
+    String imgUrl=null,image_name,video_url=null,fileUrl=null;
     ImageLoader imageLoader;
     String IPATH=null;
     MediaController media_Controller;
@@ -83,7 +84,7 @@ public class AllImageAdaper extends BaseAdapter {
     public class Holder{
         private TextView Username,Designation,Time,Title,Address;
     //    private ImageView i_image,d_icon;
-        private ImageView d_icon;
+        private ImageView d_icon,file_img;
         public NetworkImageView i_image;
         VideoView ivVideo;
         FrameLayout vshow_frame;
@@ -108,7 +109,8 @@ public class AllImageAdaper extends BaseAdapter {
             holder.i_image = (NetworkImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivImage);
             holder.ivVideo = (VideoView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivVideo);
             holder.d_icon = (ImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.downloadicon);
-            holder.vshow_frame = (FrameLayout) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.vshow_frame);
+            holder.file_img = (ImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.file_img);
+           // holder.vshow_frame = (FrameLayout) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.vshow_frame);
             convertView.setTag(holder);
         }
         else{
@@ -120,8 +122,9 @@ public class AllImageAdaper extends BaseAdapter {
         holder.Time.setTag(position);
         holder.Address.setTag(position);
         holder.i_image.setTag(position);
+        holder.file_img.setTag(position);
         holder.ivVideo.setTag(position);
-        holder.vshow_frame.setTag(position);
+       // holder.vshow_frame.setTag(position);
         holder.d_icon.setTag(position);
         //imgUrl = Constants.DOWNLOAD_URL + img_pos.getD_URL();
 
@@ -133,24 +136,49 @@ public class AllImageAdaper extends BaseAdapter {
         image_name=img_pos.getIm_filename();
         String new_word = image_name.substring(image_name.length() - 4);
         if(new_word.contentEquals(".jpg") || new_word.contentEquals(".png")|| new_word.contains("jpeg")){
+            holder.file_img.setVisibility(View.GONE);
+            holder.ivVideo.setVisibility(View.GONE);
             holder.i_image.setVisibility(View.VISIBLE);
-            holder.vshow_frame.setVisibility(View.GONE);
-            imgUrl = Constants.DOWNLOAD_URL + image_name;
+            //holder.vshow_frame.setVisibility(View.GONE);
+            imgUrl = DOWNLOAD_URL + image_name;
             imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
             imageLoader.get(imgUrl, ImageLoader.getImageListener(holder.i_image, com.iiit.amaresh.demotrack.R.drawable.rounded_image, android.R.drawable.ic_dialog_alert));
             holder.i_image.setImageUrl(imgUrl, imageLoader);
         }
-        else {
+        else if(new_word.contentEquals(".doc")||new_word.contentEquals(".pdf")){
+            holder.file_img.setVisibility(View.VISIBLE);
             holder.i_image.setVisibility(View.GONE);
-            holder.vshow_frame.setVisibility(View.VISIBLE);
-            media_Controller = new MediaController(context);
-            video_url=Constants.DOWNLOAD_URL + image_name;
+            holder.ivVideo.setVisibility(View.GONE);
+
+            //fileUrl = Constants.DOWNLOAD_URL + image_name;
+
+        }
+        else {
+            holder.file_img.setVisibility(View.GONE);
+            holder.i_image.setVisibility(View.GONE);
+            holder.ivVideo.setVisibility(View.VISIBLE);
+            //holder.vshow_frame.setVisibility(View.VISIBLE);
+            //media_Controller = new MediaController(context);
+            video_url= DOWNLOAD_URL + image_name;
            // videofile=new File(selectedVideo.getPath());
-            holder.ivVideo.setVideoPath(video_url);
+           /* holder.ivVideo.setVideoPath(video_url);
             holder.ivVideo.requestFocus();
             holder.ivVideo.setMediaController(media_Controller);
             media_Controller.setAnchorView(holder.ivVideo);
             holder.ivVideo.start();
+*/
+            Uri video = Uri.parse(video_url);
+            holder.ivVideo.setVideoURI(video);
+            MediaController mediaController = new MediaController(context);
+            mediaController.setAnchorView(holder.ivVideo);
+            holder.ivVideo.setMediaController(mediaController);
+            holder.ivVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.setLooping(true);
+                    holder.ivVideo.start();
+                }
+            });
         }
 
         holder.d_icon.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +187,7 @@ public class AllImageAdaper extends BaseAdapter {
                 if (Util.getNetworkConnectivityStatus(context)) {
 
 
-                     imgUrlnew = Constants.DOWNLOAD_URL + img_pos.getIm_filename();
+                     imgUrlnew = DOWNLOAD_URL + img_pos.getIm_filename();
                      new_wordd = imgUrlnew.substring(imgUrlnew.length() - 4);
                     //Toast.makeText(context,pos,Toast.LENGTH_LONG).show();
                     filetype=img_pos.getIm_filename();
@@ -173,6 +201,16 @@ public class AllImageAdaper extends BaseAdapter {
                 }
             }
         });
+
+            holder.file_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, FileView.class);
+                    String file=DOWNLOAD_URL+img_pos.getIm_filename();
+                    intent.putExtra("PATH",file);
+                    context.startActivity(intent);
+                }
+            });
 
         return convertView;
     }

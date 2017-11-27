@@ -82,7 +82,27 @@
                 android:scaleType="fitXY"
                 android:visibility="gone"
                 />
-            <FrameLayout
+            <ImageView
+                android:id="@+id/file_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tvImtitle"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:background="@mipmap/ic_insert_drive_file_white_24dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:visibility="gone"
+                android:layout_centerInParent="true"/>
+            <VideoView
+                android:id="@+id/ivVideo"
+                android:layout_below="@+id/tvImtitle"
+                android:foregroundGravity="center"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+            <!--<FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@+id/tvImtitle"
@@ -97,7 +117,7 @@
                     android:layout_alignParentBottom="true"
                     android:id="@+id/ivVideo"
                     android:layout_height="match_parent" />
-            </FrameLayout>
+            </FrameLayout>-->
 
 
 

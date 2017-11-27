@@ -5,11 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Parcel;
 
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private String USER_ADDRESS="ownaddress";
     private String USER_VIDEO="video";
     private String USER_FILE="file";
+    private String USER_FILEDOC="filedoc";
 
     public DBHelper(Context context) {
 
@@ -44,7 +43,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + USER_TITLE +" text, "
                 + USER_ADDRESS + " text, "
                 + USER_VIDEO +" text, "
-                + USER_FILE + " text) "
+                + USER_FILE + " text, "
+                + USER_FILEDOC+ " text) "
         );
     }
     @Override
@@ -65,6 +65,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(USER_ADDRESS, data.getAddress());
         contentValues.put(USER_VIDEO, data.getVideo());
         contentValues.put(USER_FILE, data.getImage());
+        contentValues.put(USER_FILEDOC, data.getFile_file());
        db.insertWithOnConflict(ALLUSER_TABLE, null, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         db.close(); // Closing database connection
 
@@ -84,6 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     user.settitle(res.getString(4));
                     user.setvideo(res.getString(5));
                     user.setimage(res.getString(6));
+                    user.setFile_file(res.getString(7));
                     assetlist.add(user);
                 } while (res.moveToNext());
             }

@@ -128,6 +128,9 @@
             android:label="Select User"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
         <activity
+            android:name="com.iiit.amaresh.demotrack.Activity.FileView"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+        <activity
             android:name="com.iiit.amaresh.demotrack.Activity.BlockUser"
             android:label="Select User"
             android:launchMode="singleTask"

@@ -20,22 +20,11 @@
             android:visibility="gone"
             android:scaleType="fitXY"
             android:background="@color/color_orange"/>
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:id="@+id/vshow_frame"
+        <VideoView
+            android:id="@+id/vshow"
             android:visibility="gone"
-            android:layout_gravity="center">
-            <VideoView
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:id="@+id/vshow"
-                android:layout_height="match_parent" />
-        </FrameLayout>
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -56,6 +45,14 @@
                 android:id="@+id/rec_bt"
                 android:backgroundTint="@color/colorPrimary"
                 android:background="@mipmap/ic_videocam_black_24dp"/>
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/add_files"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@mipmap/ic_insert_drive_file_white_24dp"/>
         </LinearLayout>
 
 

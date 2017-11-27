@@ -46,6 +46,7 @@ import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
+import com.iiit.amaresh.demotrack.Util.Getpath;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -61,14 +62,15 @@ import java.util.Locale;
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 
 public class UploadAssets extends AppCompatActivity implements android.location.LocationListener {
-    ImageView cam_bt,imshow,rec_bt;
+    ImageView cam_bt,imshow,rec_bt,add_files;
     Button upload_bt;
     EditText title;
-    String v_deop,im_file;
+    String v_deop,im_file,File_file;
     String latitude,longitude,s_title,address,city,state;
     private Bitmap photo,bitmapRotate;
     private Boolean upflag = false;
     private Boolean vflag = false;
+    private Boolean fflag = false;
     private Uri selectedImage = null,imuri;
     File file;
     public static File mediaFile;
@@ -84,9 +86,10 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     String sid,saddress;
     private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
+    int FILE_REQUEST_CODE=001;
     long fileSizeInMB;
-    long vfileSizeInMB;
-    File video;
+    long vfileSizeInMB,FfileSizeInMB;
+    File video,doc_file,filee,Img;
     VideoView vshow;
     ProgressBar progressBar;
     Uri fileUri;
@@ -94,6 +97,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     DisplayMetrics dm;
     FrameLayout vshow_frame;
     DBHelper db=new DBHelper(this);
+    String file_path,file_type;
 
 
     @Override
@@ -150,11 +154,12 @@ public class UploadAssets extends AppCompatActivity implements android.location.
 
         cam_bt = (ImageView) findViewById(com.iiit.amaresh.demotrack.R.id.cam_bt);
         rec_bt = (ImageView) findViewById(com.iiit.amaresh.demotrack.R.id.rec_bt);
+        add_files = (ImageView) findViewById(com.iiit.amaresh.demotrack.R.id.add_files);
         imshow = (ImageView) findViewById(com.iiit.amaresh.demotrack.R.id.imgshow);
         vshow = (VideoView) findViewById(com.iiit.amaresh.demotrack.R.id.vshow);
-        vshow_frame=(FrameLayout)findViewById(R.id.vshow_frame);
+       // vshow_frame=(FrameLayout)findViewById(R.id.vshow_frame);
         imshow.setVisibility(View.GONE);
-        vshow_frame.setVisibility(View.GONE);
+        ///vshow_frame.setVisibility(View.GONE);
         upload_bt = (Button) findViewById(com.iiit.amaresh.demotrack.R.id.upload);
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         upload_bt.setVisibility(View.INVISIBLE);
@@ -166,27 +171,54 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 captureImage();            }
         });
 
+        rec_bt.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                // record video
+                recordVideo();
+            }
+        });
+        add_files.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword","application/pdf"};
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                startActivityForResult(intent, FILE_REQUEST_CODE);
+            }
+        });
         upload_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
                     s_title = title.getText().toString();
-                    if (!upflag && !vflag) {
+                    if (!upflag && !vflag && !fflag) {
                         Toast.makeText(UploadAssets.this, "File Not Captured..!", Toast.LENGTH_LONG).show();
                     } else if (s_title.length() <= 0 && s_title.equals("")) {
                         Toast.makeText(UploadAssets.this, "Please Enter Title For Image", Toast.LENGTH_LONG).show();
-                    } else {
+                    }
+                   else {
 
                         ImUpload();
                     }
                 } else {
-                    if(file==null){
+                    if(mediaFile!=null){
                         video = new File(mediaFile.getPath());
                         long v_length = video.length();
                         long vfileSizeInKB = v_length / 1024;
                         vfileSizeInMB = vfileSizeInKB / 1024;
                         v_deop=video.toString();
+
+                    }
+                    else if(file_type!=null && file_type!=""){
+                        filee = new File(doc_file.getPath());
+                        long length = filee.length();
+                        long fileSizeInKB = length / 1024;
+                        FfileSizeInMB = fileSizeInKB / 1024;
+                        File_file=filee.toString();
 
                     }
                     else{
@@ -201,7 +233,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                     sid=String.valueOf(user_id);
                     saddress=address+","+city;
                   // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
-                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file));
+                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file,File_file));
 
                     Intent intent=new Intent(UploadAssets.this,Home.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -209,14 +241,6 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                 }
-            }
-        });
-        rec_bt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // record video
-                recordVideo();
             }
         });
 
@@ -355,7 +379,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 }
 
                 upflag=true;
-                vshow_frame.setVisibility(View.GONE);
+                //vshow_frame.setVisibility(View.GONE);
                 imshow.setVisibility(View.VISIBLE);
                 cam_bt.setVisibility(View.GONE);
                 rec_bt.setVisibility(View.GONE);
@@ -368,6 +392,21 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             }
 
         }
+        if(requestCode==FILE_REQUEST_CODE && resultCode == RESULT_OK && null != data){
+            Uri selectedfile = data.getData();
+            file_path= Getpath.getPath(this,selectedfile);
+            cam_bt.setVisibility(View.GONE);
+            rec_bt.setVisibility(View.GONE);
+            add_files.setVisibility(View.VISIBLE);
+            title.setVisibility(View.VISIBLE);
+            upload_bt.setVisibility(View.VISIBLE);
+
+            doc_file=new File(file_path);
+            file_type="docs";
+            fflag=true;
+
+        }
+
         if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
 
             if (resultCode == RESULT_OK) {
@@ -396,9 +435,11 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             vflag=true;
             cam_bt.setVisibility(View.GONE);
             rec_bt.setVisibility(View.GONE);
-            vshow_frame.setVisibility(View.VISIBLE);
+          //  vshow_frame.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
+            vshow.setVisibility(View.VISIBLE);
             upload_bt.setVisibility(View.VISIBLE);
+            media_Controller = new MediaController(this);
             /*media_Controller = new MediaController(this);
             dm = new DisplayMetrics();
             this.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -423,22 +464,28 @@ public class UploadAssets extends AppCompatActivity implements android.location.
          sid=String.valueOf(user_id);
          saddress=address+","+city;
         if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
-            if(file==null){
+            if(mediaFile!=null){
                 video = new File(mediaFile.getPath());
                 long v_length = video.length();
                 long vfileSizeInKB = v_length / 1024;
                 vfileSizeInMB = vfileSizeInKB / 1024;
 
          }
+         else if(file_type!=null && file_type!=""){
+                 filee = new File(doc_file.getPath());
+                long length = filee.length();
+                long fileSizeInKB = length / 1024;
+                FfileSizeInMB = fileSizeInKB / 1024;
+            }
          else{
-                File Img = new File(file.getPath());
+                 Img = new File(file.getPath());
                 long length = Img.length();
                 long fileSizeInKB = length / 1024;
                 fileSizeInMB = fileSizeInKB / 1024;
          }
 
 
-            if (video == null) {
+            if (Img != null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Your File is " + fileSizeInMB + " MB. Do you want to upload")
                         .setCancelable(false)
@@ -456,7 +503,26 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 AlertDialog alert = builder.create();
                 alert.show();
 
-            } else {
+            } else if(filee!=null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Your File is " + FfileSizeInMB + " MB. Do you want to upload")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                uploadImage upload = new uploadImage();
+                                upload.execute(sid, latitude, longitude, s_title, saddress);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+            else{
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Your File is " + vfileSizeInMB + " MB. Do you want to upload")
                         .setCancelable(false)
@@ -516,11 +582,16 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 multipart.addFormField("title", title);
                 multipart.addFormField("address", address);
                // if (images_to_post != null && images_to_post.exists())
-                if(file==null){
+                if(file!=null){
                     multipart.addFilePart("file_name", video);
+                }
+                else if(filee!=null){
+                    multipart.addFilePart("file_name", filee);
+
                 }
                 else{
                     multipart.addFilePart("file_name", file);
+
                 }
                 List<String> response = multipart.finish();
                 System.out.println("SERVER REPLIED:");

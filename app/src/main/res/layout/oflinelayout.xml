@@ -82,6 +82,17 @@
                 android:scaleType="fitXY"
                 android:visibility="gone"
                 />
+            <ImageView
+                android:id="@+id/file_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tvImtitle"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:background="@mipmap/ic_insert_drive_file_white_24dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:visibility="gone"
+                android:layout_centerInParent="true"/>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

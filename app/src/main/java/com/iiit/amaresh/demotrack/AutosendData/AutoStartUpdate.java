@@ -15,10 +15,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+
 import com.iiit.amaresh.demotrack.Activity.Home;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Useronlineoffline;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +36,7 @@ public class AutoStartUpdate extends Service implements android.location.Locatio
     String latitude,longitude,provider,name,id,phone_number;
     Home obj;
     Useronlineoffline useronlineoffline;
+
 
 
 
@@ -107,6 +111,12 @@ public class AutoStartUpdate extends Service implements android.location.Locatio
             double lng = location.getLongitude();
             latitude = String.valueOf(lat);
             longitude = String.valueOf(lng);
+            Calendar calander;
+            SimpleDateFormat simpledateformat;
+             calander = Calendar.getInstance();
+            simpledateformat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+           String time = simpledateformat.format(calander.getTime());
+           // if(time.contentEquals())
             //  sendlatlongtoserver();
             obj=new Home();
             obj.sendlatlongtoserver(id,latitude,longitude,phone_number,name);

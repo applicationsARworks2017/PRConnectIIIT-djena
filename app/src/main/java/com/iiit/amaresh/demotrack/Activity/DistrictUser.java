@@ -440,8 +440,8 @@ public class DistrictUser extends AppCompatActivity {
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("send_by",_sendby)
                         .appendQueryParameter("message",_msg)
-                        .appendQueryParameter("district_id",_distric);
-                         //.appendQueryParameter("usertype","2");
+                        .appendQueryParameter("district_id",_distric)
+                         .appendQueryParameter("usertype","2");
                 //.appendQueryParameter("deviceid", deviceid);
                 String query = builder.build().getEncodedQuery();
 
@@ -508,6 +508,14 @@ public class DistrictUser extends AppCompatActivity {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             if(server_status==1){
+                Intent intent=new Intent(DistrictUser.this,SelectedUser.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+            else if(server_status==0){
+                Toast.makeText(getBaseContext(),"No User To Accept The Message",Toast.LENGTH_LONG).show();
                 Intent intent=new Intent(DistrictUser.this,SelectedUser.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

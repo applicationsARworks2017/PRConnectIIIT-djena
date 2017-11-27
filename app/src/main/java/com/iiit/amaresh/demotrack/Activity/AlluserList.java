@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Adapter.AllUserAdapter;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
@@ -31,7 +32,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,7 +54,7 @@ public class AlluserList extends BaseActivity {
     TextView tvEmptyView;
     private int index = 0, top = 0;
     int g_position=0;
-    String pagename;
+    String pagename,userType,districtid;
     DBHelper db=new DBHelper(this);
 
     @Override
@@ -74,8 +77,15 @@ public class AlluserList extends BaseActivity {
             // and get whatever type user account id is
         }
 
+        userType = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_TYPE, null);
+        districtid = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
+        Date todaysdate = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String date = format.format(todaysdate);
+
         search = (SearchView)findViewById(R.id.searchView1);
         mListView = (ListView) findViewById(R.id.listView_user);
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -157,8 +167,18 @@ public class AlluserList extends BaseActivity {
     private void getContact() {
         if (Util.getNetworkConnectivityStatus(this)) {
             GetUserDetail asyncTask = new GetUserDetail();
-            String emp_type="";
-            asyncTask.execute(emp_type);
+            String emp_type=null;
+            String districid=null;
+
+            if(userType.contains("1")){
+               emp_type="0";
+            }
+            else if(userType.contains("2")){
+                emp_type="0";
+                districid=districtid;
+
+            }
+            asyncTask.execute(emp_type,districtid);
 
         }
     }
@@ -167,6 +187,7 @@ public class AlluserList extends BaseActivity {
 
         private static final String TAG = "SyncDetails";
         ProgressDialog progress;
+        int Status;
 
         @Override
         protected void onPreExecute() {
@@ -182,6 +203,7 @@ public class AlluserList extends BaseActivity {
 
             try {
                 String _emptype = params[0];
+                String _distrc = params[1];
                 InputStream in = null;
                 int resCode = -1;
                 String link = Constants.ONLINE_URL + Constants.USER_LIST;
@@ -197,7 +219,8 @@ public class AlluserList extends BaseActivity {
                 conn.setRequestMethod("POST");
 
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("emptype", _emptype);
+                        .appendQueryParameter("emptype", _emptype)
+                        .appendQueryParameter("district_id", _distrc);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -256,6 +279,7 @@ public class AlluserList extends BaseActivity {
                         emp_desig= q_list_obj.getString("empdesg");
                         usertype= q_list_obj.getString("usertype");
                         user_status= q_list_obj.getString("user_status");
+                        Status= q_list_obj.getInt("user_status");
                         if(usertype =="1"){
                             usertype ="Admin";
                         }
@@ -290,9 +314,14 @@ public class AlluserList extends BaseActivity {
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
-            qadapter = new AllUserAdapter(AlluserList.this,userlist);
-            mListView.setAdapter(qadapter);
-            mListView.setSelectionFromTop(index, top);
+            if(Status==1) {
+                qadapter = new AllUserAdapter(AlluserList.this, userlist);
+                mListView.setAdapter(qadapter);
+                mListView.setSelectionFromTop(index, top);
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Connectivity Issue,Check your Internet",Toast.LENGTH_LONG).show();
+            }
             progress.dismiss();
         }
     }

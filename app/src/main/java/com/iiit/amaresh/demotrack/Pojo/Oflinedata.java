@@ -1,13 +1,11 @@
 package com.iiit.amaresh.demotrack.Pojo;
 
-import java.io.File;
-
 /**
  * Created by RN on 11/7/2017.
  */
 
 public class Oflinedata {
-    String longitude,latitude,address,title,image,video;
+    String longitude,latitude,address,title,image,video,File_file;
     int user_id;
 
     public String getLongitude() {
@@ -62,7 +60,7 @@ public class Oflinedata {
         return user_id;
     }
 
-    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, String file) {
+    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, String file,String File_file) {
         this.user_id=user_id;
         this.latitude=latitude;
         this.longitude=longitude;
@@ -70,11 +68,20 @@ public class Oflinedata {
         this.address=saddress;
         this.video=video;
         this.image=file;
+        this.File_file=File_file;
 
     }
 
     public Oflinedata() {
 
+    }
+
+    public String getFile_file() {
+        return File_file;
+    }
+
+    public void setFile_file(String file_file) {
+        File_file = file_file;
     }
 
     public void setUser_id(int user_id) {

@@ -537,6 +537,14 @@ public class BlockUser extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
+            else if(server_status==0){
+                Toast.makeText(getBaseContext(),"No User To Accept The Message",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(BlockUser.this,SelectedUser.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
             progressDialog.cancel();
         }
     }

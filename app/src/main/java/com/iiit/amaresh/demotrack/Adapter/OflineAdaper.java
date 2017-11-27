@@ -1,17 +1,9 @@
 package com.iiit.amaresh.demotrack.Adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +12,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.iiit.amaresh.demotrack.Activity.MainActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
-import com.iiit.amaresh.demotrack.Pojo.ImageAll;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
-import com.iiit.amaresh.demotrack.Pojo.Util;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 /**
@@ -84,7 +65,7 @@ public class OflineAdaper extends BaseAdapter {
     public class Holder {
         private TextView Username, Designation, Time, Title, Address;
         //    private ImageView i_image,d_icon;
-        private ImageView d_icon;
+        private ImageView d_icon,file_img;
         public NetworkImageView i_image;
         VideoView ivVideo;
         FrameLayout vshow_frame;
@@ -111,6 +92,7 @@ public class OflineAdaper extends BaseAdapter {
             holder.i_image = (NetworkImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivImage);
             holder.ivVideo = (VideoView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivVideo);
             holder.d_icon = (ImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.downloadicon);
+            holder.file_img = (ImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.file_img);
             holder.vshow_frame = (FrameLayout) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.vshow_frame);
             convertView.setTag(holder);
         }
@@ -140,6 +122,11 @@ public class OflineAdaper extends BaseAdapter {
             imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
             imageLoader.get(imgUrl, ImageLoader.getImageListener(holder.i_image, com.iiit.amaresh.demotrack.R.drawable.rounded_image, android.R.drawable.ic_dialog_alert));
             holder.i_image.setImageUrl(imgUrl, imageLoader);
+        }
+        else if(new_word.contentEquals(".doc")||new_word.contentEquals(".pdf")){
+            holder.file_img.setVisibility(View.VISIBLE);
+            //fileUrl = Constants.DOWNLOAD_URL + image_name;
+
         }
         else {
             holder.i_image.setVisibility(View.GONE);

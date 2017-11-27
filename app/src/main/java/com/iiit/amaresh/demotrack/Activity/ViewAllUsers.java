@@ -43,7 +43,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
     UserListingAdapter qadapter;
     private SearchView search;
     ListView lv;
-    String data="view";
+    String data="view",userType,districtid;
     TextView tvEmptyView;
    // private QaListAdapter mAdapter = null;
     private Menu menu;
@@ -67,6 +67,8 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
             });
 
         }
+        userType = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_TYPE, null);
+        districtid = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
         search = (SearchView)findViewById(R.id.searchView1);
         mListView = (ListView) findViewById(R.id.listView);
         tvEmptyView = (TextView)findViewById(R.id.tvNoRecordFoundText);
@@ -140,8 +142,18 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
     private void Userlist() {
         if (Util.getNetworkConnectivityStatus(ViewAllUsers.this)) {
             SyncDetails asyncTask = new SyncDetails();
-            String emp_type="";
-            asyncTask.execute(emp_type);
+            String emp_type=null;
+            String districid=null;
+
+            if(userType.contains("1")){
+                emp_type="0";
+            }
+            else if(userType.contains("2")){
+                emp_type="0";
+                districid=districtid;
+
+            }
+            asyncTask.execute(emp_type,districid);
 
         }
     }
@@ -157,7 +169,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
 
         private static final String TAG = "SyncDetails";
         ProgressDialog progress;
-
+        int Status;
         @Override
         protected void onPreExecute() {
             progress = ProgressDialog.show(ViewAllUsers.this, "Please Wait",
@@ -172,6 +184,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
 
             try {
                 String _emptype = params[0];
+                String _distric = params[1];
                 InputStream in = null;
                 int resCode = -1;
                 String link = Constants.ONLINE_URL + Constants.USER_LIST;
@@ -186,8 +199,17 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
                 conn.setInstanceFollowRedirects(true);
                 conn.setRequestMethod("POST");
 
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("emptype", _emptype);
+                Uri.Builder builder = new Uri.Builder();
+                if(userType.contentEquals("1")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("usertype", _emptype);
+                }
+                else {
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("usertype", _emptype)
+                            .appendQueryParameter("district_id", _distric);
+                }
+
 
                 String query = builder.build().getEncodedQuery();
 
@@ -246,6 +268,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
                         emp_desig= q_list_obj.getString("empdesg");
                         usertype= q_list_obj.getString("usertype");
                         user_status= q_list_obj.getString("user_status");
+                        Status= q_list_obj.getInt("user_status");
                         if(usertype =="1"){
                             usertype ="Admin";
                         }
@@ -280,8 +303,13 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
-            qadapter = new UserListingAdapter(ViewAllUsers.this,userlist);
-            mListView.setAdapter(qadapter);
+            if(Status==1) {
+                qadapter = new UserListingAdapter(ViewAllUsers.this, userlist);
+                mListView.setAdapter(qadapter);
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Data not found",Toast.LENGTH_LONG).show();
+            }
             progress.dismiss();
 
         }
