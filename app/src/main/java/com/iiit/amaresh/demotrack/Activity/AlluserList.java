@@ -218,10 +218,16 @@ public class AlluserList extends BaseActivity {
                 conn.setInstanceFollowRedirects(true);
                 conn.setRequestMethod("POST");
 
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("emptype", _emptype)
-                        .appendQueryParameter("district_id", _distrc);
-
+                Uri.Builder builder = new Uri.Builder();
+                if(userType.contentEquals("1")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("user_type", _emptype);
+                }
+                else {
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("user_type", _emptype)
+                            .appendQueryParameter("district_id", _distrc);
+                }
                 String query = builder.build().getEncodedQuery();
 
                 OutputStream os = conn.getOutputStream();
@@ -255,10 +261,11 @@ public class AlluserList extends BaseActivity {
                     JSONObject res = new JSONObject(response);
                     JSONArray user_list = res.getJSONArray("emp");
 
+                    Status =res.getInt("status");
                     userlist = new ArrayList<UserListing>();
 
                     //db=new DBHelper(QAAnsweredListActivity.this);
-
+                    if(Status==1){
                     for (int i = 0; i < user_list.length(); i++) {
 
                         JSONObject q_list_obj = user_list.getJSONObject(i);
@@ -267,29 +274,27 @@ public class AlluserList extends BaseActivity {
                         emp_id = q_list_obj.getString("empid");
                         emp_name = q_list_obj.getString("empname");
                         emp_add = q_list_obj.getString("empadd");
-                        emp_mail  = q_list_obj.getString("empmail");
+                        emp_mail = q_list_obj.getString("empmail");
                         emp_phone = q_list_obj.getString("empphone");
                         emp_address = q_list_obj.getString("empaddress");
                         emp_pass = q_list_obj.getString("emppass");
                         emp_imei = q_list_obj.getString("imei");
-                        empl_type= q_list_obj.getString("emptype");
-                        emp_state= q_list_obj.getString("state");
-                        emp_dist= q_list_obj.getString("district");
-                        emp_block= q_list_obj.getString("block");
-                        emp_desig= q_list_obj.getString("empdesg");
-                        usertype= q_list_obj.getString("usertype");
-                        user_status= q_list_obj.getString("user_status");
-                        Status= q_list_obj.getInt("user_status");
-                        if(usertype =="1"){
-                            usertype ="Admin";
-                        }
-                        else {
-                            usertype="User";
+                        empl_type = q_list_obj.getString("emptype");
+                        emp_state = q_list_obj.getString("state");
+                        emp_dist = q_list_obj.getString("district");
+                        emp_block = q_list_obj.getString("block");
+                        emp_desig = q_list_obj.getString("empdesg");
+                        usertype = q_list_obj.getString("usertype");
+                        user_status = q_list_obj.getString("user_status");
+                        if (usertype == "1") {
+                            usertype = "Admin";
+                        } else {
+                            usertype = "User";
                         }
 
-                        UserListing u_list=new UserListing(id,emp_id,emp_name,emp_add,emp_mail,emp_phone,emp_address,emp_pass,emp_imei,empl_type,emp_state,emp_dist,emp_block,emp_desig,usertype,user_status);
+                        UserListing u_list = new UserListing(id, emp_id, emp_name, emp_add, emp_mail, emp_phone, emp_address, emp_pass, emp_imei, empl_type, emp_state, emp_dist, emp_block, emp_desig, usertype, user_status);
                         userlist.add(u_list);
-
+                    }
                         // db.addAnsweredQuestionList(new AnswerDetails(qid,uid,q_title,qdesc,q_admin_desc,q_isanswer,q_ispublish,q_fullname,q_postdate,q_created));
 
                       /*String q_isanswer = q_list_obj.getString("is_answer");
@@ -297,6 +302,9 @@ public class AlluserList extends BaseActivity {
                       String q_postdate = q_list_obj.getString("post_date");
                       String q_created = q_list_obj.getString("full_name");
                       String q_modified = q_list_obj.getString("modified");*/
+                    }
+                    else{
+
                     }
 
                 }
