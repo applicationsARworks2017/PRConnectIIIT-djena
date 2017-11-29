@@ -64,9 +64,10 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 public class UploadAssets extends AppCompatActivity implements android.location.LocationListener {
     ImageView cam_bt,imshow,rec_bt,add_files;
     Button upload_bt;
-    EditText title;
+    EditText title,et_projct_title;
     String v_deop,im_file,File_file;
     String latitude,longitude,s_title,address,city,state;
+    public static String project_title;
     private Bitmap photo,bitmapRotate;
     private Boolean upflag = false;
     private Boolean vflag = false;
@@ -164,7 +165,16 @@ public class UploadAssets extends AppCompatActivity implements android.location.
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         upload_bt.setVisibility(View.INVISIBLE);
         title=(EditText)findViewById(com.iiit.amaresh.demotrack.R.id.im_title);
+        et_projct_title=(EditText)findViewById(com.iiit.amaresh.demotrack.R.id.et_projct_title);
         title.setVisibility(View.INVISIBLE);
+        et_projct_title.setVisibility(View.INVISIBLE);
+        /*et_projct_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(UploadAssets.this,StaticUserLlist.class);
+                startActivity(i);
+            }
+        });*/
         cam_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,10 +205,13 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             public void onClick(View v) {
                 if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
                     s_title = title.getText().toString();
+                    project_title = et_projct_title.getText().toString();
                     if (!upflag && !vflag && !fflag) {
                         Toast.makeText(UploadAssets.this, "File Not Captured..!", Toast.LENGTH_LONG).show();
                     } else if (s_title.length() <= 0 && s_title.equals("")) {
                         Toast.makeText(UploadAssets.this, "Please Enter Title For Image", Toast.LENGTH_LONG).show();
+                    }else if (project_title.length() <= 0 && project_title.equals("")) {
+                        Toast.makeText(UploadAssets.this, "Please Enter Project Name For Image", Toast.LENGTH_LONG).show();
                     }
                    else {
 
@@ -230,6 +243,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
 
                     }
                     s_title = title.getText().toString();
+                    project_title = et_projct_title.getText().toString();
                     sid=String.valueOf(user_id);
                     saddress=address+","+city;
                   // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
@@ -383,7 +397,9 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 imshow.setVisibility(View.VISIBLE);
                 cam_bt.setVisibility(View.GONE);
                 rec_bt.setVisibility(View.GONE);
+                add_files.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
+                et_projct_title.setVisibility(View.VISIBLE);
                 upload_bt.setVisibility(View.VISIBLE);
                 imshow.setImageBitmap(bitmapRotate);
 
@@ -399,6 +415,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             rec_bt.setVisibility(View.GONE);
             add_files.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
+            et_projct_title.setVisibility(View.VISIBLE);
             upload_bt.setVisibility(View.VISIBLE);
 
             doc_file=new File(file_path);
@@ -434,12 +451,14 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             }
             vflag=true;
             cam_bt.setVisibility(View.GONE);
+            add_files.setVisibility(View.GONE);
             rec_bt.setVisibility(View.GONE);
           //  vshow_frame.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
-            vshow.setVisibility(View.VISIBLE);
+            et_projct_title.setVisibility(View.VISIBLE);
             upload_bt.setVisibility(View.VISIBLE);
             media_Controller = new MediaController(this);
+            vshow.setVisibility(View.VISIBLE);
             /*media_Controller = new MediaController(this);
             dm = new DisplayMetrics();
             this.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -492,7 +511,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 uploadImage upload = new uploadImage();
-                                upload.execute(sid, latitude, longitude, s_title, saddress);
+                                upload.execute(sid, latitude, longitude, s_title, saddress,project_title);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -510,7 +529,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 uploadImage upload = new uploadImage();
-                                upload.execute(sid, latitude, longitude, s_title, saddress);
+                                upload.execute(sid, latitude, longitude, s_title, saddress,project_title);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -529,7 +548,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 uploadImage upload = new uploadImage();
-                                upload.execute(sid, latitude, longitude, s_title, saddress);
+                                upload.execute(sid, latitude, longitude, s_title, saddress,project_title);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -574,6 +593,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 String lng = params[2];
                 String title = params[3];
                 String address = params[4];
+                String project_titl = params[5];
                 //String is_anonymous = params[3];
                 MultipartUtility multipart = new MultipartUtility(requestURL, charset);
                 multipart.addFormField("emp_id", User_id);
@@ -581,6 +601,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 multipart.addFormField("logitude", lng);
                 multipart.addFormField("title", title);
                 multipart.addFormField("address", address);
+                multipart.addFormField("project_file", project_titl);
                // if (images_to_post != null && images_to_post.exists())
                 if(file!=null){
                     multipart.addFilePart("file_name", video);

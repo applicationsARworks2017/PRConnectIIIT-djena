@@ -98,6 +98,9 @@ public class AlluserList extends BaseActivity {
         userType = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_TYPE, null);
         districtid = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
         USER_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_ID, 0);
+        sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
+        state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
+        bloc_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_BLOCK_ID, null);
 
 
         Date todaysdate = new Date();
@@ -110,10 +113,7 @@ public class AlluserList extends BaseActivity {
         msgbody = (EditText) findViewById(R.id.msgbody);
         message_send = (LinearLayout) findViewById(R.id.message_send);
         rcpt_name = (TextView) findViewById(R.id.rcpt_name);
-        sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
-        state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
-        distric_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
-        bloc_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_BLOCK_ID, null);
+
         tvEmptyView = (TextView) findViewById(R.id.tvNoRecordFoundText);
         getContact();
         search.setQueryHint("SearchView");
@@ -310,18 +310,18 @@ public class AlluserList extends BaseActivity {
                 Uri.Builder builder = new Uri.Builder();
                 if(userType.contentEquals("1")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("user_type", _emptype)
+                            .appendQueryParameter("usertype", _emptype)
                             .appendQueryParameter("district_id", _distrc);
 
                 }
                 else if(pagename.contains("SPD")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("user_type", _emptype)
+                            .appendQueryParameter("usertype", "1")
                             .appendQueryParameter("district_id", _distrc);
                 }
                 else if(pagename.contains("SPB")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("user_type", _emptype)
+                            .appendQueryParameter("usertype", _emptype)
                             .appendQueryParameter("id", _block);
                 }
                 else {
