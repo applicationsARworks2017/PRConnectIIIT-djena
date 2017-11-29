@@ -70,9 +70,10 @@ public class BlockUser extends AppCompatActivity {
     public static EditText flatName;
     private static int counter = 0;
     String block_id,distric_id,block_name;
-    String district_id=null,bloc_id,sender_name;
+    String district_id=null,bloc_id,sender_name,pagename;
     LinearLayout message_send,btn_layout;
     TextView rcpt_name;
+    int USER_id;
 
 
     @Override
@@ -83,11 +84,15 @@ public class BlockUser extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             selected_district_id = extras.getString("DISTRICTID");
+            pagename = extras.getString("page");
         }
         sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
         state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
         distric_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
         bloc_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_BLOCK_ID, null);
+        USER_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_ID, 0);
+
+
         listview = (ListView) findViewById(R.id.district_listView);
         tvNoRecordFound = (TextView) findViewById(R.id.blank_text);
         msgbody = (EditText) findViewById(R.id.msgbody);
@@ -138,6 +143,7 @@ public class BlockUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 StringBuffer sb = new StringBuffer();
+                StringBuffer sb1 = new StringBuffer();
 
                 for (BlockList bean : blocklist) {
 
@@ -147,6 +153,8 @@ public class BlockUser extends AppCompatActivity {
                         } else {
                             sb.append(bean.getB_id());
                             sb.append(",");
+                            sb1.append(bean.getB_title());
+                            sb1.append(",");
                         }
                     }
                     if (sb.length() <= 0) {
@@ -154,48 +162,29 @@ public class BlockUser extends AppCompatActivity {
                         // flatName.setText("");
                         //BlockUser.this.finish();
                     } else {
-                        block_id=sb.toString().trim().substring(0, sb.length() - 1);;
+                        block_id = sb.toString().trim().substring(0, sb.length() - 1);
+
+                        if(pagename.contentEquals("dwbu")) {
+                            block_id = sb.toString().trim().substring(0, sb.length() - 1);
+                            listview.setVisibility(View.GONE);
+                            searchView1.setVisibility(View.GONE);
+                            btn_layout.setVisibility(View.GONE);
+                            message_send.setVisibility(View.VISIBLE);
+                            block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
+                            rcpt_name.setText("To" + " " + ":" + " " + block_name);
+                        }
+                        else {
+                            Intent i = new Intent(BlockUser.this, AlluserList.class);
+                            i.putExtra("BLOCKID", block_id);
+                            i.putExtra("page", "SPB");
+                            startActivity(i);
+                        }
                        // GetBlockUserList();
                         //flatName.setText(sb.toString().trim().substring(0, sb.length() - 1));
                         //DistrictUser.this.finish();
                     }
 
                 }
-                //for name
-
-                StringBuffer sb1 = new StringBuffer();
-
-                for (BlockList bean1 : blocklist) {
-                        /*if (counter<5) {
-                            counter++;
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "Only five please", Toast.LENGTH_SHORT).show();
-                        }*/
-                    if (bean1.isSelected()) {
-                        if (sb1.toString().trim().contains(bean1.getB_title())) {
-
-                        } else {
-                            sb1.append(bean1.getB_title());
-                            sb1.append(",");
-                        }
-                    }
-                    if (sb1.length() <= 0) {
-                        block_name = " ";
-                        // flatName.setText("");
-                        //DistrictUser.this.finish();
-                    }
-                    else {
-                        listview.setVisibility(View.GONE);
-                        searchView1.setVisibility(View.GONE);
-                        btn_layout.setVisibility(View.GONE);
-                        message_send.setVisibility(View.VISIBLE);
-                        block_name=sb1.toString().trim().substring(0, sb1.length() - 1);
-                        rcpt_name.setText("To"+" "+":"+" "+block_name);
-
-                    }
-                }
-
             }
         });
         SEND_ok.setOnClickListener(new View.OnClickListener() {

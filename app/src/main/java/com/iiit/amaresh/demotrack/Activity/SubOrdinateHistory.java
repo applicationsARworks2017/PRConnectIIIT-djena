@@ -56,7 +56,7 @@ public class SubOrdinateHistory extends BaseActivity {
         add_phone_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(SubOrdinateHistory.this,AlluserList.class);
+                Intent i=new Intent(SubOrdinateHistory.this,ViewAllUsers.class);
                 i.putExtra("page","history");
                 startActivity(i);
             }

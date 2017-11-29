@@ -172,14 +172,19 @@ public class DistrictUser extends AppCompatActivity {
                             district_id=sb.toString().trim().substring(0, sb.length() - 1);
                             Intent i=new Intent(DistrictUser.this,BlockUser.class);
                             i.putExtra("DISTRICTID",district_id);
+                            i.putExtra("page",data);
                             startActivity(i);
                         }
                         else{
-                            listview.setVisibility(View.GONE);
+                            district_id=sb.toString().trim().substring(0, sb.length() - 1);
+                            Intent i=new Intent(DistrictUser.this,AlluserList.class);
+                            i.putExtra("DISTRICTID",district_id);
+                            i.putExtra("page","SPD");
+                            startActivity(i);
+                           /* listview.setVisibility(View.GONE);
                             searchView1.setVisibility(View.GONE);
                             btn_layout.setVisibility(View.GONE);
-                            message_send.setVisibility(View.VISIBLE);
-                            district_id=sb.toString().trim().substring(0, sb.length() - 1);
+                            message_send.setVisibility(View.VISIBLE);*/
                             //DistrictUser.this.finish();
 
 

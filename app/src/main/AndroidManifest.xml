@@ -109,8 +109,8 @@
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.AlluserList"
-            android:label="AllUser"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+            android:label="Select User"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.SelectedUser" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.OnlineOflineActivity"
             android:label="Gallery Asset"

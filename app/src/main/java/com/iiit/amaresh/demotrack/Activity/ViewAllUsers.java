@@ -43,13 +43,18 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
     UserListingAdapter qadapter;
     private SearchView search;
     ListView lv;
-    String data="view",userType,districtid;
+    String data="view",userType,districtid,userid,pagename;
     TextView tvEmptyView;
-   // private QaListAdapter mAdapter = null;
+    private int index = 0, top = 0;
+
+    // private QaListAdapter mAdapter = null;
     private Menu menu;
     String id,emp_id,emp_name,emp_add,emp_mail,emp_phone,
             emp_address,emp_pass,emp_imei,empl_type,emp_state,emp_dist,emp_block,
             emp_desig,usertype=null,user_status;
+    int USER_id;
+    String name,em_id,indexx = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +72,40 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
             });
 
         }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            pagename = extras.getString("page");
+            // and get whatever type user account id is
+        }
         userType = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_TYPE, null);
         districtid = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
+        USER_id = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getInt(Constants.SP_USER_ID, 0);
+
         search = (SearchView)findViewById(R.id.searchView1);
         mListView = (ListView) findViewById(R.id.listView);
         tvEmptyView = (TextView)findViewById(R.id.tvNoRecordFoundText);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserListing users= (UserListing) parent.getItemAtPosition(position);
+                //  Toast.makeText(AdminUserList.this,users.getUser_name(),Toast.LENGTH_LONG).show();
+                name = users.getU_emp_name();
+                em_id = users.getU_emp_id();
+                index = mListView.getFirstVisiblePosition();
+                View v = mListView.getChildAt(0);
+                top = (v == null) ? 0 : (v.getTop() - mListView.getPaddingTop());
+                String value = users.getU_emp_phone();
+                if(pagename.contains("movement")){
+                    GetMovement.phone.setText(value);
+                }
+                else{
+                    SubOrdinateHistory.phoneview.setText(value);
+                }
+                finish();
+            }
+        });
+
         if (Util.getNetworkConnectivityStatus(ViewAllUsers.this)) {
             Userlist();
         }
@@ -146,14 +180,18 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
             String districid=null;
 
             if(userType.contains("1")){
-                emp_type="0";
+                emp_type="1";
             }
             else if(userType.contains("2")){
-                emp_type="0";
+                emp_type="2";
                 districid=districtid;
 
+            } else if(userType.contains("0")){
+                emp_type="0";
+                userid=String.valueOf(USER_id);
+
             }
-            asyncTask.execute(emp_type,districid);
+            asyncTask.execute(emp_type,districid,userid);
 
         }
     }
@@ -185,6 +223,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
             try {
                 String _emptype = params[0];
                 String _distric = params[1];
+                String _userid = params[2];
                 InputStream in = null;
                 int resCode = -1;
                 String link = Constants.ONLINE_URL + Constants.USER_LIST;
@@ -203,6 +242,12 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
                 if(userType.contentEquals("1")){
                     builder = new Uri.Builder()
                             .appendQueryParameter("user_type", _emptype);
+                }
+                else if(userType.contains("0")){
+                    builder = new Uri.Builder()
+                    .appendQueryParameter("user_type", _emptype)
+                    .appendQueryParameter("id", _userid);
+
                 }
                 else {
                     builder = new Uri.Builder()

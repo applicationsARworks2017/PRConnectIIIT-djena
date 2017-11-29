@@ -42,7 +42,7 @@ public class GetMovement extends BaseActivity {
         add_phone_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(GetMovement.this,AlluserList.class);
+                Intent i=new Intent(GetMovement.this,ViewAllUsers.class);
                 i.putExtra("page","movement");
                 startActivity(i);
             }
