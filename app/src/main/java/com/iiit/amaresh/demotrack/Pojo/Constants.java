@@ -23,6 +23,7 @@ public class Constants {
     public static final String SEND_ALL="setbulkmessage.php";
     public static final String SEND_DISTRICT_W_B_USER="getdistrict.php";
     public static final String BLOCK_USER="getblock.php";
+    public static final String FCM_ID="fcmid";
 
 
 

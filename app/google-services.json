@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "522771243615",
+    "firebase_url": "https://prconnect-e00fd.firebaseio.com",
+    "project_id": "prconnect-e00fd",
+    "storage_bucket": "prconnect-e00fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522771243615:android:c919d02d7cf95400",
+        "android_client_info": {
+          "package_name": "com.iiit.amaresh.demotrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522771243615-tc17s20v5d7catg99f360sdpus0o5esr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iiit.amaresh.demotrack",
+            "certificate_hash": "0926da27c58a4fc21e4be8a8ebee976d59b0e5c9"
+          }
+        },
+        {
+          "client_id": "522771243615-bc7qh66i4i2j7lf0f1j4le53i8aqfojm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFVVQNluxmdBGtNKKePUJTevHRfyQEkN0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522771243615-bc7qh66i4i2j7lf0f1j4le53i8aqfojm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

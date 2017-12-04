@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="android-times-square-1.6.5">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.squareup/android-times-square/1.6.5/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.squareup/android-times-square/1.6.5/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/3914af52ae9a943f17e9e53b7c1779b7de168a31/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3914af52ae9a943f17e9e53b7c1779b7de168a31/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
