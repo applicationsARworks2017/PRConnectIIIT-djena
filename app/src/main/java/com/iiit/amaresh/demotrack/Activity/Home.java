@@ -230,6 +230,7 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
 
        if (id == R.id.viewAll) {
             Intent intent = new Intent(this, ViewAllUsers.class);
+            intent.putExtra("page","home");
             startActivity(intent);
         }
        else if(id==R.id.profile){

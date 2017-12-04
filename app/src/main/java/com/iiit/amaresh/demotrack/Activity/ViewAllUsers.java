@@ -98,11 +98,13 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
                 String value = users.getU_emp_phone();
                 if(pagename.contains("movement")){
                     GetMovement.phone.setText(value);
+                    finish();
                 }
-                else{
+                else if(pagename.contentEquals("history")){
                     SubOrdinateHistory.phoneview.setText(value);
+                    finish();
+
                 }
-                finish();
             }
         });
 
@@ -156,7 +158,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
         }
 
         // create an Object for Adapter
-        qadapter = new UserListingAdapter(ViewAllUsers.this,userlist_search);
+        qadapter = new UserListingAdapter(ViewAllUsers.this,userlist_search,pagename);
         mListView.setAdapter(qadapter);
         //  mAdapter.notifyDataSetChanged();
 
@@ -238,20 +240,20 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
                 conn.setInstanceFollowRedirects(true);
                 conn.setRequestMethod("POST");
 
-                Uri.Builder builder = new Uri.Builder();
+                Uri.Builder builder;
                 if(userType.contentEquals("1")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("user_type", _emptype);
+                            .appendQueryParameter("usertype", _emptype);
                 }
                 else if(userType.contains("0")){
                     builder = new Uri.Builder()
-                    .appendQueryParameter("user_type", _emptype)
+                    .appendQueryParameter("usertype", _emptype)
                     .appendQueryParameter("id", _userid);
 
                 }
                 else {
                     builder = new Uri.Builder()
-                            .appendQueryParameter("user_type", _emptype)
+                            .appendQueryParameter("usertype", _emptype)
                             .appendQueryParameter("district_id", _distric);
                 }
 
@@ -350,7 +352,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             if(Status==1) {
-                qadapter = new UserListingAdapter(ViewAllUsers.this, userlist);
+                qadapter = new UserListingAdapter(ViewAllUsers.this, userlist,pagename);
                 mListView.setAdapter(qadapter);
             }
             else{

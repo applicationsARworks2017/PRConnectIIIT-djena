@@ -29,12 +29,13 @@ public class UserListingAdapter extends BaseAdapter {
     List<UserListing> user_lis;
     Holder holder;
     Holder holder1;
-    String page="answer";
+    String page;
     String server_message;
     Integer server_status;
-    public UserListingAdapter(Context userListActivity, List<UserListing> data) {
+    public UserListingAdapter(Context userListActivity, List<UserListing> data, String pagename) {
         this.context=userListActivity;
         this.user_lis=data;
+        this.page=pagename;
     }
 
 
@@ -47,7 +48,7 @@ public class UserListingAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return user_lis.get(position);
     }
 
     @Override
@@ -114,6 +115,7 @@ public class UserListingAdapter extends BaseAdapter {
         holder.im_on_status.setTag(position);
         holder.im_of_status.setTag(position);
         holder.user_detaill_list.setTag(holder);
+        holder.iv_letterview.setTag(holder);
         holder.user_list.setTag(holder);
        // holder.im_location.setTag(position);
         String firstLetter = user_pos.getU_emp_name().substring(0, 1).toUpperCase();
@@ -122,7 +124,7 @@ public class UserListingAdapter extends BaseAdapter {
         //int color = generator.getRandomColor();
         TextDrawable drawable = TextDrawable.builder().buildRound(firstLetter, color); // radius in px
         holder.iv_letterview.setImageDrawable(drawable);
-        holder.User_name.setText("Name: "+user_pos.getU_emp_name());
+        holder.User_name.setText(user_pos.getU_emp_name());
         holder.User_phone.setText("Mob: "+user_pos.getU_emp_phone());
         holder.User_email.setText("Mail: "+user_pos.getU_emp_mail());
         holder.User_designation.setText("Designation: "+user_pos.getU_emp_desig());
@@ -138,21 +140,23 @@ public class UserListingAdapter extends BaseAdapter {
             holder.im_of_status.setVisibility(View.VISIBLE);
             holder.im_on_status.setVisibility(View.INVISIBLE);
         }
-        holder.user_list.setOnClickListener(new View.OnClickListener() {
+        holder.iv_letterview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder1 = (Holder) v.getTag();
-                holder.count++;
-                    if(holder.count==1){
+                if(page.contentEquals("home")) {
+                    holder1 = (Holder) v.getTag();
+                    holder.count++;
+                    if (holder.count == 1) {
                         holder1.user_detaill_list.setVisibility(View.VISIBLE);
                     }
                     //double click
-                    if(holder.count==2){
+                    if (holder.count == 2) {
                         holder1.user_detaill_list.setVisibility(View.GONE);
-                        holder.count=0;
+                        holder.count = 0;
                         //double function()
-                       // holder.count==0;
+                        // holder.count==0;
                     }
+                }
                 }
             });
 

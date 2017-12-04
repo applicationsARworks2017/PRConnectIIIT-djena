@@ -33,6 +33,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LocationListingByUser extends AppCompatActivity {
@@ -255,6 +256,7 @@ public class LocationListingByUser extends AppCompatActivity {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             if(server_status==1) {
+                Collections.reverse(locationlist);
                 locadapter = new LocationListingAdapter(LocationListingByUser.this, locationlist);
                 locListView.setAdapter(locadapter);
             }

@@ -31,6 +31,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -186,6 +187,7 @@ public class UnreadMessages extends Fragment {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             if(server_status==1) {
+                Collections.reverse(allmessagelist);
                 qadapter = new UnreadMessageAdaper(getContext(), allmessagelist);
                 lv.setAdapter(qadapter);
             }
