@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.DataParser;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -49,7 +50,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MovementMap extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MovementMap extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener ,OnMapReadyCallback {
     String phone_number;
     GoogleMap googleMap;
     SupportMapFragment fm;
@@ -82,11 +83,8 @@ public class MovementMap extends AppCompatActivity implements GoogleApiClient.Co
         fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mov_map);
 
         // Getting Map for the SupportMapFragment
-        googleMap = fm.getMap();
-        points = new ArrayList<LatLng>();
+         fm.getMapAsync(this);
 
-        myAsynchronousTask();
-        //getThepos();
     }
 
     // tbis function called itself autometically in every 5 seconds
@@ -141,6 +139,17 @@ public class MovementMap extends AppCompatActivity implements GoogleApiClient.Co
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap Map) {
+
+        this.googleMap=Map;
+        points = new ArrayList<LatLng>();
+
+        myAsynchronousTask();
+      //  getThepos();
 
     }
 

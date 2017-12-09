@@ -44,7 +44,7 @@ public class GalaryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galary);
         if (null != toolbar) {
-            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
             toolbar.setTitle(getResources().getString(R.string.Galary));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

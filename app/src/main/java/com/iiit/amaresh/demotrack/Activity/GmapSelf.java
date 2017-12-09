@@ -11,6 +11,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class GmapSelf extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GmapSelf extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback {
     GoogleMap googleMap;
     SupportMapFragment fm;
     private String provider;
@@ -47,7 +48,7 @@ public class GmapSelf extends FragmentActivity implements NavigationView.OnNavig
         fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.iiit.amaresh.demotrack.R.id.self_map);
 
         // Getting Map for the SupportMapFragment
-        googleMap = fm.getMap();
+         fm.getMapAsync(this);
 
 
 
@@ -58,6 +59,17 @@ public class GmapSelf extends FragmentActivity implements NavigationView.OnNavig
         double lng = location.getLongitude();
         latituteField.setText(String.valueOf(lat));
         longitudeField.setText(String.valueOf(lng));*/
+
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
         double lat = Double.parseDouble(latitude);
         double lng = Double.parseDouble(longitude);
         LatLng latLng = new LatLng(lat, lng);
@@ -82,11 +94,5 @@ public class GmapSelf extends FragmentActivity implements NavigationView.OnNavig
         googleMap.addMarker(markerOptions);
         googleMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
-
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
     }
 }

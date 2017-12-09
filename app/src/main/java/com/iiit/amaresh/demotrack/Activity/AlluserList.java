@@ -78,7 +78,7 @@ public class AlluserList extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list);
         if (null != toolbar) {
-            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             toolbar.setTitle(getResources().getString(R.string.userlist));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,12 +156,6 @@ public class AlluserList extends BaseActivity {
                 if (pagename.contains("SPD")) {
                     indexx = users.getU_emp_id();
                     gotomessage();
-                   /* listview.setVisibility(View.GONE);
-                    searchView1.setVisibility(View.GONE);
-                    btn_layout.setVisibility(View.GONE);
-                    message_send.setVisibility(View.VISIBLE);
-                    block_name=sb1.toString().trim().substring(0, sb1.length() - 1);
-                    rcpt_name.setText("To"+" "+":"+" "+block_name);*/
 
                 } else if (pagename.contains("SPB")) {
                     indexx = users.getU_emp_id();
@@ -247,7 +241,6 @@ public class AlluserList extends BaseActivity {
 
     private void getContact() {
         if (Util.getNetworkConnectivityStatus(this)) {
-            GetUserDetail asyncTask = new GetUserDetail();
             String emp_type=null;
             String districid=null;
             String blockid=null;
@@ -266,6 +259,7 @@ public class AlluserList extends BaseActivity {
                  blockid=String.valueOf(USER_id);
 
             }
+            GetUserDetail asyncTask = new GetUserDetail();
             asyncTask.execute(emp_type,districid,blockid);
 
         }
@@ -316,7 +310,7 @@ public class AlluserList extends BaseActivity {
                 }
                 else if(pagename.contains("SPD")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("usertype", "1")
+                            .appendQueryParameter("emptype", "disctict")
                             .appendQueryParameter("district_id", _distrc);
                 }
                 else if(pagename.contains("SPB")){

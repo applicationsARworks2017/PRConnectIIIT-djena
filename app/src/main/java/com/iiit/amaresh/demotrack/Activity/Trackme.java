@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.R;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -32,7 +33,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class Trackme extends FragmentActivity implements android.location.LocationListener,NavigationView.OnNavigationItemSelectedListener {
+public class Trackme extends FragmentActivity implements OnMapReadyCallback,android.location.LocationListener,NavigationView.OnNavigationItemSelectedListener {
     private BaseActivity baseActivity;
     Button start, stop;
     String address,city,state;
@@ -44,6 +45,8 @@ public class Trackme extends FragmentActivity implements android.location.Locati
     private String provider;
     Geocoder geocoder;
     MarkerOptions markerOptions;
+    LatLng latLng;
+    Location location;
     private GoogleApiClient googleApiClient;
     private static final int PERMISSION_ACCESS_COARSE_LOCATION =100;
 
@@ -55,6 +58,9 @@ public class Trackme extends FragmentActivity implements android.location.Locati
         latituteField = (TextView) findViewById(R.id.TextView02);
         longitudeField = (TextView) findViewById(R.id.TextView04);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
 
         // Getting Google Play availability status
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
@@ -62,47 +68,13 @@ public class Trackme extends FragmentActivity implements android.location.Locati
          fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         // Getting Map for the SupportMapFragment
-        googleMap = fm.getMap();
+         fm.getMapAsync(this);
 
 
 
 
-        // Get the location manager
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the locatioin provider -> use
-        // default
-
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
 
 
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            Location location = locationManager.getLastKnownLocation(provider);
-
-            // Initialize the location fields
-            if (location != null) {
-                System.out.println("Provider " + provider + " has been selected.");
-                onLocationChanged(location);
-            } else {
-                latituteField.setText("Location not available");
-                longitudeField.setText("Location not available");
-            }
-
-        }
-        else {
-            Toast.makeText(Trackme.this,"Allow to GPS",Toast.LENGTH_LONG).show();
-        }
     }
 
     /* Request updates at startup */
@@ -140,7 +112,7 @@ public class Trackme extends FragmentActivity implements android.location.Locati
             double lng = location.getLongitude();
             latituteField.setText(String.valueOf(lat));
              longitudeField.setText(String.valueOf(lng));
-            LatLng latLng = new LatLng(lat, lng);
+             latLng = new LatLng(lat, lng);
             // for getting the address
             List<android.location.Address> addresses;
             geocoder = new Geocoder(this, Locale.getDefault());
@@ -153,31 +125,7 @@ public class Trackme extends FragmentActivity implements android.location.Locati
                 e.printStackTrace();
             }
 
-
-            googleMap.addMarker(new MarkerOptions().position(latLng));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
-            markerOptions = new MarkerOptions();
-            markerOptions.position(latLng).title(address+","+city+","+state);
-            googleMap.addMarker(markerOptions);
-            googleMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-
-            /*
-            *
-            * Geocoder geocoder;
-            List<Address> addresses;
-            geocoder = new Geocoder(this, Locale.getDefault());
-
-            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
-            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            String country = addresses.get(0).getCountryName();
-            String postalCode = addresses.get(0).getPostalCode();
-            String knownName = addresses.get(0).getFeatureName();
-            *
-            * */
+            getPos(latLng);
 
 
         }
@@ -208,5 +156,62 @@ public class Trackme extends FragmentActivity implements android.location.Locati
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         return false;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap Map) {
+        this.googleMap=Map;
+        // Get the location manager
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the locatioin provider -> use
+        // default
+
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+
+
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+             location=locationManager.getLastKnownLocation(provider);
+
+            // Initialize the location fields
+            if (location != null) {
+                System.out.println("Provider " + provider + " has been selected.");
+                onLocationChanged(location);
+            } else {
+                latituteField.setText("Location not available");
+                longitudeField.setText("Location not available");
+            }
+
+        }
+        else {
+            Toast.makeText(Trackme.this,"Allow to GPS",Toast.LENGTH_LONG).show();
+        }
+        if(latLng==null){
+
+        }
+        else{
+            getPos(latLng);
+        }
+    }
+    private void getPos(LatLng ll){
+        this.latLng=ll;
+        googleMap.addMarker(new MarkerOptions().position(latLng));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        markerOptions = new MarkerOptions();
+        markerOptions.position(latLng).title(address+","+city+","+state);
+        googleMap.addMarker(markerOptions);
+        googleMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
     }
 }

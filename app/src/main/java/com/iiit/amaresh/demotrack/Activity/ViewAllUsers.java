@@ -61,7 +61,7 @@ public class ViewAllUsers extends BaseActivity implements AdapterView.OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_users);
         if (null != toolbar) {
-            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
             toolbar.setTitle(getResources().getString(R.string.all_user));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

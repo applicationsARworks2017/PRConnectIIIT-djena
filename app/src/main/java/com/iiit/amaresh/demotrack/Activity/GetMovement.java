@@ -26,7 +26,7 @@ public class GetMovement extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_movement);
         if(null!=toolbar){
-            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             toolbar.setTitle(getResources().getString(R.string.Live_Track));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
+import com.iiit.amaresh.demotrack.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +38,7 @@ public class OwnHistory extends BaseActivity {
         setContentView(com.iiit.amaresh.demotrack.R.layout.activity_own_history);
 
         if(null!=toolbar){
-            toolbar.setNavigationIcon(com.iiit.amaresh.demotrack.R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             toolbar.setTitle(getResources().getString(com.iiit.amaresh.demotrack.R.string.Check_history));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

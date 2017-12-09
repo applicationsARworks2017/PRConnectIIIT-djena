@@ -11,9 +11,9 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.stalwartgroup.residentguardo.Activity.HomeActivity;
-import com.stalwartgroup.residentguardo.Util.Config;
-import com.stalwartgroup.residentguardo.Util.NotificationUtils;
+import com.iiit.amaresh.demotrack.Activity.Home;
+import com.iiit.amaresh.demotrack.Util.Config;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,7 +109,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notificationUtils.playNotificationSound();
             } else {
                 // app is in background, show the notification in notification tray
-                Intent resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent resultIntent = new Intent(getApplicationContext(), Home.class);
                 resultIntent.putExtra("message", message);
 
                 // check for image attachment

@@ -25,7 +25,7 @@ public class ProfileDetail extends BaseActivity {
 
 
         if (null != toolbar) {
-            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
             toolbar.setTitle(getResources().getString(R.string.profile));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

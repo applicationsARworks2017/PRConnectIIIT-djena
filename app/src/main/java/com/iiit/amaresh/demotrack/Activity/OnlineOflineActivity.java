@@ -32,7 +32,7 @@ public class OnlineOflineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (null != toolbar) {
-            toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
             toolbar.setTitle(getResources().getString(R.string.Galary_ASSET));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

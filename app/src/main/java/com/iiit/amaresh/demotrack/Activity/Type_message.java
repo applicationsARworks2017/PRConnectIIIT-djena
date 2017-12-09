@@ -54,7 +54,7 @@ public class Type_message extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.iiit.amaresh.demotrack.R.layout.activity_type_message);
         if (null != toolbar) {
-            toolbar.setNavigationIcon(com.iiit.amaresh.demotrack.R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            toolbar.setNavigationIcon(com.iiit.amaresh.demotrack.R.drawable.ic_arrow_back_white_24dp);
 
             toolbar.setTitle(getResources().getString(com.iiit.amaresh.demotrack.R.string.msg_page));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
