@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -99,6 +100,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
     FrameLayout vshow_frame;
     DBHelper db=new DBHelper(this);
     String file_path,file_type;
+    LinearLayout lin_camera,lin_video,lin_file;
 
 
     @Override
@@ -158,6 +160,9 @@ public class UploadAssets extends AppCompatActivity implements android.location.
         add_files = (ImageView) findViewById(com.iiit.amaresh.demotrack.R.id.add_files);
         imshow = (ImageView) findViewById(com.iiit.amaresh.demotrack.R.id.imgshow);
         vshow = (VideoView) findViewById(com.iiit.amaresh.demotrack.R.id.vshow);
+        lin_camera=(LinearLayout)findViewById(R.id.lin_camera);
+        lin_video=(LinearLayout)findViewById(R.id.lin_video);
+        lin_file=(LinearLayout)findViewById(R.id.lin_file);
        // vshow_frame=(FrameLayout)findViewById(R.id.vshow_frame);
         imshow.setVisibility(View.GONE);
         ///vshow_frame.setVisibility(View.GONE);
@@ -396,8 +401,11 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 //vshow_frame.setVisibility(View.GONE);
                 imshow.setVisibility(View.VISIBLE);
                 cam_bt.setVisibility(View.GONE);
+                lin_camera.setVisibility(View.GONE);
                 rec_bt.setVisibility(View.GONE);
+                lin_video.setVisibility(View.GONE);
                 add_files.setVisibility(View.GONE);
+                lin_file.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
                 et_projct_title.setVisibility(View.VISIBLE);
                 upload_bt.setVisibility(View.VISIBLE);
@@ -412,7 +420,9 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             Uri selectedfile = data.getData();
             file_path= Getpath.getPath(this,selectedfile);
             cam_bt.setVisibility(View.GONE);
+            lin_camera.setVisibility(View.GONE);
             rec_bt.setVisibility(View.GONE);
+            lin_video.setVisibility(View.GONE);
             add_files.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
             et_projct_title.setVisibility(View.VISIBLE);
@@ -451,8 +461,11 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             }
             vflag=true;
             cam_bt.setVisibility(View.GONE);
+            lin_camera.setVisibility(View.GONE);
             add_files.setVisibility(View.GONE);
+            lin_file.setVisibility(View.GONE);
             rec_bt.setVisibility(View.GONE);
+            lin_video.setVisibility(View.GONE);
           //  vshow_frame.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
             et_projct_title.setVisibility(View.VISIBLE);

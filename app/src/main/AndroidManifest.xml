@@ -82,7 +82,8 @@
         </activity>
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.PrimaryNotices"
-            android:label="Primary Notices" />
+            android:label="Primary Notices"
+            android:parentActivityName=".Activity.Home"/>
         <activity android:name="com.iiit.amaresh.demotrack.Activity.GmapSelf" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.SubOrdinateHistory"
@@ -110,7 +111,7 @@
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.AlluserList"
             android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.SelectedUser" />
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.DistrictUser" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.OnlineOflineActivity"
             android:label="Gallery Asset"
@@ -118,21 +119,22 @@
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.SelectedUser"
             android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.PrimaryNotices" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.DistrictUser"
-            android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+            android:label="District User"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.SelectedUser" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.MessageToSelectedUser"
-            android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
+            android:label="Write Message"
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.SelectedUser"
+             />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.FileView"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.BlockUser"
-            android:label="Select User"
+            android:label="Block User"
             android:launchMode="singleTask"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.DistrictUser" />
 

@@ -2,10 +2,11 @@ package com.iiit.amaresh.demotrack.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Adapter.BlockAdapter;
+import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.BlockList;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.DistrictUserList;
@@ -47,7 +49,7 @@ import java.util.List;
  * Created by mobileapplication on 11/21/17.
  */
 
-public class BlockUser extends AppCompatActivity {
+public class BlockUser extends BaseActivity {
 
     String server_response;
     int server_status;
@@ -80,6 +82,19 @@ public class BlockUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.block_user_list);
+
+
+        if (null != toolbar) {
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setTitle(getResources().getString(R.string.blockuser));
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavUtils.navigateUpFromSameTask(BlockUser.this);
+                }
+            });
+        }
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -108,9 +123,11 @@ public class BlockUser extends AppCompatActivity {
         if(distric_id.contains("null")){
             distric_id="";
         }
-        if(selected_district_id.contains("sbu")){
+        if(pagename.contains("SBU")){
             district_id=distric_id;
-        }
+        }/*if(pagename.contains("sbu")){
+            block_id=bloc_id;
+        }*/
         else{
             district_id=selected_district_id;
         }
@@ -166,12 +183,33 @@ public class BlockUser extends AppCompatActivity {
 
                         if(pagename.contentEquals("dwbu")) {
                             block_id = sb.toString().trim().substring(0, sb.length() - 1);
-                            listview.setVisibility(View.GONE);
+                            block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
+                            Intent i=new Intent(BlockUser.this,MessageToSelectedUser.class);
+                            i.putExtra("TAB","dwbu");
+                            i.putExtra("BLOCKID",block_id);
+                            i.putExtra("BLOCKNAME",block_name);
+                            startActivity(i);
+                            /*listview.setVisibility(View.GONE);
                             searchView1.setVisibility(View.GONE);
                             btn_layout.setVisibility(View.GONE);
                             message_send.setVisibility(View.VISIBLE);
                             block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
-                            rcpt_name.setText("To" + " " + ":" + " " + block_name);
+                            rcpt_name.setText("To" + " " + ":" + " " + block_name);*/
+                        }
+                        else if(pagename.contentEquals("SBU")) {
+                            block_id = sb.toString().trim().substring(0, sb.length() - 1);
+                            block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
+                            Intent i=new Intent(BlockUser.this,AlluserList.class);
+                            i.putExtra("page",pagename);
+                            i.putExtra("BLOCKID",block_id);
+                            i.putExtra("BLOCKNAME",block_name);
+                            startActivity(i);
+                            /*listview.setVisibility(View.GONE);
+                            searchView1.setVisibility(View.GONE);
+                            btn_layout.setVisibility(View.GONE);
+                            message_send.setVisibility(View.VISIBLE);
+                            block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
+                            rcpt_name.setText("To" + " " + ":" + " " + block_name);*/
                         }
                         else {
                             Intent i = new Intent(BlockUser.this, AlluserList.class);
@@ -187,7 +225,7 @@ public class BlockUser extends AppCompatActivity {
                 }
             }
         });
-        SEND_ok.setOnClickListener(new View.OnClickListener() {
+       /* SEND_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg=msgbody.getText().toString();
@@ -199,7 +237,7 @@ public class BlockUser extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
         searchView1.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

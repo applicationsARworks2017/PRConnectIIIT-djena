@@ -93,5 +93,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return assetlist;
     }
 
+    // Deleting single contact
+    public void deleteRow(String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ALLUSER_TABLE, USER_TITLE + " = ?",
+                new String[] { title });
+        db.close();
+    }
+
 
 }

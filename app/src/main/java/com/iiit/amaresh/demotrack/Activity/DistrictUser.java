@@ -2,10 +2,11 @@ package com.iiit.amaresh.demotrack.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Adapter.BlockAdapter;
 import com.iiit.amaresh.demotrack.Adapter.DistrictAdapter;
+import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.BlockList;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.DistrictUserList;
@@ -47,7 +49,7 @@ import java.util.ArrayList;
  * Created by RN on 11/20/2017.
  */
 
-public class DistrictUser extends AppCompatActivity {
+public class DistrictUser extends BaseActivity {
 
     String server_response;
     int server_status;
@@ -80,11 +82,25 @@ public class DistrictUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.district_user_list);
 
-        Intent intent = getIntent();
+        if (null != toolbar) {
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setTitle(getResources().getString(R.string.districtuser));
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavUtils.navigateUpFromSameTask(DistrictUser.this);
+                }
+            });
+        }
+        data=SelectedUser.selection;
+        /*Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             data = extras.getString("TAB");
-        }
+        }*/
+
+
         sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
         state_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_STATE_ID, null);
         distric_id = this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_DISTRICT_ID, null);
@@ -109,13 +125,19 @@ public class DistrictUser extends AppCompatActivity {
             }
         });
 
+        if(data!=null && data!="" && !data.isEmpty()) {
+            if (data.contains("dwbu")) {
+                getDistrictuser();
+            }
+            else if(data.contains("SBU")){
+                getDistrictuser();
 
-        if (data.contains("dwbu")) {
-            getDistrictuser();
-        }
-        else{
-            getDistrictuser();
+            }
+            else
+             {
+                getDistrictuser();
 
+            }
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -169,6 +191,14 @@ public class DistrictUser extends AppCompatActivity {
                         if (data.contains("dwbu")) {
                             district_name=sb1.toString().trim().substring(0, sb1.length() - 1);
                             rcpt_name.setText("To"+" "+":"+" "+district_name);
+                            district_id=sb.toString().trim().substring(0, sb.length() - 1);
+                            Intent i=new Intent(DistrictUser.this,BlockUser.class);
+                            i.putExtra("DISTRICTID",district_id);
+                            i.putExtra("page",data);
+                            startActivity(i);
+                        }else if (data.contains("SBU")) {
+                            district_name=sb1.toString().trim().substring(0, sb1.length() - 1);
+                           // rcpt_name.setText("To"+" "+":"+" "+district_name);
                             district_id=sb.toString().trim().substring(0, sb.length() - 1);
                             Intent i=new Intent(DistrictUser.this,BlockUser.class);
                             i.putExtra("DISTRICTID",district_id);

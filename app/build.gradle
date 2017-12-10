@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.iiit.amaresh.demotrack"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 23
         versionCode 6
         versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

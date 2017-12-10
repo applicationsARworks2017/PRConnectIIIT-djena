@@ -155,11 +155,39 @@ public class AlluserList extends BaseActivity {
                 }*/
                 if (pagename.contains("SPD")) {
                     indexx = users.getU_emp_id();
-                    gotomessage();
+                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
+                    i.putExtra("TAB",pagename);
+                    i.putExtra("USERNAME",name);
+                    i.putExtra("USERID",indexx);
+                    startActivity(i);
+                   // gotomessage();
+
+                }else if (pagename.contains("SBU")) {
+                    indexx = users.getU_emp_id();
+                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
+                    i.putExtra("TAB",pagename);
+                    i.putExtra("USERNAME",name);
+                    i.putExtra("USERID",indexx);
+                    startActivity(i);
+                    //gotomessage();
+
+                }else if (pagename.contains("State")) {
+                    indexx = users.getU_emp_id();
+                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
+                    i.putExtra("TAB",pagename);
+                    i.putExtra("USERNAME",name);
+                    i.putExtra("USERID",indexx);
+                    startActivity(i);
+                    //gotomessage();
 
                 } else if (pagename.contains("SPB")) {
                     indexx = users.getU_emp_id();
-                    gotomessage();
+                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
+                    i.putExtra("TAB",pagename);
+                    i.putExtra("USERNAME",name);
+                    i.putExtra("USERID",indexx);
+                    startActivity(i);
+                    //gotomessage();
                    /* listview.setVisibility(View.GONE);
                     searchView1.setVisibility(View.GONE);
                     btn_layout.setVisibility(View.GONE);
@@ -256,11 +284,11 @@ public class AlluserList extends BaseActivity {
             }
             else if(userType.contains("0")){
                 emp_type="0";
-                 blockid=String.valueOf(USER_id);
+                block_id=String.valueOf(USER_id);
 
             }
             GetUserDetail asyncTask = new GetUserDetail();
-            asyncTask.execute(emp_type,districid,blockid);
+            asyncTask.execute(emp_type,districid,block_id);
 
         }
     }
@@ -302,16 +330,20 @@ public class AlluserList extends BaseActivity {
                 conn.setRequestMethod("POST");
 
                 Uri.Builder builder = new Uri.Builder();
-                if(userType.contentEquals("1")){
+                if(pagename.contains("SBU")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("usertype", _emptype)
-                            .appendQueryParameter("district_id", _distrc);
+                            .appendQueryParameter("emptype", "block")
+                            .appendQueryParameter("block_id", _block);
 
                 }
-                else if(pagename.contains("SPD")){
+                 else if(pagename.contains("SPD")){
                     builder = new Uri.Builder()
-                            .appendQueryParameter("emptype", "disctict")
+                            .appendQueryParameter("emptype", "district")
                             .appendQueryParameter("district_id", _distrc);
+                }else if(pagename.contains("State")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("emptype", "state")
+                            .appendQueryParameter("state_id", "1");
                 }
                 else if(pagename.contains("SPB")){
                     builder = new Uri.Builder()
@@ -551,5 +583,12 @@ public class AlluserList extends BaseActivity {
             }
             progressDialog.cancel();
         }
+    }
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        this.finish();
     }
 }

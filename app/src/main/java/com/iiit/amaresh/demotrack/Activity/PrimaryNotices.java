@@ -5,14 +5,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.R;
 import com.iiit.amaresh.demotrack.Tabs.PagerMessages;
 
-public class PrimaryNotices extends AppCompatActivity  {
+public class PrimaryNotices extends BaseActivity {
     FloatingActionButton fab;
 
 
@@ -20,6 +21,17 @@ public class PrimaryNotices extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_primary_notices);
+        if (null != toolbar) {
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setTitle(getResources().getString(R.string.primarynotice));
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavUtils.navigateUpFromSameTask(PrimaryNotices.this);
+                }
+            });
+        }
         fab = (FloatingActionButton) findViewById(R.id.float_btn);
         //fab.setBackgroundColor(Color.parseColor("#ffffff"));
         fab.setRippleColor(Color.CYAN);

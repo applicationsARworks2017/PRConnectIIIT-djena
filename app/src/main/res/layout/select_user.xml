@@ -3,14 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/for_state_userttype">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
         <include android:id="@+id/district_list"
             android:visibility="gone"
             layout="@layout/select_user_district"/>
@@ -22,14 +27,17 @@
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
     <RelativeLayout
         android:id="@+id/all"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/squar_background">
         <TextView
@@ -44,7 +52,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         android:layout_marginTop="10dp"
         android:id="@+id/a_d_user"
         android:layout_below="@+id/all"
@@ -61,7 +69,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         android:id="@+id/d_w_user"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/a_d_user"
@@ -79,7 +87,7 @@
     <RelativeLayout
         android:id="@+id/spcfc_d_user"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         android:layout_below="@+id/d_w_user"
         android:background="@drawable/squar_background4"
         android:layout_marginTop="10dp">
@@ -93,6 +101,23 @@
             android:textStyle="bold"
             android:text="SPECIFIC DISTRICT USER"/>
     </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/spcfc_block_user"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_below="@+id/spcfc_d_user"
+                android:background="@drawable/squar_background5"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+                    android:textColor="#ff30d0"
+                    android:textStyle="bold"
+                    android:text="SPECIFIC BLOCK USER"/>
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/spcfc_b_user"
                 android:layout_width="match_parent"

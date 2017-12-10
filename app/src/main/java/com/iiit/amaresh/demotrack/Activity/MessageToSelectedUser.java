@@ -2,10 +2,11 @@ package com.iiit.amaresh.demotrack.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
@@ -35,16 +37,16 @@ import java.net.URL;
  * Created by RN on 11/19/2017.
  */
 
-public class MessageToSelectedUser extends AppCompatActivity{
+public class MessageToSelectedUser extends BaseActivity{
 
-    String data;
+    String data,BLOCKID,BLOCKNAME;
     TextView rcpt_name;
     EditText msgbody;
     Button ok;
     String message_body;
     ProgressDialog progressDialog;
     int server_status;
-    String server_response,sender_name,distric_id,state_id,bloc_id;
+    String server_response,sender_name,distric_id,state_id,bloc_id,USERID,USERNAME;
 
 
     @Override
@@ -52,11 +54,27 @@ public class MessageToSelectedUser extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selectd_user_messag);
 
+        if (null != toolbar) {
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setTitle(getResources().getString(R.string.writemessage));
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavUtils.navigateUpFromSameTask(MessageToSelectedUser.this);
+                }
+            });
+
+        }
 
         Intent intent=getIntent();
         Bundle extras = intent.getExtras();
         if(extras != null) {
             data = extras.getString("TAB");
+            BLOCKID = extras.getString("BLOCKID");
+            BLOCKNAME = extras.getString("BLOCKNAME");
+            USERNAME = extras.getString("USERNAME");
+            USERID = extras.getString("USERID");
         }
 
         sender_name = getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.SP_USER_NAME, null);
@@ -76,9 +94,17 @@ public class MessageToSelectedUser extends AppCompatActivity{
             rcpt_name.setText("To"+" "+":"+" "+"ALL DISTRICT USER");
 
         }
-        else if(data.contains("State")){
+        else if(data.contains("SBU")){
 
-            rcpt_name.setText("To"+" "+":"+" "+"State");
+            rcpt_name.setText("To"+" "+":"+" "+USERNAME);
+
+        }  else if(data.contains("State")){
+
+            rcpt_name.setText("To"+" "+":"+" "+USERNAME);
+
+        } else if(data.contains("dwbu")){
+
+            rcpt_name.setText("To"+" "+":"+" "+BLOCKNAME);
 
         }
       ok.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +125,7 @@ public class MessageToSelectedUser extends AppCompatActivity{
     private void sendMessage() {
         if(Util.getNetworkConnectivityStatus(MessageToSelectedUser.this)) {
             send_message regtask = new send_message();
-            regtask.execute(sender_name,message_body,distric_id,bloc_id,state_id);
+            regtask.execute(sender_name,message_body,distric_id,bloc_id,state_id,BLOCKID,USERID);
         }
         else{
             Toast.makeText(MessageToSelectedUser.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
@@ -128,6 +154,8 @@ public class MessageToSelectedUser extends AppCompatActivity{
                 String _distric = params[2];
                 String _block = params[3];
                 String _state = params[4];
+                String _blockid = params[5];
+                String _userid = params[6];
 
                 InputStream in = null;
                 int resCode = -1;
@@ -149,6 +177,27 @@ public class MessageToSelectedUser extends AppCompatActivity{
                             .appendQueryParameter("send_by",_sendby)
                             .appendQueryParameter("message",_msg)
                             .appendQueryParameter("usertype","2");
+                }else if(data.contentEquals("SBU")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by",_sendby)
+                            .appendQueryParameter("message",_msg);
+
+                }else if(data.contentEquals("SPB")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by",_sendby)
+                            .appendQueryParameter("message",_msg);
+
+                }else if(data.contentEquals("SPD")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by",_sendby)
+                            .appendQueryParameter("message",_msg);
+                }
+                else if(data.contentEquals("dwbu")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by",_sendby)
+                            .appendQueryParameter("message",_msg)
+                            .appendQueryParameter("block_id",_blockid)
+                            .appendQueryParameter("usertype","0");
                 }
                 else {
                     builder = new Uri.Builder()
