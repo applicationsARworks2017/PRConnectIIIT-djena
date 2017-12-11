@@ -13,7 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.DataParser;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;

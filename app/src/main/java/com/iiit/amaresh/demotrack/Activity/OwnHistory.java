@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
 

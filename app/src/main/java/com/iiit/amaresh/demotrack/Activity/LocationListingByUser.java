@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Adapter.LocationListingAdapter;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.LocationList;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 

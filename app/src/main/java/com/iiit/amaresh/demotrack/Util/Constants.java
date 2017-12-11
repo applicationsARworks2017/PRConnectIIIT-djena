@@ -1,4 +1,4 @@
-package com.iiit.amaresh.demotrack.Pojo;
+package com.iiit.amaresh.demotrack.Util;
 
 /**
  * Created by ISEA on 11-01-2017.
@@ -23,6 +23,7 @@ public class Constants {
     public static final String SEND_ALL="setbulkmessage.php";
     public static final String SEND_DISTRICT_W_B_USER="getdistrict.php";
     public static final String BLOCK_USER="getblock.php";
+    public static final String PROJECT_LIST="getprojectlist.php";
     public static final String FCM_ID="fcmid";
 
 

@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.iiit.amaresh.demotrack.Adapter.BlockAdapter;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.BlockList;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.DistrictUserList;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -438,7 +438,7 @@ public class BlockUser extends BaseActivity {
                 listview.setAdapter(b_adapter);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Connectivity issue",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Data Not Found",Toast.LENGTH_SHORT).show();
             }
             // mListView.setSelectionFromTop(index, top);
             progress.dismiss();

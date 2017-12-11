@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Activity.UserDetails;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 

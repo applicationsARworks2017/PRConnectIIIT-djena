@@ -97,6 +97,7 @@
             android:hint="Project Name"
             android:singleLine="true"
             android:editable="false"
+            android:focusable="false"
             android:id="@+id/et_projct_title"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"

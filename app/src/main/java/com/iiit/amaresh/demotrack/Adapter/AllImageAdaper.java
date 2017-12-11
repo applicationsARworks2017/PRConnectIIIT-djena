@@ -41,7 +41,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
-import static com.iiit.amaresh.demotrack.Pojo.Constants.DOWNLOAD_URL;
+import static com.iiit.amaresh.demotrack.Util.Constants.DOWNLOAD_URL;
 
 /**
  * Created by LIPL on 16/02/17.

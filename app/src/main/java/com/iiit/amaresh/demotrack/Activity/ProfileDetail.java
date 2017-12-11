@@ -2,12 +2,11 @@ package com.iiit.amaresh.demotrack.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.R;
 
 /**

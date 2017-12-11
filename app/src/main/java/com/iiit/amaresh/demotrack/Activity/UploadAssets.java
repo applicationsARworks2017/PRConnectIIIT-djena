@@ -42,7 +42,7 @@ import android.widget.VideoView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -65,7 +65,8 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 public class UploadAssets extends AppCompatActivity implements android.location.LocationListener {
     ImageView cam_bt,imshow,rec_bt,add_files;
     Button upload_bt;
-    EditText title,et_projct_title;
+    EditText title;
+    public static EditText et_projct_title;
     String v_deop,im_file,File_file;
     String latitude,longitude,s_title,address,city,state;
     public static String project_title;
@@ -173,13 +174,13 @@ public class UploadAssets extends AppCompatActivity implements android.location.
         et_projct_title=(EditText)findViewById(com.iiit.amaresh.demotrack.R.id.et_projct_title);
         title.setVisibility(View.INVISIBLE);
         et_projct_title.setVisibility(View.INVISIBLE);
-        /*et_projct_title.setOnClickListener(new View.OnClickListener() {
+        et_projct_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(UploadAssets.this,StaticUserLlist.class);
                 startActivity(i);
             }
-        });*/
+        });
         cam_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,7 +216,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                         Toast.makeText(UploadAssets.this, "File Not Captured..!", Toast.LENGTH_LONG).show();
                     } else if (s_title.length() <= 0 && s_title.equals("")) {
                         Toast.makeText(UploadAssets.this, "Please Enter Title For Image", Toast.LENGTH_LONG).show();
-                    }else if (project_title.length() <= 0 && project_title.equals("")) {
+                    }else if (project_title.length() <= 0 || project_title.equals("")) {
                         Toast.makeText(UploadAssets.this, "Please Enter Project Name For Image", Toast.LENGTH_LONG).show();
                     }
                    else {
@@ -483,9 +484,10 @@ public class UploadAssets extends AppCompatActivity implements android.location.
             vshow.setMediaController(media_Controller);
             vshow.setVideoPath(String.valueOf(mediaFile));
             vshow.start();*/
-            String path = data.getData().toString();
+           // String path = data.getData().toString();
+            String pathh =(String.valueOf(mediaFile));
            // videofile=new File(selectedVideo.getPath());
-            vshow.setVideoPath(path);
+            vshow.setVideoPath(pathh);
             vshow.requestFocus();
             vshow.setMediaController(media_Controller);
             media_Controller.setAnchorView(vshow);
@@ -584,12 +586,12 @@ public class UploadAssets extends AppCompatActivity implements android.location.
 
         String TAG = "FileUpload";
         private boolean is_success = false;
-        //private ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress = ProgressDialog.show(UploadAssets.this, "Please Wait",
+            progressDialog = ProgressDialog.show(UploadAssets.this, "Please Wait",
                     "Uploading Files...", true);
         }
 
@@ -616,7 +618,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                 multipart.addFormField("address", address);
                 multipart.addFormField("project_file", project_titl);
                // if (images_to_post != null && images_to_post.exists())
-                if(file!=null){
+                if(video!=null){
                     multipart.addFilePart("file_name", video);
                 }
                 else if(filee!=null){
@@ -669,13 +671,21 @@ public class UploadAssets extends AppCompatActivity implements android.location.
         @Override
         protected void onPostExecute(final Void result) {
             super.onPostExecute(result);
-            progress.dismiss();
-            Toast.makeText(UploadAssets.this,server_message,Toast.LENGTH_LONG).show();
-            Intent intent=new Intent(UploadAssets.this,Home.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
+            if (server_status == 1) {
+                et_projct_title.setText("");
+                Toast.makeText(UploadAssets.this, server_message, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UploadAssets.this, Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        else {
+                Toast.makeText(UploadAssets.this, server_message, Toast.LENGTH_LONG).show();
+
+            }
+            progressDialog.dismiss();
+
         }
     }
 

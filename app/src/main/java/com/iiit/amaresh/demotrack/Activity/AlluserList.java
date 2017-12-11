@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.iiit.amaresh.demotrack.Adapter.AllUserAdapter;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
@@ -57,7 +57,7 @@ public class AlluserList extends BaseActivity {
     List<UserListing> userlist_search;
     AllUserAdapter qadapter;
     ListView mListView = null;
-    private SearchView search;
+    public SearchView search;
     TextView tvEmptyView;
     private int index = 0, top = 0;
     int g_position = 0, USER_id;
@@ -455,7 +455,7 @@ public class AlluserList extends BaseActivity {
                 mListView.setSelectionFromTop(index, top);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Connectivity Issue,Check your Internet",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Data Not Found",Toast.LENGTH_LONG).show();
             }
             progress.dismiss();
         }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.iiit.amaresh.demotrack.Adapter.DistrictAdapter;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.UserListing;
 import com.iiit.amaresh.demotrack.R;
 

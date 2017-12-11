@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 
 public class SplashActivity extends AppCompatActivity {
     private static final int PERMISSION_ACCESS_COARSE_LOCATION =100;

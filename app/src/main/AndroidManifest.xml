@@ -137,6 +137,11 @@
             android:label="Block User"
             android:launchMode="singleTask"
             android:parentActivityName="com.iiit.amaresh.demotrack.Activity.DistrictUser" />
+         <activity
+                    android:name="com.iiit.amaresh.demotrack.Activity.StaticUserLlist"
+                    android:label="Block User"
+                    android:launchMode="singleTask"
+                    android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
 
 
         <!-- Firebase Notifications -->

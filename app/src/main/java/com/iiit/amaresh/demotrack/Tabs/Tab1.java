@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Activity.Home;
 import com.iiit.amaresh.demotrack.Activity.MainActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 
 import org.json.JSONException;

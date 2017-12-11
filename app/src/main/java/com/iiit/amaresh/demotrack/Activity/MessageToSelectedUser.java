@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;
 
@@ -180,17 +180,28 @@ public class MessageToSelectedUser extends BaseActivity{
                 }else if(data.contentEquals("SBU")){
                     builder = new Uri.Builder()
                             .appendQueryParameter("send_by",_sendby)
-                            .appendQueryParameter("message",_msg);
+                            .appendQueryParameter("message",_msg)
+                            .appendQueryParameter("emp_id",_userid);
+
 
                 }else if(data.contentEquals("SPB")){
                     builder = new Uri.Builder()
                             .appendQueryParameter("send_by",_sendby)
-                            .appendQueryParameter("message",_msg);
+                            .appendQueryParameter("message",_msg)
+                            .appendQueryParameter("emp_id",_userid);
+
 
                 }else if(data.contentEquals("SPD")){
                     builder = new Uri.Builder()
                             .appendQueryParameter("send_by",_sendby)
-                            .appendQueryParameter("message",_msg);
+                            .appendQueryParameter("message",_msg)
+                            .appendQueryParameter("emp_id",_userid);
+                }
+                else if(data.contentEquals("State")){
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("send_by",_sendby)
+                            .appendQueryParameter("message",_msg)
+                            .appendQueryParameter("emp_id",_userid);
                 }
                 else if(data.contentEquals("dwbu")){
                     builder = new Uri.Builder()

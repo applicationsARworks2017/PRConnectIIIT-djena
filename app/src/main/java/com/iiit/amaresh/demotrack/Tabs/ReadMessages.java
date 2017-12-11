@@ -14,7 +14,7 @@ import android.support.v4.app.Fragment;
 
 
 import com.iiit.amaresh.demotrack.Adapter.ReadMessageAdaper;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.MessageRead;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;

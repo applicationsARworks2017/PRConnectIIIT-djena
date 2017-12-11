@@ -24,7 +24,7 @@ import com.iiit.amaresh.demotrack.Adapter.BlockAdapter;
 import com.iiit.amaresh.demotrack.Adapter.DistrictAdapter;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Pojo.BlockList;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.DistrictUserList;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 import com.iiit.amaresh.demotrack.R;

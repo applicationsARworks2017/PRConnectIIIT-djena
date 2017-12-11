@@ -24,7 +24,7 @@ import android.widget.VideoView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.iiit.amaresh.demotrack.Database.DBHelper;
-import com.iiit.amaresh.demotrack.Pojo.Constants;
+import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.CustomVolleyRequest;
 import com.iiit.amaresh.demotrack.Pojo.MultipartUtility;
 import com.iiit.amaresh.demotrack.Pojo.Oflinedata;
