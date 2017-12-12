@@ -205,8 +205,9 @@ public class Type_message extends BaseActivity {
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
-            postregistration();
+            //postregistration();
             progressDialog.cancel();
+            finish();
         }
     }
     public void postregistration(){

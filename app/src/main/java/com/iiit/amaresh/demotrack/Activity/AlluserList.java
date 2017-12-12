@@ -155,37 +155,37 @@ public class AlluserList extends BaseActivity {
                 }*/
                 if (pagename.contains("SPD")) {
                     indexx = users.getU_emp_id();
-                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
-                    i.putExtra("TAB",pagename);
-                    i.putExtra("USERNAME",name);
-                    i.putExtra("USERID",indexx);
+                    Intent i=new Intent(AlluserList.this,Type_message.class);
+                    //i.putExtra("TAB",pagename);
+                    i.putExtra("name",name);
+                    i.putExtra("id",indexx);
                     startActivity(i);
                    // gotomessage();
 
                 }else if (pagename.contains("SBU")) {
                     indexx = users.getU_emp_id();
-                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
-                    i.putExtra("TAB",pagename);
-                    i.putExtra("USERNAME",name);
-                    i.putExtra("USERID",indexx);
+                    Intent i=new Intent(AlluserList.this,Type_message.class);
+                   // i.putExtra("TAB",pagename);
+                    i.putExtra("name",name);
+                    i.putExtra("id",indexx);
                     startActivity(i);
                     //gotomessage();
 
                 }else if (pagename.contains("State")) {
                     indexx = users.getU_emp_id();
-                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
-                    i.putExtra("TAB",pagename);
-                    i.putExtra("USERNAME",name);
-                    i.putExtra("USERID",indexx);
+                    Intent i=new Intent(AlluserList.this,Type_message.class);
+                   // i.putExtra("TAB",pagename);
+                    i.putExtra("name",name);
+                    i.putExtra("id",indexx);
                     startActivity(i);
                     //gotomessage();
 
                 } else if (pagename.contains("SPB")) {
                     indexx = users.getU_emp_id();
-                    Intent i=new Intent(AlluserList.this,MessageToSelectedUser.class);
-                    i.putExtra("TAB",pagename);
-                    i.putExtra("USERNAME",name);
-                    i.putExtra("USERID",indexx);
+                    Intent i=new Intent(AlluserList.this,Type_message.class);
+                   // i.putExtra("TAB",pagename);
+                    i.putExtra("name",name);
+                    i.putExtra("id",indexx);
                     startActivity(i);
                     //gotomessage();
                    /* listview.setVisibility(View.GONE);
