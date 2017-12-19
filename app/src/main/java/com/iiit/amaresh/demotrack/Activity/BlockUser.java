@@ -189,12 +189,6 @@ public class BlockUser extends BaseActivity {
                             i.putExtra("BLOCKID",block_id);
                             i.putExtra("BLOCKNAME",block_name);
                             startActivity(i);
-                            /*listview.setVisibility(View.GONE);
-                            searchView1.setVisibility(View.GONE);
-                            btn_layout.setVisibility(View.GONE);
-                            message_send.setVisibility(View.VISIBLE);
-                            block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
-                            rcpt_name.setText("To" + " " + ":" + " " + block_name);*/
                         }
                         else if(pagename.contentEquals("SBU")) {
                             block_id = sb.toString().trim().substring(0, sb.length() - 1);
@@ -204,12 +198,6 @@ public class BlockUser extends BaseActivity {
                             i.putExtra("BLOCKID",block_id);
                             i.putExtra("BLOCKNAME",block_name);
                             startActivity(i);
-                            /*listview.setVisibility(View.GONE);
-                            searchView1.setVisibility(View.GONE);
-                            btn_layout.setVisibility(View.GONE);
-                            message_send.setVisibility(View.VISIBLE);
-                            block_name = sb1.toString().trim().substring(0, sb1.length() - 1);
-                            rcpt_name.setText("To" + " " + ":" + " " + block_name);*/
                         }
                         else {
                             Intent i = new Intent(BlockUser.this, AlluserList.class);
@@ -351,8 +339,15 @@ public class BlockUser extends BaseActivity {
                 conn.setInstanceFollowRedirects(true);
                 conn.setRequestMethod("POST");
 
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("district_id", districtid);
+                Uri.Builder builder = null;
+                if(pagename.contentEquals("SBU")) {
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("district_id", "");
+                }
+                else{
+                    builder = new Uri.Builder()
+                            .appendQueryParameter("district_id", districtid);
+                }
 
                 String query = builder.build().getEncodedQuery();
 

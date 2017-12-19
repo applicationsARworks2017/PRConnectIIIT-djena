@@ -111,7 +111,8 @@
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.AlluserList"
             android:label="Select User"
-            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.DistrictUser" />
+            android:parentActivityName="com.iiit.amaresh.demotrack.Activity.DistrictUser"
+            android:launchMode="singleTask"/>
         <activity
             android:name="com.iiit.amaresh.demotrack.Activity.OnlineOflineActivity"
             android:label="Gallery Asset"

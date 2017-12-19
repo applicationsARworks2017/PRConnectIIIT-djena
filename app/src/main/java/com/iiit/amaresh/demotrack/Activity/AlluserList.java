@@ -270,25 +270,22 @@ public class AlluserList extends BaseActivity {
     private void getContact() {
         if (Util.getNetworkConnectivityStatus(this)) {
             String emp_type=null;
-            String districid=null;
-            String blockid=null;
+
 
             if(userType.contains("1")){
                 emp_type="2";
-                districid=distric_id;
             }
             else if(userType.contains("2")){
                 emp_type="2";
-                districid=distric_id;
 
             }
             else if(userType.contains("0")){
                 emp_type="0";
-                block_id=String.valueOf(USER_id);
+               // block_id=String.valueOf(USER_id);
 
             }
             GetUserDetail asyncTask = new GetUserDetail();
-            asyncTask.execute(emp_type,districid,block_id);
+            asyncTask.execute(emp_type,distric_id,block_id);
 
         }
     }
@@ -340,6 +337,7 @@ public class AlluserList extends BaseActivity {
                     builder = new Uri.Builder()
                             .appendQueryParameter("emptype", "district")
                             .appendQueryParameter("district_id", _distrc);
+                    Log.i(TAG, "emptype : " + _distrc);
                 }else if(pagename.contains("State")){
                     builder = new Uri.Builder()
                             .appendQueryParameter("emptype", "state")
