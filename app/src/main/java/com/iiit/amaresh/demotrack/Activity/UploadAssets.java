@@ -253,7 +253,7 @@ public class UploadAssets extends AppCompatActivity implements android.location.
                     sid=String.valueOf(user_id);
                     saddress=address+","+city;
                   // db.insertasset(user_id,latitude,longitude,s_title,saddress,video,file);
-                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file,File_file));
+                    db.insertasset(new Oflinedata(user_id,latitude,longitude,s_title,saddress,v_deop,im_file,File_file,project_title));
 
                     Intent intent=new Intent(UploadAssets.this,Home.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

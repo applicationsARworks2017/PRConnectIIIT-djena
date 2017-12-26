@@ -66,12 +66,20 @@
                 android:layout_below="@+id/tvImtime"
                 android:textColor="@color/textColorPrimary" />
             <TextView
+                android:id="@+id/tvprojectname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Project Name"
+                android:layout_below="@+id/tvImaddress"
+                android:textColor="@color/projectname" />
+            <TextView
                 android:id="@+id/tvImtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Title"
-                android:layout_below="@+id/tvImaddress"
+                android:layout_below="@+id/tvprojectname"
                 android:textColor="@color/textColorPrimary" />
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="match_parent"

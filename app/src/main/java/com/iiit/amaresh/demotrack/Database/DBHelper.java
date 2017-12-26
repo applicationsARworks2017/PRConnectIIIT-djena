@@ -28,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private String USER_VIDEO="video";
     private String USER_FILE="file";
     private String USER_FILEDOC="filedoc";
+    private String PROJECTFILE="projectname";
 
     public DBHelper(Context context) {
 
@@ -44,7 +45,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + USER_ADDRESS + " text, "
                 + USER_VIDEO +" text, "
                 + USER_FILE + " text, "
-                + USER_FILEDOC+ " text) "
+                + USER_FILEDOC + " text, "
+                + PROJECTFILE+ " text) "
         );
     }
     @Override
@@ -66,6 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(USER_VIDEO, data.getVideo());
         contentValues.put(USER_FILE, data.getImage());
         contentValues.put(USER_FILEDOC, data.getFile_file());
+        contentValues.put(PROJECTFILE, data.getProjectname());
        db.insertWithOnConflict(ALLUSER_TABLE, null, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         db.close(); // Closing database connection
 
@@ -86,6 +89,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     user.setvideo(res.getString(5));
                     user.setimage(res.getString(6));
                     user.setFile_file(res.getString(7));
+                    user.setProjectname(res.getString(8));
                     assetlist.add(user);
                 } while (res.moveToNext());
             }

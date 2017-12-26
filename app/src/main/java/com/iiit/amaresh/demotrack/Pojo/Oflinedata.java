@@ -5,7 +5,7 @@ package com.iiit.amaresh.demotrack.Pojo;
  */
 
 public class Oflinedata {
-    String longitude,latitude,address,title,image,video,File_file;
+    String longitude,latitude,address,title,image,video,File_file,projectname;
     int user_id;
 
     public String getLongitude() {
@@ -60,7 +60,15 @@ public class Oflinedata {
         return user_id;
     }
 
-    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, String file,String File_file) {
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
+
+    public Oflinedata(int user_id, String latitude, String longitude, String s_title, String saddress, String video, String file, String File_file, String projectname) {
         this.user_id=user_id;
         this.latitude=latitude;
         this.longitude=longitude;
@@ -69,6 +77,8 @@ public class Oflinedata {
         this.video=video;
         this.image=file;
         this.File_file=File_file;
+        this.projectname=projectname;
+
 
     }
 

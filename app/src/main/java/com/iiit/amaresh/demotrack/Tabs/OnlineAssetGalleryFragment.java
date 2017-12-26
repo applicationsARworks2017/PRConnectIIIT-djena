@@ -168,9 +168,11 @@ public class OnlineAssetGalleryFragment extends Fragment {
                             im_usename = q_list_obj.getString("empname");
                             im_userdesg = q_list_obj.getString("empdesg");
                             im_useradd = q_list_obj.getString("address");
+                            im_useradd = q_list_obj.getString("address");
+                            String project_file = q_list_obj.getString("project_file");
 //                        server_status = q_list_obj.getInt("status");
 
-                            ImageAll am_list = new ImageAll(id, im_emp_id, im_filename, im_title, im_latitude, im_longitude, im_created, im_usename, im_userdesg, im_useradd);
+                            ImageAll am_list = new ImageAll(id, im_emp_id, im_filename, im_title, im_latitude, im_longitude, im_created, im_usename, im_userdesg, im_useradd,project_file);
                             allimagelist.add(am_list);
                         }
                     }

@@ -174,9 +174,10 @@ public class GalaryActivity extends BaseActivity {
                             im_usename = q_list_obj.getString("empname");
                             im_userdesg = q_list_obj.getString("empdesg");
                             im_useradd = q_list_obj.getString("address");
+                            String project_name = q_list_obj.getString("project_file");
 //                        server_status = q_list_obj.getInt("status");
 
-                            ImageAll am_list = new ImageAll(id, im_emp_id, im_filename, im_title, im_latitude, im_longitude, im_created, im_usename, im_userdesg, im_useradd);
+                            ImageAll am_list = new ImageAll(id, im_emp_id, im_filename, im_title, im_latitude, im_longitude, im_created, im_usename, im_userdesg, im_useradd,project_name);
                             allimagelist.add(am_list);
                         }
                     }

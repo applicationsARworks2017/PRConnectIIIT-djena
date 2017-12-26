@@ -4,8 +4,17 @@ package com.iiit.amaresh.demotrack.Pojo;
  * Created by LIPL on 16/02/17.
  */
 public class ImageAll {
-    String id,im_emp_id,im_filename,im_title,im_latitude,im_longitude,im_created,im_username,im_userdesg,im_add;
-    public ImageAll(String id, String im_emp_id, String im_filename, String im_title, String im_latitude, String im_longitude, String im_created, String im_username,String im_userdesg,String im_add) {
+    String id,im_emp_id,im_filename,im_title,im_latitude,im_longitude,im_created,im_username,im_userdesg,im_add,project_name;
+
+    public String getProject_name() {
+        return project_name;
+    }
+
+    public void setProject_name(String project_name) {
+        this.project_name = project_name;
+    }
+
+    public ImageAll(String id, String im_emp_id, String im_filename, String im_title, String im_latitude, String im_longitude, String im_created, String im_username, String im_userdesg, String im_add, String project_name) {
         this.id=id;
         this.im_emp_id=im_emp_id;
         this.im_filename=im_filename;
@@ -16,6 +25,8 @@ public class ImageAll {
         this.im_username=im_username;
         this.im_userdesg=im_userdesg;
         this.im_add=im_add;
+        this.project_name=project_name;
+
 
     }
     public String getId(){

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Adapter.AllMessageAdaper;
+import com.iiit.amaresh.demotrack.Database.DBHelper;
 import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.MessageAll;
 import com.iiit.amaresh.demotrack.Pojo.Util;
@@ -218,7 +219,7 @@ public class AllMessage extends Fragment {
 
                     allmessagelist = new ArrayList<MessageAll>();
 
-                    //db=new DBHelper(QAAnsweredListActivity.this);
+                   // db=new DBHelper(QAAnsweredListActivity.this);
 
                     for (int i = 0; i < user_list.length(); i++) {
 

@@ -82,7 +82,7 @@ public class AllImageAdaper extends BaseAdapter {
     }
 
     public class Holder{
-        private TextView Username,Designation,Time,Title,Address;
+        private TextView Username,Designation,Time,Title,Address,tvprojectname;
     //    private ImageView i_image,d_icon;
         private ImageView d_icon,file_img;
         public NetworkImageView i_image;
@@ -105,6 +105,7 @@ public class AllImageAdaper extends BaseAdapter {
             holder.Designation = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImdesig);
             holder.Time = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImtime);
             holder.Address = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImaddress);
+            holder.tvprojectname = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvprojectname);
             holder.Title = (TextView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.tvImtitle);
             holder.i_image = (NetworkImageView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivImage);
             holder.ivVideo = (VideoView) convertView.findViewById(com.iiit.amaresh.demotrack.R.id.ivVideo);
@@ -124,11 +125,13 @@ public class AllImageAdaper extends BaseAdapter {
         holder.i_image.setTag(position);
         holder.file_img.setTag(position);
         holder.ivVideo.setTag(position);
+        holder.tvprojectname.setTag(position);
        // holder.vshow_frame.setTag(position);
         holder.d_icon.setTag(position);
         //imgUrl = Constants.DOWNLOAD_URL + img_pos.getD_URL();
 
         holder.Username.setText(img_pos.getIm_username());
+        holder.tvprojectname.setText(img_pos.getProject_name());
         holder.Designation.setText(img_pos.getIm_userdesg());
         holder.Title.setText(img_pos.getIm_title());
         holder.Time.setText(img_pos.getIm_created());
