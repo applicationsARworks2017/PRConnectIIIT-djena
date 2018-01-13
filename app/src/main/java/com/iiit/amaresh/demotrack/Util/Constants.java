@@ -31,6 +31,7 @@ public class Constants {
 
 
     public static final String SHAREDPREFERENCE_KEY = "odisha_PR_connect";
+    public static final String SHAREDPREFERENCE_KEY_FCM = "firebaseid";
     public static final String SHAREDPREFERENCE_KEY1 = "odisha_PR_connect_IMEI";
     public static final String IMEI = "phone_imei";
     public static final String SP_LOGIN_STATUS = "login_status";

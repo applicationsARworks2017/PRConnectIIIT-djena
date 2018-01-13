@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -47,6 +49,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,6 +64,8 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
     String provider,latitude,longitude,phone_number,name,server_response,id;
     TextView tv1,tv2;
     Useronlineoffline useronlineoffline;
+    Geocoder geocoder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -345,8 +351,12 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
         this.id=id;
         this.phone_number=phone_number;
         this.name=name;
+        String address="Address Not Found";
+        if(latitude!=null || latitude!="null"){
+            address= getAddress(Double.valueOf(latitude),Double.valueOf(longitude));
+        }
         uploadpos upload = new uploadpos();
-        upload.execute(id, latitude, longitude, phone_number, name);
+        upload.execute(id, latitude, longitude, phone_number, name,address);
 
 
        /* if (Util.getNetworkConnectivityStatus(getApplicationContext())) {
@@ -357,6 +367,24 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
             Toast.makeText(getApplication(), "No internet Connection", Toast.LENGTH_LONG).show();
 
         }*/
+    }
+    public String getAddress(Double lat, Double lng) {
+        List<Address> addresses;
+        geocoder = new Geocoder(Home.this, Locale.getDefault());
+        String Address = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            String address = addresses.get(0).getAddressLine(0);
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            Address = address + city ;
+            // loc.setText(address+","+city+","+state);
+            //et_latlong.setText(sign_lat+","+sign_long);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Address;
+
     }
     public class uploadpos extends AsyncTask<String, Void, Void> {
         private static final String TAG = "register_user";
@@ -380,6 +408,7 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
                 String _lng = params[2];
                 String _ph = params[3];
                 String _name = params[4];
+                String _add = params[5];
                 InputStream in = null;
                 int resCode = -1;
 
@@ -400,7 +429,8 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
                         .appendQueryParameter("empphone", _ph)
                         .appendQueryParameter("title", _name)
                         .appendQueryParameter("latitude", _lat)
-                        .appendQueryParameter("longitude", _lng);
+                        .appendQueryParameter("longitude", _lng)
+                        .appendQueryParameter("address", _add);
                 //.appendQueryParameter("deviceid", deviceid);
                 String query = builder.build().getEncodedQuery();
 

@@ -192,6 +192,7 @@ public class UserDetails extends AppCompatActivity {
                     server_status = res.optInt("status");
                     if(server_status == 1){
                         server_response="You have successfully registered.";
+
                     }
                     else{
                         server_response="Registration Field.";

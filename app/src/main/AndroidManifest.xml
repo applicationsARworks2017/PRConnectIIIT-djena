@@ -144,7 +144,6 @@
                     android:launchMode="singleTask"
                     android:parentActivityName="com.iiit.amaresh.demotrack.Activity.Home" />
 
-
         <!-- Firebase Notifications -->
         <service android:name=".Firebase.MyFirebaseMessagingService">
             <intent-filter>

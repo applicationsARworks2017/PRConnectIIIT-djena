@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.iiit.amaresh.demotrack.Activity.Home;
 import com.iiit.amaresh.demotrack.Activity.MainActivity;
+import com.iiit.amaresh.demotrack.Activity.UserDetails;
 import com.iiit.amaresh.demotrack.Util.Constants;
 import com.iiit.amaresh.demotrack.Pojo.Util;
 
@@ -46,40 +47,39 @@ import java.net.URL;
 //Our class extending fragment
 public class Tab1 extends Fragment {
     Button login;
-    EditText phoneemail,password;
-    String emailphone,pass;
+    EditText phoneemail, password;
+    String emailphone, pass;
     ProgressDialog progressDialog;
     String server_response;
-    String emp_name,emp_phone,emp_mail,emp_desg;
-    int server_status,user_id;
-    String state_id,district_id,block_id;
+    String emp_name, emp_phone, emp_mail, emp_desg;
+    int server_status, user_id;
+    String state_id, district_id, block_id;
     SharedPreferences sharedPreferences;
     private TelephonyManager mTelephonyManager;
-    String deviceid,user_type;
+    String deviceid, user_type, fcmid;
     String[] PERMISSIONS = {Manifest.permission.READ_PHONE_STATE};
-
 
 
     //Overriden method onCreateView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view=inflater.inflate(com.iiit.amaresh.demotrack.R.layout.tab1, container, false);
-        login=(Button)view.findViewById(com.iiit.amaresh.demotrack.R.id.btnLogin);
-        phoneemail=(EditText)view.findViewById(com.iiit.amaresh.demotrack.R.id.email);
-        password=(EditText)view.findViewById(com.iiit.amaresh.demotrack.R.id.password);
+        final View view = inflater.inflate(com.iiit.amaresh.demotrack.R.layout.tab1, container, false);
+        login = (Button) view.findViewById(com.iiit.amaresh.demotrack.R.id.btnLogin);
+        phoneemail = (EditText) view.findViewById(com.iiit.amaresh.demotrack.R.id.email);
+        password = (EditText) view.findViewById(com.iiit.amaresh.demotrack.R.id.password);
+        fcmid = getActivity().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY_FCM, 0).getString(Constants.FCM_ID, null);
+
         getDeviceImei();
-         login.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emailphone=phoneemail.getText().toString();
-                pass=password.getText().toString();
-                if(emailphone.length()==0){
-                    Toast.makeText(getContext(),"Enter Phone Number", Toast.LENGTH_LONG).show();
-                }
-                else if(pass.length()==0){
-                    Toast.makeText(getContext(),"Enter Password", Toast.LENGTH_LONG).show();
-                }
-                else{
+                emailphone = phoneemail.getText().toString();
+                pass = password.getText().toString();
+                if (emailphone.length() == 0) {
+                    Toast.makeText(getContext(), "Enter Phone Number", Toast.LENGTH_LONG).show();
+                } else if (pass.length() == 0) {
+                    Toast.makeText(getContext(), "Enter Password", Toast.LENGTH_LONG).show();
+                } else {
                     userLogin();
                 }
                /* Intent i=new Intent(getContext(),Home.class);
@@ -99,6 +99,16 @@ public class Tab1 extends Fragment {
             } else {
 
                 mTelephonyManager = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 deviceid = mTelephonyManager.getDeviceId();
 
             }
@@ -269,6 +279,8 @@ public class Tab1 extends Fragment {
             editor.putString(Constants.SP_DISTRICT_ID,district_id);
             editor.commit();
 
+            register();
+
             Toast.makeText(getContext(), server_response, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getContext(), Home.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -278,14 +290,128 @@ public class Tab1 extends Fragment {
         }
         else {
             Toast.makeText(getContext(), server_response, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            /*Intent intent = new Intent(getContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
+            startActivity(intent);*/
         }
     }
 
+    private void register() {
+        if(Util.getNetworkConnectivityStatus(getActivity())) {
+            register_user regtask = new register_user();
+            regtask.execute(String.valueOf(user_id),fcmid);
+        }
+    }
 
+    private class register_user extends AsyncTask<String, Void, Void> {
+        private static final String TAG = "register_user";
+        //private ProgressDialog progressDialog = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (progressDialog == null) {
+                progressDialog = ProgressDialog.show(getActivity(), "Loading", "Please wait...");
+            }
+            // onPreExecuteTask();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+
+                String _user_id = params[0];
+                String _fcm_id = params[1];
+
+                InputStream in = null;
+                int resCode = -1;
+
+                String link = Constants.ONLINE_URL + Constants.USER_REGISTER;
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setAllowUserInteraction(false);
+                conn.setInstanceFollowRedirects(true);
+                conn.setRequestMethod("POST");
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("id",_user_id)
+                        .appendQueryParameter("fcm_id",_fcm_id);
+                //.appendQueryParameter("deviceid", deviceid);
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                conn.connect();
+                resCode = conn.getResponseCode();
+                if (resCode == HttpURLConnection.HTTP_OK) {
+                    in = conn.getInputStream();
+                }
+                if (in == null) {
+                    return null;
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                String response = "", data = "";
+
+                while ((data = reader.readLine()) != null) {
+                    response += data + "\n";
+                }
+
+                Log.i(TAG, "Response : " + response);
+                Log.i(TAG, "FCM : " + fcmid);
+
+                /**
+                 * {
+                 "status": 1,
+                 "message": "Details inserted successfully"
+                 }
+                 * */
+
+                if (response != null && response.length() > 0) {
+                    JSONObject res = new JSONObject(response.trim());
+                    server_status = res.optInt("status");
+                    if(server_status == 1){
+                        server_response="You have successfully registered.";
+
+                    }
+                    else{
+                        server_response="Registration Field.";
+
+                    }
+                    // server_response = res.optString("message");
+
+
+                    // int status = res.optInt("login_status");
+                    //  message = res.optString("message");
+                }
+
+                return null;
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void user) {
+            super.onPostExecute(user);
+            progressDialog.cancel();
+        }
+    }
 }
 
