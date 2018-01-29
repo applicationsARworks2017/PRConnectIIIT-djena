@@ -1,10 +1,26 @@
 package com.iiit.amaresh.demotrack.Util;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
+import com.iiit.amaresh.demotrack.AutosendData.ScheduledJobService;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Created by ISEA on 11-01-2017.
  */
 
 public class Constants {
+
     //public static final String ONLINE_URL="http://legalsocial.in/web/";
     public static final String ONLINE_URL="http://14.139.198.169/web/";
     public static final String PHONE_VERIFY="getemp.php";
@@ -45,5 +61,46 @@ public class Constants {
     public static final String SP_STATE_ID = "state_id";
     public static final String SP_BLOCK_ID = "block_id";
     public static final String SP_DISTRICT_ID = "district_id";
+
+
+    public static String getAddress(Double lat, Double lng, Context context) {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(context, Locale.getDefault());
+        String Address = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            String address = addresses.get(0).getAddressLine(0);
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            Address = address + city ;
+            // loc.setText(address+","+city+","+state);
+            //et_latlong.setText(sign_lat+","+sign_long);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Address;
+
+    }
+
+
+    public static Job createJob(FirebaseJobDispatcher dispatcher){
+        Job job = dispatcher.newJobBuilder()
+                // persist the task across boots
+                .setLifetime(Lifetime.FOREVER)
+                // Call this service when the criteria are met.
+                .setService(ScheduledJobService.class)
+                // unique id of the task
+                .setTag("LocationJob")
+                // We are mentioning that the job is not periodic.
+                .setRecurring(true)
+                // Run between 30 - 60 seconds from now.
+                .setTrigger(Trigger.executionWindow(10,20))
+                //Run this job only when the network is avaiable.
+                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .build();
+        return job;
+    }
+
 }
 

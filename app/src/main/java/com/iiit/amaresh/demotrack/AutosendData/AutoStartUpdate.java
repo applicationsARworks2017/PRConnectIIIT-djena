@@ -102,6 +102,11 @@ public class AutoStartUpdate extends Service implements android.location.Locatio
 
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // do your jobs here
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -118,15 +123,25 @@ public class AutoStartUpdate extends Service implements android.location.Locatio
            String time = simpledateformat.format(calander.getTime());
            // if(time.contentEquals())
             //  sendlatlongtoserver();
+            String address="No Address found";
+            if(latitude!=null || latitude!="null"){
+                address= Constants.getAddress(Double.valueOf(latitude),Double.valueOf(longitude),AutoStartUpdate.this);
+            }
             obj=new Home();
-            obj.sendlatlongtoserver(id,latitude,longitude,phone_number,name);
+            obj.sendlatlongtoserver(id,latitude,longitude,phone_number,name,address);
         }
 
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        String address="No Address found";
+        if(latitude!=null || latitude!="null"){
+            address= Constants.getAddress(Double.valueOf(latitude),Double.valueOf(longitude),AutoStartUpdate.this);
+        }
+        obj=new Home();
+        obj.sendlatlongtoserver(id,latitude,longitude,phone_number,name,address);
+        reeatcalltostatus();
     }
 
     @Override

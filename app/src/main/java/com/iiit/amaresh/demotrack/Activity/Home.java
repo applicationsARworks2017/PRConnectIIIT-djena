@@ -30,6 +30,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
 import com.iiit.amaresh.demotrack.AutosendData.AutoStartUpdate;
 import com.iiit.amaresh.demotrack.Extra.BaseActivity;
 import com.iiit.amaresh.demotrack.Util.Constants;
@@ -54,6 +57,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.iiit.amaresh.demotrack.Util.Constants.createJob;
+
 public class  Home extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,android.location.LocationListener {
     NavigationView navigationView;
     LinearLayout layout_points;
@@ -61,10 +66,9 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
     LinearLayout ur_position,ownpos,ass_upload,track_sub,get_move,galary,messages;
     int user_id,server_status;
     LocationManager locationManager;
-    String provider,latitude,longitude,phone_number,name,server_response,id;
+    String provider,latitude,longitude,phone_number,name,server_response,id,address;
     TextView tv1,tv2;
     Useronlineoffline useronlineoffline;
-    Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +94,18 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
          id=String.valueOf(user_id);
 
         // when home screen will open, service class should stop sending data to server.
-        this.stopService(new Intent(this, AutoStartUpdate.class));
+       // this.stopService(new Intent(this, AutoStartUpdate.class));
+
+        // job scheduler started
+
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job job=createJob(dispatcher);
+        dispatcher.schedule(job);
+
+
+
 
         reeatcalltostatus();
-
-
-
 
         tv1=(TextView)header.findViewById(R.id.tvUserFullName);
         tv1.setText(name);
@@ -318,7 +328,11 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
             double lng = location.getLongitude();
             latitude = String.valueOf(lat);
             longitude = String.valueOf(lng);
-            sendlatlongtoserver(id,latitude,longitude,phone_number,name);
+            String address="No Address found";
+            if(latitude!=null || latitude!="null"){
+                address= Constants.getAddress(Double.valueOf(latitude),Double.valueOf(longitude),Home.this);
+            }
+            sendlatlongtoserver(id,latitude,longitude,phone_number,name,address);
         }
 
     }
@@ -345,16 +359,17 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
 
     }
 
-    public  void sendlatlongtoserver(String id, String latitude, String longitude, String phone_number, String name){
+    public  void sendlatlongtoserver(String id, String latitude, String longitude, String phone_number, String name,String address){
         this.latitude= latitude;
         this.longitude= longitude;
         this.id=id;
         this.phone_number=phone_number;
         this.name=name;
-        String address="Address Not Found";
+        this.address=address;
+        /*String address="Address Not Found";
         if(latitude!=null || latitude!="null"){
             address= getAddress(Double.valueOf(latitude),Double.valueOf(longitude));
-        }
+        }*/
         uploadpos upload = new uploadpos();
         upload.execute(id, latitude, longitude, phone_number, name,address);
 
@@ -368,24 +383,7 @@ public class  Home extends BaseActivity implements NavigationView.OnNavigationIt
 
         }*/
     }
-    public String getAddress(Double lat, Double lng) {
-        List<Address> addresses;
-        geocoder = new Geocoder(Home.this, Locale.getDefault());
-        String Address = null;
-        try {
-            addresses = geocoder.getFromLocation(lat, lng, 1);
-            String address = addresses.get(0).getAddressLine(0);
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            Address = address + city ;
-            // loc.setText(address+","+city+","+state);
-            //et_latlong.setText(sign_lat+","+sign_long);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Address;
 
-    }
     public class uploadpos extends AsyncTask<String, Void, Void> {
         private static final String TAG = "register_user";
        // private ProgressDialog progressDialog = null;
